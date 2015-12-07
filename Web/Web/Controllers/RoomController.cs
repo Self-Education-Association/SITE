@@ -48,7 +48,7 @@ namespace Web.Controllers
             {
                 if (RoomRecord.Apply(Id))
                     return RedirectToAction("List");
-                //错误信息
+                ViewData["ErrorInfo"] = "你不符合预约要求！";
                 return View(Details(Id));
             }
             return View(Details(Id));
@@ -59,7 +59,7 @@ namespace Web.Controllers
             {
                 if (RoomRecord.Quit(Id))
                     return RedirectToAction("List");
-                //错误信息
+                ViewData["ErrorInfo"] = "无法退选！";
                 return View(Details(Id));
             }
             return View(Details(Id));
