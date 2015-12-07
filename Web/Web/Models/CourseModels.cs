@@ -39,15 +39,24 @@ namespace Web.Models
                 return false;
             }
         }
-        public static bool Update(CourseOperation courseOperation)
+        public static bool Update([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                db.Entry(courseOperation).State = EntityState.Modified;
-                db.SaveChanges();
-                if (db.CourseOperations.Find(courseOperation.Id) != null)
-                    return true;
-                return false;
+                //try
+                //{
+                    //if (courseOperation.Students.Count > courseOperation.Limit)
+                    //    return false;
+                    db.Entry(courseOperation).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (db.CourseOperations.Find(courseOperation.Id) != null)
+                        return true;
+                    return false;
+                //}
+                //catch
+                //{
+                //    return false;
+                //}
             }
         }
         public static bool Delete(Guid id)
@@ -63,24 +72,24 @@ namespace Web.Models
                 return false;
             }
         }
-        public static object List(string select, bool IsTeacher)
+        public static List<CourseOperation> List(string select, bool IsTeacher)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 int pageSize = 5;
                 int page = 0;
-                List<CourseOperation> Course;
+                IQueryable<CourseOperation> Course;
                 if (IsTeacher)
                 {
                     var user = Extensions.GetCurrentUser();
                     if (select == null | select == "")
-                    { Course = (from a in db.CourseOperations where a.State != 0 && a.Creator == user orderby a.Name select a).ToList(); }
+                    { Course = (from a in db.CourseOperations where a.State != 0 && a.Creator == user orderby a.Name select a).AsQueryable(); }
                     else
                     {
                         Course = (from a in db.CourseOperations
                                   where a.State != 0 && a.Creator == user && a.Name == @select
                                   orderby a.Name
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                 }
                 else
@@ -90,14 +99,14 @@ namespace Web.Models
                         Course = (from a in db.CourseOperations
                                   where a.State != 0 && a.StartTime > DateTime.Now
                                   orderby a.Time
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                     else
                     {
                         Course = (from a in db.CourseOperations
                                   where a.State != 0 && a.Name == @select && a.StartTime > DateTime.Now
                                   orderby a.Time
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                 }
                 var paginatedNews = new ListPage<CourseOperation>(Course, page, pageSize);

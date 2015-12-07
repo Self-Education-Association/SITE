@@ -43,10 +43,7 @@ namespace Web.Models
     /// <typeparam name="T">泛型参数T,必须实现IListPage接口</typeparam>
     public class ListPage<T> : List<T> where T :IListPage
     {
-        private List<CourseOperation> course;
         private int page;
-        private List<ActivityOperation> activity;
-        private List<RoomOperation> room;
 
         /// <summary>
         /// 页面索引值
@@ -77,27 +74,6 @@ namespace Web.Models
             TotalPages = (int)Math.Ceiling(TotalCount / (double)pageSize);
             var temp = source.OrderBy(p => p.Time).Skip(pageIndex * pageSize);
             AddRange(source.OrderBy(p => p.Time).Skip(pageIndex * pageSize).Take(PageSize));
-        }
-
-        public ListPage(List<CourseOperation> course, int page, int pageSize)
-        {
-            this.course = course;
-            this.page = page;
-            PageSize = pageSize;
-        }
-
-        public ListPage(List<ActivityOperation> activity, int page, int pageSize)
-        {
-            this.activity = activity;
-            this.page = page;
-            PageSize = pageSize;
-        }
-
-        public ListPage(List<RoomOperation> room, int page, int pageSize)
-        {
-            this.room = room;
-            this.page = page;
-            PageSize = pageSize;
         }
 
         /// <summary>

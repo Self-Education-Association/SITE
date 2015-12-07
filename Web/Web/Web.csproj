@@ -182,6 +182,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -248,11 +249,17 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Tutor\CourseList.cshtml" />
+    <Content Include="Views\Tutor\Create.cshtml" />
+    <Content Include="Views\Tutor\Update.cshtml" />
+    <Content Include="Views\Tutor\StudentList.cshtml" />
+    <Content Include="Views\Tutor\Create1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UserUpload\Administrator\" />
     <Folder Include="UserUpload\Identity\" />
+    <Folder Include="Views\CourseRecords\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

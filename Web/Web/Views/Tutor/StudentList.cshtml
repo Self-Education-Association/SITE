@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Web.Models.CourseRecord>
+
+@{
+    ViewBag.Title = "StudentList";
+}
+
+<h2>StudentList</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create1")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Receiver.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

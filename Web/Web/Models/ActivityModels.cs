@@ -62,18 +62,18 @@ namespace Web.Models
             {
                 int pageSize = 5;
                 int page = 0;
-                List<ActivityOperation> Activity;
+                IQueryable<ActivityOperation> Activity;
                 if (IsAdministrator)
                 {
                     var user = Extensions.GetCurrentUser();
                     if (select == null | select=="")
-                    { Activity = db.ActivityOperations.ToList(); }
+                    { Activity = db.ActivityOperations.AsQueryable(); }
                     else
                     {
                         Activity = (from a in db.ActivityOperations
                                   where a.Name == @select
                                   orderby a.Name
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                 }
                 else
@@ -83,14 +83,14 @@ namespace Web.Models
                         Activity = (from a in db.ActivityOperations
                                   where a.State != 0 && a.StartTime > DateTime.Now
                                   orderby a.Time
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                     else
                     {
                         Activity = (from a in db.ActivityOperations
                                   where a.State != 0 && a.Name == @select && a.StartTime > DateTime.Now
                                   orderby a.Time
-                                  select a).ToList();
+                                  select a).AsQueryable();
                     }
                 }
                 var paginatedNews = new ListPage<ActivityOperation>(Activity, page, pageSize);

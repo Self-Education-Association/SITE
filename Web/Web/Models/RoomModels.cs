@@ -73,18 +73,18 @@ namespace Web.Models
                 db.SaveChanges();
                 int pageSize = 5;
                 int page = 0;
-                List<RoomOperation> Room;
+                IQueryable<RoomOperation> Room;
                 if (IsAdministrator)
                 {
                     var user = Extensions.GetCurrentUser();
                     if (select == null | select == "")
-                    { Room = db.RoomOperations.ToList(); }
+                    { Room = db.RoomOperations; }
                     else
                     {
                         Room = (from a in db.RoomOperations
                                 where a.Name == @select
                                 orderby a.Name
-                                select a).ToList();
+                                select a).AsQueryable();
                     }
                 }
                 else
@@ -94,14 +94,14 @@ namespace Web.Models
                         Room = (from a in db.RoomOperations
                                 where a.State != 0 && a.StartTime > DateTime.Now
                                 orderby a.Time
-                                select a).ToList();
+                                select a).AsQueryable();
                     }
                     else
                     {
                         Room = (from a in db.RoomOperations
                                 where a.State != 0 && a.Name == @select && a.StartTime > DateTime.Now
                                 orderby a.Time
-                                select a).ToList();
+                                select a).AsQueryable();
                     }
                 }
                 var paginatedNews = new ListPage<RoomOperation>(Room, page, pageSize);
