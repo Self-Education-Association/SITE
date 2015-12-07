@@ -31,6 +31,7 @@ namespace Web.Controllers
         public ActionResult Materials(int page = 0)
 
         {
+            IListPage test = new Material();
             var model = new ListPage<Material>(db.Materials, page, pageSize); //实现分页功能
             return View(model);
         }
@@ -58,7 +59,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MaterialCreate([Bind(Include = "Name,Description")] Material material)
+        public ActionResult MaterialCreate([Bind(Include = "Name,Description,Type")] Material material)
         {
             if (ModelState.IsValid)
             {
@@ -96,16 +97,14 @@ namespace Web.Controllers
             return View(material);
         }
 
-        // POST: Materials/Edit/5
-        // 为了防止“过多发布”攻击，请启用要绑定到的特定属性，有关 
-        // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult MaterialEdit([Bind(Include = "ID,Description")] Material material)
+        public ActionResult MaterialEdit([Bind(Include = "ID,Description,Type")] Material material)
         {
             if (ModelState.IsValid)
             {
-                db.Materials.Find(material.ID).Description = material.Description;
+                db.Materials.Find(material.Id).Description = material.Description;
+                db.Materials.Find(material.Id).Type = material.Type;
                 db.SaveChanges();
                 return RedirectToAction("Materials");
             }

@@ -6,6 +6,7 @@ using System.Security;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using System.IO;
+using System.Collections;
 
 namespace Web.Models
 {
@@ -41,7 +42,7 @@ namespace Web.Models
     /// 用于分页的分页List,继承自List
     /// </summary>
     /// <typeparam name="T">泛型参数T,必须实现IListPage接口</typeparam>
-    public class ListPage<T> : List<T> where T :IListPage
+    public class ListPage<T> : List<T> where T :class,IListPage
     {
         private List<CourseOperation> course;
         private int page;
