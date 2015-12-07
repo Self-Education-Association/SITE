@@ -8,7 +8,7 @@ namespace Web.Models
 {
     public class Material:IListPage
     {
-        public Guid ID { get; set; }
+        public Guid Id { get; set; }
 
         [Display(Name = "文件名")]
         public string Name { get; set; }
@@ -24,7 +24,7 @@ namespace Web.Models
 
         public Material(string name,string description,MaterialType type)
         {
-            ID = Guid.NewGuid();
+            Id = Guid.NewGuid();
             Name = name;
             Description = description;
             Time = DateTime.Now;
