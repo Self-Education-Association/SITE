@@ -1,31 +1,76 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<style>
+    body {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    .body-content {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .row{
+        margin-left:0px;
+        margin-right:0px;
+    }
+</style>
+<!--下面是轮播图片-->
+
+<div id="myCarousel" class="carousel slide" style="height:350px">
+    <!-- 轮播（Carousel）指标 -->
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        @for (int i = 1; i < Model.Sliders.Count; i++)
+        {
+            <li data-target="#myCarousel" data-slide-to="@i"></li>
+        }
+    </ol>
+    <!-- 轮播（Carousel）项目 -->
+    <div class="carousel-inner">
+        @foreach (var m in Model.Sliders)
+        {
+            <div class="item active">
+                <img src="~/UserUpload/Administrator/@m.Name" alt="First slide" style="height:400px;width:100%">
+                <div class="carousel-caption">@m.Description</div>
+            </div>
+        }
+    </div>
+    <!-- 轮播（Carousel）导航 -->
+    <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
+    <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+<!--上面是轮播图片-->
+<!--下面是公告栏-->
+<div style="padding-top:10px;padding-bottom:10px;margin-bottom:0;margin-top:0;background-color:#2B2B4B;">
+    <h4 style="font-family:KaiTi;text-align:center">近期公告</h4><br>
+    <div class="row demo-tiles" style="padding-left:75px;padding-right:75px;margin-bottom:0px;">
+        @foreach (var a in Model.LatestActivitys)
+        {
+            <div class="col-md-3">
+                <div class="tile" style="height:300px">
+                    <img src="~/img/icons/png/Clipboard.png" alt="Compas" class="tile-image big-illustration">
+                    <h3 class="tile-title">@a.Name</h3>
+                    <p>@a.Content</p>
+                    <a class="btn btn-primary btn-large btn-block" href="#">阅读详细</a>
+                </div>
+            </div>
+        }
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+</div>
+
+
+<!--上面是公告栏-->
+<!--下面是日历-->
+<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;background-color:#1abc9c;padding-left:30px;padding-right:30px;min-height:350px;">
+    <div class="col-md-3"><img style="height:150px;width:150px;"src="~/img/icons/png/Calendar.png" /></div>
+    <div class="col-md-9"><!--script calendar--></div>
+</div>
+<!--上面是日历-->
+<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:350px;background:url(../../img/e45f8b6ffa4dcfef4c6cdd4a92f305390119a4bbfdce-yiDiFn_fw658.jpg)no-repeat center ;background-size:cover">
+    <div class="col-md-3"></div>
+    <div class="col-md-9"></div>
 </div>
