@@ -11,6 +11,11 @@
     <link rel="shortcut icon" href="~/img/favicon.ico">
     @Scripts.Render("~/bundles/modernizr")
     <style>
+        body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+        }
+
         .navbar {
             margin-bottom: 0;
             background-color: #242B4B;
@@ -23,7 +28,6 @@
         .navbar-default .navbar-brand {
             color: white;
         }
-
     </style>
 
 </head>
@@ -44,7 +48,7 @@
                     <li><a href="#"><span class="fui-user"></span>比赛</a></li>
                     <li><a href="#"><span class="fui-windows"></span>资料下载</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="fui-new"></span>预约<b class="caret"></b></a>
+                        <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown"><span class="fui-new"></span>预约<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">课程</a></li>
                             <li><a href="#">场地</a></li>
@@ -58,17 +62,15 @@
     </div>
 
     @RenderBody()
-    <hr />
-    <div class="container">
-        <footer style="min-height:50px;background-color:#242B4B;">
+ <div class="col-md-12" style="margin-bottom: 0; margin-top: 0;background-color: #242B4B;">
             <p><span style="text-align:left;float:left;color:white;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span></p>
-        </footer>
-    </div>
+ </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/flat-ui.js"></script>
+    <script src="~/Scripts/flat-ui.min.js"></script>
     <script src="~/Scripts/npm.js"></script>
 </body>
 </html>
