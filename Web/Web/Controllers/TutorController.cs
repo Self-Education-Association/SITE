@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -78,6 +79,7 @@ namespace Web.Controllers
             }
             return View();
         }
+        
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -94,7 +96,7 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DoDelete(Guid id)
         {
             if (!CourseOperation.Delete(id))
             {
@@ -110,24 +112,27 @@ namespace Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CourseRecord courseRecord = db.CourseRecords.Find(id);
+            CourseOperation course = courseRecord.CourseOperation;
             if (courseRecord == null)
             {
                 return HttpNotFound();
             }
-            if (courseRecord.RemarkRate <= 5 && courseRecord.RemarkRate >= 1 && courseRecord.RemarkContent != "未评价")
+            if (courseRecord.RemarkRate > 0)
             {
                 return View(courseRecord);
             }
-            return View("StudentList");
+            if (course != null)
+            { return RedirectToAction("StudentList", course.Id); }
+            return RedirectToAction("StudentList");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Remark([Bind(Include = "Id,ActionTime,RecordContent,RecordRate,Time")] CourseRecord courseRecord)
+        public ActionResult Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] CourseRecord courseRecord)
         {
             if (ModelState.IsValid)
             {
                 if (CourseRecord.Remark(courseRecord))
-                    return RedirectToAction("StudentList");
+                return RedirectToAction("StudentList");
                 ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
@@ -145,12 +150,12 @@ namespace Web.Controllers
                 ViewData["ErrorInfo"] = "该课程不存在！";
                 return RedirectToAction("CourseList");
             }
-            //if (course.Creator != user)
-            //{
-            //    ViewData["ErrorInfo"] = "你没有权限对该课程进行评价！";
-            //    return View("CourseList");
-            //
-            List<CourseRecord> studentList = db.CourseRecords.Where(a => a.CourseOperation == course).ToList();
+            if (course.Creator != user)
+            {
+                ViewData["ErrorInfo"] = "你没有权限对该课程进行评价！";
+                return View("CourseList");
+            }
+            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id==course.Id select a ).Distinct();
             if (studentList.FirstOrDefault() == null)
                 return View(db.CourseRecords.ToList());
             return View(studentList);
@@ -167,6 +172,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 courseRecord.ActionTime = DateTime.Now;
+                courseRecord.Time = new DateTime(2000,1,1,0,0,0);
                 courseRecord.Id = Guid.NewGuid();
                 db.CourseRecords.Add(courseRecord);
                 db.SaveChanges();
