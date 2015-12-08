@@ -134,13 +134,6 @@ namespace Web.Models
         public bool Searchable { get; set; }
     }
 
-    public enum UserRoleType
-    {
-        Student,
-        Teacher,
-        Administrator
-    }
-
     public enum IdentityStatus
     {
         None,

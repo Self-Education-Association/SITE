@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Web.Models.IdentityRecord>
+
+@{
+    ViewBag.Title = "IdentityRecords";
+}
+
+<h2>IdentityRecords</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.User.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.InUIBE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsStudent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.InUIBE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsStudent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "IdentityRecordDetails", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

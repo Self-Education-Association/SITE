@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace Web.Models
 {
@@ -34,6 +35,34 @@ namespace Web.Models
         public Material()
         {
 
+        }
+
+        public string GetUrl()
+        {
+            switch (Type)
+            {
+                case MaterialType.Download:
+                case MaterialType.Slider:
+                    return "~/UserUpload/Administrator/" + Name;
+                case MaterialType.Identity:
+                    return "~/UserUpload/Identity/" + Name;
+                default:
+                    return "";
+            }
+        }
+
+        public string GetPath()
+        {
+            switch (Type)
+            {
+                case MaterialType.Download:
+                case MaterialType.Slider:
+                    return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Administrator/" + Name;
+                case MaterialType.Identity:
+                    return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Identity/" + Name;
+                default:
+                    return "";
+            }
         }
     }
 

@@ -12,7 +12,6 @@ using System.Net;
 
 namespace Web.Controllers
 {
-    [Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -53,54 +52,23 @@ namespace Web.Controllers
             }
         }
 
-        //
-        // GET: /Manage/Index
         public ActionResult Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.Error ? "出现错误。"
                 : message == ManageMessageId.AddEducationSuccess ? "已添加你的一条教育经历。"
                 : message == ManageMessageId.AddWorkSuccess ? "已添加一条你的工作经历。"
+                : message == ManageMessageId.ChangePasswordSuccess ? "修改密码成功。"
                 : "";
 
             var userId = User.Identity.GetUserId();
-            var model = new IndexViewModel
+            var model = new ManageIndexViewModel
             {
             };
             return View(model);
         }
 
-        //
-        // GET: /Manage/ChangePassword
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-
-        //
-        // POST: /Manage/ChangePassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
-            }
-            AddErrors(result);
-            return View(model);
-        }
-
+        #region 个人履历模块
         public ActionResult RecordList()
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -112,7 +80,7 @@ namespace Web.Controllers
                 ViewBag.Educations = educations;
                 ViewBag.Works = works;
 
-                return View(educations);
+                return View();
             }
         }
 
@@ -167,11 +135,41 @@ namespace Web.Controllers
 
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
+        #endregion
+
+        #region 用户信息与认证模块
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
 
         public ActionResult UserProfile()
         {
             User user = UserManager.FindById(User.Identity.GetUserId());
-            UserProfileViewModel model = (UserProfileViewModel)user.Profile;
+            //UserProfileViewModel model = (UserProfileViewModel)user.Profile;
+            UserProfileViewModel model = new UserProfileViewModel();
 
             return View(model);
         }
@@ -231,7 +229,9 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
+        #endregion
 
+        #region 项目、团队与公司模块
         public ActionResult Project()
         {
 
@@ -290,14 +290,14 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
             Team team = db.Teams.First(u => u.Administrator.Id == Extensions.GetCurrentUser().Id);
-            if (user==null)
+            if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Recruited, user));
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });
         }
 
-        public ActionResult TeamMember(int page=0)
+        public ActionResult TeamMember(int page = 0)
         {
             Team team = Extensions.GetCurrentUser().TeamRecord.Team;
             if (team == null)
@@ -336,7 +336,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult TeamProfile([Bind(Include ="Annoucement,Introduction,Searchable")]TeamProfileViewModel model)
+        public ActionResult TeamProfile([Bind(Include = "Annoucement,Introduction,Searchable")]TeamProfileViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -384,6 +384,7 @@ namespace Web.Controllers
 
             return View();
         }
+        #endregion
 
         protected override void Dispose(bool disposing)
         {

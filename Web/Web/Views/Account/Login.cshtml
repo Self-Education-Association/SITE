@@ -1,0 +1,39 @@
+﻿@using Web.Models;
+@model LoginViewModel
+@{
+    ViewBag.Title = "登录";
+}
+<h2 align="center">登录你的账号</h2>
+
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label for="Email" class="span2 control-label">电子邮箱</label>
+        <div class="col-sm-10">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })<br>
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="Password" class="span2 control-label">密码</label>
+        <div>
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })<br>
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <label class="remember" for="RememberMe">
+        @Html.CheckBoxFor(m => m.RememberMe)
+        记住我？
+    </label>
+    <div class="button-login">
+        <button type="submit" value="登录" class="btn btn-primary">登录</button>
+    </div>
+
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
