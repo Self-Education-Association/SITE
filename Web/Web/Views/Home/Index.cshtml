@@ -17,35 +17,35 @@
     }
 </style>
 <!--下面是轮播图片-->
-
-<div id="myCarousel" class="carousel slide" style="height:350px">
-    <!-- 轮播（Carousel）指标 -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        @for (int i = 1; i < Model.Sliders.Count; i++)
-        {
-            <li data-target="#myCarousel" data-slide-to="@i"></li>
-        }
-    </ol>
-    <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
-        @foreach (var m in Model.Sliders)
-        {
-            <div class="item active">
-                <img src="~/UserUpload/Administrator/@m.Name" alt="First slide" style="height:400px;width:100%">
-                <div class="carousel-caption">@m.Description</div>
-            </div>
-        }
+<div style="background-image:url(../../img/old-brick-wall-texture-05.jpg);background-size:cover;padding-top:35px;padding-bottom:35px;">
+    <div id="myCarousel" class="carousel slide" style="min-height:300px;margin-right:200px;margin-left:200px;">
+        <!-- 轮播（Carousel）指标 -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            @for (int i = 1; i < Model.Sliders.Count; i++)
+            {
+                <li data-target="#myCarousel" data-slide-to="@i"></li>
+            }
+        </ol>
+        <!-- 轮播（Carousel）项目 -->
+        <div class="carousel-inner">
+            @foreach (var m in Model.Sliders)
+            {
+                <div class="item active">
+                    <img src="~/UserUpload/Administrator/@m.Name" alt="First slide" style="min-height:350px;width:100%">
+                    <div class="carousel-caption">@m.Description</div>
+                </div>
+            }
+        </div>
+        <!-- 轮播（Carousel）导航 -->
+        <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
+        <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
     </div>
-    <!-- 轮播（Carousel）导航 -->
-    <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
-    <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
 </div>
-
 
 <!--上面是轮播图片-->
 <!--下面是公告栏-->
-<div style="padding-top:10px;padding-bottom:10px;margin-bottom:0;margin-top:0;background-color:#2B2B4B;">
+<div style="padding-top:10px;padding-bottom:10px;margin-bottom:0;margin-top:0;background:url(../../img/HeaderGreyDenim.jpg)center top repeat ;background-size:cover">
     <h4 style="font-family:KaiTi;text-align:center">近期公告</h4><br>
     <div class="row demo-tiles" style="padding-left:75px;padding-right:75px;margin-bottom:0px;">
         @foreach (var a in Model.LatestActivitys)
@@ -70,7 +70,7 @@
     <div class="col-md-9"><!--script calendar--></div>
 </div>
 <!--上面是日历-->
-<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:350px;background:url(../../img/e45f8b6ffa4dcfef4c6cdd4a92f305390119a4bbfdce-yiDiFn_fw658.jpg)no-repeat center ;background-size:cover">
+<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:350px;background-color:#ececec;">
     <div class="col-md-3"></div>
     <div class="col-md-9"></div>
 </div>

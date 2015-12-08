@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CourseRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -245,7 +246,6 @@
     <Content Include="img\demo\logo-mask-2x.png" />
     <Content Include="img\demo\logo-mask.png" />
     <Content Include="img\demo\video.jpg" />
-    <Content Include="img\e45f8b6ffa4dcfef4c6cdd4a92f305390119a4bbfdce-yiDiFn_fw658.jpg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\gallery\bg-login.jpg" />
     <Content Include="img\gallery\index_img2.jpg" />
@@ -263,6 +263,7 @@
     <Content Include="img\gallery\photo8.jpg" />
     <Content Include="img\gallery\photo9.jpg" />
     <Content Include="img\gallery\register_bg_img1.jpg" />
+    <Content Include="img\HeaderGreyDenim.jpg" />
     <Content Include="img\icons\png\Book.png" />
     <Content Include="img\icons\png\Calendar.png" />
     <Content Include="img\icons\png\Chat.png" />
@@ -292,9 +293,11 @@
     <Content Include="img\icons\svg\retina.svg" />
     <Content Include="img\icons\svg\ribbon.svg" />
     <Content Include="img\icons\svg\toilet-paper.svg" />
+    <Content Include="img\indexbg.jpeg" />
     <Content Include="img\login\icon.png" />
     <Content Include="img\login\imac-2x.png" />
     <Content Include="img\login\imac.png" />
+    <Content Include="img\old-brick-wall-texture-05.jpg" />
     <Content Include="img\tile\ribbon-2x.png" />
     <Content Include="img\tile\ribbon.png" />
     <Content Include="Scripts\bootstrap.js" />
