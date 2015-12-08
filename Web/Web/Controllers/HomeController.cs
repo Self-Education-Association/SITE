@@ -28,6 +28,8 @@ namespace Web.Controllers
 
             model.LatestActivitys.Add(new ActivityOperation { Name = "123", Content = "456" });
             model.LatestActivitys.Add(new ActivityOperation { Name = "123", Content = "456" });
+            model.LatestActivitys.Add(new ActivityOperation { Name = "123", Content = "456" });
+            model.LatestActivitys.Add(new ActivityOperation { Name = "123", Content = "456" });
 
             if (db.Materials.Where(u => u.Type == MaterialType.Slider).Count() == 0)
                 model.Sliders = new List<Material>();

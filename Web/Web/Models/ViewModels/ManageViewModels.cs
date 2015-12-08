@@ -6,7 +6,7 @@ using System;
 
 namespace Web.Models
 {
-    public class IndexViewModel
+    public class ManageIndexViewModel
     {
         public bool HasIdentited { get; set; }
     }
@@ -34,21 +34,6 @@ namespace Web.Models
         [Display(Name = "确认新密码")]
         [Compare("NewPassword", ErrorMessage = "新密码和确认密码不匹配。")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class UserRecordViewModel
-    {
-        public EducationRecord Education { get; set; }
-
-        public WorkRecord Work { get; set; }
-
-        public UserRecordType Type { get; set; }
-    }
-
-    public enum UserRecordType
-    {
-        Education=1,
-        Work=2
     }
 
     public class UserProfileViewModel:Profile

@@ -164,6 +164,8 @@ namespace Web.Controllers
             IdentityRecord model = db.IdentityRecords.Find(id);
             if (model == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+            if (model.Status != IdentityStatus.ToApprove)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             if (isApprove)
             {
                 model.Status = IdentityStatus.Done;
