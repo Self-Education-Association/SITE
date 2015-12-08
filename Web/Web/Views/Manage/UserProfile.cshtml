@@ -37,7 +37,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Searchable, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList()
+                @Html.DropDownListFor(model=>model.Searchable,new[] { new SelectListItem() { Text="是",Value="true"},new SelectListItem() { Text="否",Value="false"}  })
                 @Html.ValidationMessageFor(model => model.Searchable, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -45,7 +45,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.InformationPrivacy, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.RadioButtonFor(model => model.InformationPrivacy, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.InformationPrivacy, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
                 @Html.ValidationMessageFor(model => model.InformationPrivacy, "", new { @class = "text-danger" })
             </div>
         </div>

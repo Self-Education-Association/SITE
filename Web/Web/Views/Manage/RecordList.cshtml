@@ -1,0 +1,99 @@
+﻿@using Web.Models
+@{
+    ViewBag.Title = "RecordList";
+}
+
+@{
+    var Educations = (List<EducationRecord>)ViewBag.Educations;
+    var Works = (List<WorkRecord>)ViewBag.Works;
+    <div>
+        <div class="col-md-6">
+            <table class="table table-hover">
+                <caption>教育经历</caption>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(e => Educations.First().DegreeType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(e => Educations.First().School)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(e => Educations.First().StartYear)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(e => Educations.First().EndYear)
+                    </th>
+                </tr>
+
+                @foreach (var item in Educations)
+            {
+                string degree = "";
+                switch (item.DegreeType)
+                {
+                    case 1:
+                        degree = "本科学历";
+                        break;
+                    case 2:
+                        degree = "硕士学历";
+                        break;
+                    case 3:
+                        degree = "博士学历";
+                        break;
+                    case 4:
+                        degree = "博士以上学历";
+                        break;
+                }
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => degree)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.School)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndYear)
+                        </td>
+                    </tr>
+                }
+                <tfoot>@Html.ActionLink("添加一条教育经历", "AddEducationRecord")</tfoot>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-hover">
+                <caption>工作经历</caption>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(e => Works.First().Company)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(e => Works.First().StartYear)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(e => Works.First().EndYear)
+                    </th>
+                </tr>
+                @foreach (var item in Works)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Company)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StartYear)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndYear)
+                        </td>
+                    </tr>
+                }
+                <tfoot>@Html.ActionLink("添加一条工作经历", "AddWorkRecord")</tfoot>
+            </table>
+        </div>
+    </div>
+}
+
+
+
