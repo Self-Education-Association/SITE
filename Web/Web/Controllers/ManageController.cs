@@ -192,7 +192,7 @@ namespace Web.Controllers
 
         public ActionResult UserIdentity()
         {
-            ViewBag.Status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord.Status;
+            //ViewBag.Status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord.Status;
 
             return View();
         }
