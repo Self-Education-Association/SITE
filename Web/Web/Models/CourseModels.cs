@@ -8,6 +8,8 @@ using System.Data;
 using System.Net;
 using System.Web.Mvc;
 using Web.Models;
+using System.Web;
+using Microsoft.AspNet.Identity;
 
 namespace Web.Models
 {
@@ -26,164 +28,203 @@ namespace Web.Models
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                courseOperation.Id = Guid.NewGuid();
-                courseOperation.Time = DateTime.Now;
-                courseOperation.Count = 0;
-                courseOperation.State = 1;
-                courseOperation.Time = DateTime.Now;
-                courseOperation.Creator = Extensions.GetCurrentUser();
-                db.CourseOperations.Add(courseOperation);
-                db.SaveChanges();
-                if (db.CourseOperations.Find(courseOperation.Id) != null)
-                    return true;
-                return false;
+                try
+                {
+                    courseOperation.Id = Guid.NewGuid();
+                    courseOperation.Time = DateTime.Now;
+                    courseOperation.Count = 0;
+                    courseOperation.State = 1;
+                    courseOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    db.CourseOperations.Add(courseOperation);
+                    db.SaveChanges();
+                    var course = db.CourseOperations.Find(courseOperation.Id);
+                    if (course != null)
+                        return true;
+                    return false;
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         }
         public static bool Update([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                //try
-                //{
-                    //if (courseOperation.Students.Count > courseOperation.Limit)
-                    //    return false;
+                try
+                {
+                    if (courseOperation.Students != null)
+                    {
+                        if (courseOperation.Students.Count > courseOperation.Limit)
+                            return false;
+                    }
+                    courseOperation.Time = DateTime.Now;
                     db.Entry(courseOperation).State = EntityState.Modified;
                     db.SaveChanges();
                     if (db.CourseOperations.Find(courseOperation.Id) != null)
                         return true;
                     return false;
-                //}
-                //catch
-                //{
-                //    return false;
-                //}
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
         public static bool Delete(Guid id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                CourseOperation courseOperation = db.CourseOperations.Find(id);
-                courseOperation.State = 0;
-                db.Entry(courseOperation).State = EntityState.Modified;
-                db.SaveChanges();
-                if (courseOperation.State == 0)
-                    return true;
-                return false;
+                try
+                {
+                    CourseOperation courseOperation = db.CourseOperations.Find(id);
+                    courseOperation.State = 0;
+                    db.Entry(courseOperation).State = EntityState.Modified;
+                    db.SaveChanges();
+                    if (courseOperation.State == 0)
+                        return true;
+                    return false;
+                }
+                catch
+                {
+                    return false;
+                }
             }
         }
         public static List<CourseOperation> List(string select, bool IsTeacher)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                int pageSize = 5;
-                int page = 0;
-                IQueryable<CourseOperation> Course;
-                if (IsTeacher)
+                try
                 {
-                    var user = Extensions.GetCurrentUser();
-                    if (select == null | select == "")
-                    { Course = (from a in db.CourseOperations where a.State != 0 && a.Creator == user orderby a.Name select a).AsQueryable(); }
-                    else
+                    int pageSize = 5;
+                    int page = 0;
+                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.State != 0);
+                    if (IsTeacher)
                     {
-                        Course = (from a in db.CourseOperations
-                                  where a.State != 0 && a.Creator == user && a.Name == @select
-                                  orderby a.Name
-                                  select a).AsQueryable();
-                    }
-                }
-                else
-                {
-                    if (select == null)
-                    {
-                        Course = (from a in db.CourseOperations
-                                  where a.State != 0 && a.StartTime > DateTime.Now
-                                  orderby a.Time
-                                  select a).AsQueryable();
+                        var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                        if (select == null | select == "")
+                        {
+                            Course = (from a in db.CourseOperations where a.Creator.Id == user.Id orderby a.Name select a).AsQueryable();
+                        }
+                        else
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.Creator.Id == user.Id && a.Name == @select
+                                      orderby a.Name
+                                      select a).AsQueryable();
+                        }
                     }
                     else
                     {
-                        Course = (from a in db.CourseOperations
-                                  where a.State != 0 && a.Name == @select && a.StartTime > DateTime.Now
-                                  orderby a.Time
-                                  select a).AsQueryable();
+                        if (select == null)
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.StartTime > DateTime.Now
+                                      orderby a.Time
+                                      select a).AsQueryable();
+                        }
+                        else
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.Name == @select && a.StartTime > DateTime.Now
+                                      orderby a.Time
+                                      select a).AsQueryable();
+                        }
                     }
+                    var paginatedNews = new ListPage<CourseOperation>(Course, page, pageSize);
+                    return paginatedNews;
                 }
-                var paginatedNews = new ListPage<CourseOperation>(Course, page, pageSize);
-                return paginatedNews;
+                catch
+                {
+                    return db.CourseOperations.ToList();
+                }
             }
         }
-    }
-    public enum state
-    {
-        已被删除 = 0,
-        可选 = 1,
-        正在进行 = 2,
-        已结束 = 3,
     }
     public class CourseRecord : Remark
     {
         public CourseOperation CourseOperation { get; set; }
-        public static bool Remark(CourseRecord courseRecord)
+        public static bool Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] CourseRecord courseRecord)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                if (courseRecord.RemarkRate <= 5 && courseRecord.RemarkRate >= 1 && courseRecord.RemarkContent != "未评价")
+                try
                 {
-                    courseRecord.CourseOperation = db.CourseOperations.First(t => t.Creator == db.Users.First(u => u.UserName == System.Web.HttpContext.Current.User.Identity.Name));
-                    courseRecord.Time = DateTime.Now;
-                    db.Entry(courseRecord).State = EntityState.Modified;
-                    db.SaveChanges();
-                    if (courseRecord.RemarkContent != "未评价" && courseRecord.RemarkRate != 0)
+                    if (courseRecord.RemarkRate > 0 && courseRecord.RemarkRate <= 5)
+                    {
+                        User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                        courseRecord.CourseOperation = db.CourseOperations.First(t => t.Creator == user);
+                        courseRecord.Time = DateTime.Now;
+                        db.Entry(courseRecord).State = EntityState.Modified;
+                        db.SaveChanges();
                         return true;
+                    }
+                    return false;
                 }
-                return false;
+                catch
+                {
+                    return false;
+                }
             }
         }
         public static bool Apply(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                var CourseOperation = db.CourseOperations.Find(Id);
-                if (CourseOperation.Count < CourseOperation.Limit )// && DateTime.Now < CourseOperation.StartTime)
+                try
                 {
+                    var CourseOperation = db.CourseOperations.Find(Id);
                     var courseRecord = new CourseRecord
                     {
                         Id = Guid.NewGuid(),
                         CourseOperation = CourseOperation,
                         ActionTime = DateTime.Now,
-                        Receiver = Extensions.GetCurrentUser(),
+                        Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
                         RemarkContent = "未评价",
                         RemarkRate = 0,
-                        Time = new DateTime(1000, 1, 1, 0, 0, 0)
+                        Time = new DateTime(2000, 1, 1, 0, 0, 0)
                     };
                     CourseOperation.Count++;
-                    CourseOperation.Students.Add(Extensions.GetCurrentUser());
-                    db.Entry(CourseOperation).State = EntityState.Modified;
                     db.CourseRecords.Add(courseRecord);
                     db.SaveChanges();
                     return true;
                 }
-                return false;      //人数已满显示错误信息。
+                catch (Exception e)
+                {
+                    return false;
+                }
             }
         }
         public static bool Quit(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                var CourseOperation = db.CourseOperations.Find(Id);
-                if (DateTime.Now < CourseOperation.StartTime)
+                try
                 {
-                    var courseRecord = db.CourseRecords.First(u => u.Receiver == Extensions.GetCurrentUser() && u.CourseOperation == CourseOperation);
+                    var CourseOperation = db.CourseOperations.Find(Id);
+                    var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    var courseRecord = (from a in db.CourseRecords where a.Receiver.Id==user.Id && a.CourseOperation.Id == CourseOperation.Id select a).First();
                     CourseOperation.Count--;
-                    CourseOperation.Students.Remove(Extensions.GetCurrentUser());
-                    db.Entry(CourseOperation).State = EntityState.Modified;
+                    if (CourseOperation.Students != null)
+                    {
+                        if(CourseOperation.Students.Contains(user))
+                            CourseOperation.Students.Remove(user);
+                    }
                     db.CourseRecords.Remove(courseRecord);
                     db.SaveChanges();
                     return true;
                 }
-                return false;      //超时无法退选
+                catch
+                {
+                    return false;
+                }
             }
         }
+    }
+    public class Courses
+    {
+        public CourseOperation courses { get; set; }
     }
 }

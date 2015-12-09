@@ -1,21 +1,23 @@
-﻿@model Web.Models.ActivityRecord
+﻿@model Web.Models.CourseRecord
 
 @{
-    ViewBag.Title = "Create1";
+    ViewBag.Title = "Remark";
 }
 
-<h2>Create1</h2>
-
+<h2>Remark</h2>
 <div>@ViewData["ErrorInfo"]</div>
-@using (Html.BeginForm()) 
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ActivityRecord</h4>
+        <h4>CourseRecord</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.ActionTime)
+        @Html.HiddenFor(model => model.Time)
 
         <div class="form-group">
             @Html.LabelFor(model => model.RemarkContent, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -35,14 +37,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "StudentList")
 </div>
 
 @section Scripts {

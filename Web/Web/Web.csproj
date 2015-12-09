@@ -308,6 +308,7 @@
     <Content Include="img\subtle-grunge-texture-02.jpg" />
     <Content Include="img\tile\ribbon-2x.png" />
     <Content Include="img\tile\ribbon.png" />
+    <Content Include="img\wg_burned_and_scratched8.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\flat-ui.js" />
@@ -345,7 +346,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -394,10 +394,12 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Manage\UserProfile.cshtml" />
     <Content Include="Views\Manage\UserIdentity.cshtml" />
-    <Content Include="Views\Manage\Project.cshtml" />
-    <Content Include="Views\Manage\ProjectProfile.cshtml" />
-    <Content Include="Views\Manage\TeamApply.cshtml" />
-    <Content Include="Views\Manage\TeamRecruit.cshtml" />
+    <Content Include="Views\Activity\Details.cshtml" />
+    <Content Include="Views\Activity\Index.cshtml" />
+    <Content Include="Views\Course\Details.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

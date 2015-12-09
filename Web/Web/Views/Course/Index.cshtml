@@ -7,11 +7,17 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create", "Create")
+    @Html.ActionLink("Create New", "Create")
+
+    <div>
+        @TempData["ErrorInfo"]
+    </div>
 </p>
-<div>@ViewData["ErrorInfo"]</div>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Count)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Limit)
         </th>
@@ -39,6 +45,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.Count)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Limit)
         </td>
         <td>
@@ -60,9 +69,9 @@
             @Html.DisplayFor(modelItem => item.Content)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
-            @Html.ActionLink("Details", "StudentList", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Apply", "Apply", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Quit", "Quit", new { id=item.Id })
         </td>
     </tr>
 }

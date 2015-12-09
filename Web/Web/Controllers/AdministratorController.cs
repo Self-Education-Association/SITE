@@ -17,7 +17,7 @@ namespace Web.Controllers
         // GET: Administrator
         public ActionResult Index()
         {
-            return View();
+            return View(new ListPage<Article>(db.Articles, 0, 5));
         }
 
         public ActionResult AdminNotice()
