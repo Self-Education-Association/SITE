@@ -1,24 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Web.Models;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class ActivityController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
 
-        public ActionResult List(string select)
+        public ActionResult Index(string select)
         {
             return View(ActivityOperation.List(select, false));
         }
-        
+
         public ActionResult Details(Guid? id)
         {
             if (id == null)
@@ -30,41 +29,61 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            var model = new ActivityDetailsViewModel
-            {
-                Name = ActivityOperation.Name,
-                Creator = ActivityOperation.Creator,
-                Content=ActivityOperation.Content,
-                Count=ActivityOperation.Count,
-                EndTime=ActivityOperation.EndTime,
-                Limit=ActivityOperation.Limit,
-                StartTime=ActivityOperation.StartTime
-            };
-            return View(model);
+            return View(ActivityOperation);
         }
 
         public ActionResult Apply(Guid Id)
         {
             if (ModelState.IsValid)
             {
+                var ActivityOperation = db.ActivityOperations.Find(Id);
+                var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
+                var Activityrecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
+                if (Activityrecord != null)
+                {
+                        TempData["ErrorInfo"] = "您已选过该活动！";
+                        return RedirectToAction("Index");
+                }
+                if (ActivityOperation.Count >= ActivityOperation.Limit)
+                {
+                    TempData["ErrorInfo"] = "该活动已满！";
+                    return RedirectToAction("Index");
+                }
+                if (DateTime.Now > ActivityOperation.StartTime)
+                {
+                    TempData["ErrorInfo"] = "该活动现在不可预约！";
+                    return RedirectToAction("Index");
+                }
                 if (ActivityRecord.Apply(Id))
-                    return RedirectToAction("List");
-                ViewData["ErrorInfo"] = "你不符合预约要求！";
-                return View(Details(Id));
+                    return RedirectToAction("Index"); ;
+                TempData["ErrorInfo"] = "你不符合预约要求！";
             }
-            return View(Details(Id));
+            return RedirectToAction("Index");
         }
         public ActionResult Quit(Guid Id)
         {
             if (ModelState.IsValid)
             {
+                var ActivityOperation = db.ActivityOperations.Find(Id);
+                var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
+                var Activityrecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
+                if (Activityrecord == null)
+                {
+                        TempData["ErrorInfo"] = "您未选过该活动！";
+                        return RedirectToAction("Index");
+                }
+                if (DateTime.Now > ActivityOperation.StartTime)
+                {
+                    TempData["ErrorInfo"] = "现在不是可退选的时间！";
+                    return RedirectToAction("Index");
+                }
                 if (ActivityRecord.Quit(Id))
-                    return RedirectToAction("List");
-                ViewData["ErrorInfo"] = "无法退选！";
-                return View(Details(Id));
+                    return RedirectToAction("Index");
+                TempData["ErrorInfo"] = "无法退选！";
             }
-            return View(Details(Id));
+            return RedirectToAction("Index");
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

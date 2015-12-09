@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -9,12 +7,13 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class TutorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
 
         //作为tutor自己的课程列表，在使用时若无需检索请输入参数为null或"";
-        public ActionResult CourseList()
+        public ActionResult Index()
         {
             return View(CourseOperation.List("", true));
         }
@@ -31,7 +30,7 @@ namespace Web.Controllers
             {
                 //创建成功返回至列表菜单
                 if (CourseOperation.Create(courseOperation))
-                    return RedirectToAction("CourseList");
+                    return RedirectToAction("Index");
             }
             ViewData["ErrorInfo"] = "错误：无法创建课程，不符合创建课程要求";
             return View(courseOperation);
@@ -72,7 +71,7 @@ namespace Web.Controllers
                             }
                         }
                     }
-                    return RedirectToAction("CourseList");
+                    return RedirectToAction("Index");
                 }
                 ViewData["ErrorInfo"] = "无法修改,可能的问题：降低了人数上限，无法连接到服务器，修改后的内容超出规定";
                 return View();
@@ -103,7 +102,7 @@ namespace Web.Controllers
                 ViewData["ErrorInfo"] = "无法删除";
                 return View();
             }
-            return RedirectToAction("CourseList");
+            return RedirectToAction("Index");
         }
         public ActionResult Remark(Guid? id)
         {
@@ -122,8 +121,20 @@ namespace Web.Controllers
                 return View(courseRecord);
             }
             if (course != null)
-            { return RedirectToAction("StudentList", course.Id); }
-            return RedirectToAction("StudentList");
+            {
+                if (DateTime.Now < course.EndTime)
+                {
+                    if (course.Students != null)
+                        return RedirectToAction("StudentList", course.Id);
+                }
+                TempData["ErrorInfo"] = "还未到允许评论的时间！";
+            }
+            else
+            {
+                TempData["ErrorInfo"] = "该课程没有成员！";
+            }
+            return RedirectToAction("Index");
+            //return RedirectToAction("StudentList");
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -144,16 +155,16 @@ namespace Web.Controllers
                 return View(db.CourseRecords.ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
             //if (user == null)
-            //    return View("~/Account/Login");
+            //    return View("Login");
             if (course == null)
             {
-                ViewData["ErrorInfo"] = "该课程不存在！";
-                return RedirectToAction("CourseList");
+                TempData["ErrorInfo"] = "该课程不存在！";
+                return RedirectToAction("Index");
             }
             if (course.Creator != user)
             {
-                ViewData["ErrorInfo"] = "你没有权限对该课程进行评价！";
-                return View("CourseList");
+                TempData["ErrorInfo"] = "你没有权限对该课程进行评价！";
+                return View("Index");
             }
             IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id==course.Id select a ).Distinct();
             if (studentList.FirstOrDefault() == null)
@@ -176,7 +187,7 @@ namespace Web.Controllers
                 courseRecord.Id = Guid.NewGuid();
                 db.CourseRecords.Add(courseRecord);
                 db.SaveChanges();
-                return RedirectToAction("CourseList");
+                return RedirectToAction("Index");
             }
             return View(courseRecord);
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -10,11 +11,12 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    //[Authorize]
     public class CourseController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
 
-        public ActionResult List(string select)
+        public ActionResult Index(string select)
         {
             return View(CourseOperation.List(select, false));
         }
@@ -30,42 +32,66 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            var model = new CourseDetailsViewModel
-            {
-                Name = courseOperation.Name,
-                Creator = courseOperation.Creator,
-                Content=courseOperation.Content,
-                Count=courseOperation.Count,
-                EndTime=courseOperation.EndTime,
-                Limit=courseOperation.Limit,
-                Location=courseOperation.Location,
-                StartTime=courseOperation.StartTime,
-                Status=courseOperation.Status,
-            };
-            return View(model);
+            return View(courseOperation);
         }
         
         public ActionResult Apply(Guid Id)
         {
             if (ModelState.IsValid)
             {
-                if(CourseRecord.Apply(Id))
-                return RedirectToAction("List");
-                ViewData["ErrorInfo"] = "你不符合预约要求！";
-                return View(Details(Id));
+                var CourseOperation = db.CourseOperations.Find(Id);
+                if (CourseOperation.Students != null)
+                {
+                    if (CourseOperation.Students.Contains(db.Users.Find(HttpContext.User.Identity.GetUserId())))
+                    {
+                        TempData["ErrorInfo"] = "您已选过该课程！";
+                        return RedirectToAction("Index");
+                    }
+                }
+                if (CourseOperation.Count >= CourseOperation.Limit)
+                {
+                    TempData["ErrorInfo"] = "该课程已满！";
+                    return RedirectToAction("Index");
+                }
+                if ( DateTime.Now > CourseOperation.StartTime)
+                {
+                    TempData["ErrorInfo"] = "该课程现在不可预约！";
+                    return RedirectToAction("Index");
+                }
+                if (CourseRecord.Apply(Id))
+                    return RedirectToAction("Index");;
+                TempData["ErrorInfo"] = "你不符合预约要求！";
             }
-            return View(Details(Id));
+            return RedirectToAction("Index");
         }
         public ActionResult Quit(Guid Id)
         {
             if (ModelState.IsValid)
             {
-                if(CourseRecord.Quit(Id))
-                return RedirectToAction("List");
-                ViewData["ErrorInfo"] = "无法退选！";
-                return View(Details(Id));
+                var CourseOperation = db.CourseOperations.Find(Id);
+                if (CourseOperation.Students == null)
+                {
+                        TempData["ErrorInfo"] = "您未选过该课程！";
+                        return RedirectToAction("Index");
+                }
+                if (CourseOperation.Students != null)
+                {
+                    if (!CourseOperation.Students.Contains(db.Users.Find(HttpContext.User.Identity.GetUserId())))
+                    {
+                        TempData["ErrorInfo"] = "您未选过该课程！";
+                        return RedirectToAction("Index");
+                    }
+                }
+                if (DateTime.Now > CourseOperation.StartTime)
+                {
+                    TempData["ErrorInfo"] = "现在不是可退选的时间！";
+                    return RedirectToAction("Index");
+                }
+                    if (CourseRecord.Quit(Id))
+                return RedirectToAction("Index");
+                TempData["ErrorInfo"] = "无法退选！";
             }
-            return View(Details(Id));
+            return RedirectToAction("Index"); 
         }
 
         protected override void Dispose(bool disposing)
