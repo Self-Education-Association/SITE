@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Web.Models.CourseOperation>
+﻿@model IEnumerable<Web.Models.RoomOperation>
 
 @{
     ViewBag.Title = "Index";
@@ -7,22 +7,22 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create", "Create")
+    @Html.ActionLink("Create New", "Create")
+
+    <div>
+        @TempData["ErrorInfo"]
+    </div>
 </p>
-<div>@ViewData["ErrorInfo"]</div>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Limit)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Location)
+            @Html.DisplayNameFor(model => model.Usable)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.StartTime)
@@ -39,16 +39,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Limit)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Location)
+            @Html.DisplayFor(modelItem => item.Usable)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.StartTime)
@@ -60,9 +57,9 @@
             @Html.DisplayFor(modelItem => item.Content)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Update", new { id=item.Id }) |
-            @Html.ActionLink("Details", "StudentList", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Apply", "Apply", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Quit", "Quit", new { id = item.Id })
         </td>
     </tr>
 }
