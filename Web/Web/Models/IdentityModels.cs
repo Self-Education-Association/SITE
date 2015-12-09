@@ -8,6 +8,7 @@ using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Web.Models
 {
@@ -54,15 +55,17 @@ namespace Web.Models
     /// </summary>
     public class IdentityRecord:IListPage
     {
-        public string Id { get; set; }//身份证号或学号
+        public Guid Id { get; set; }
 
-        public User User { get; set; }//用户
+        public string IdNumber { get; set; }//身份证号或学号
+
+        public virtual User User { get; set; }//用户
 
         public string Name { get; set; } //真实姓名
 
-        public Material FrontIdCard { get; set; }//身份证正面或学生证专业信息页
+        public virtual Material FrontIdCard { get; set; }//身份证正面或学生证专业信息页
 
-        public Material BackIdCard { get; set; }//身份证反面或学生证注册报到页
+        public virtual Material BackIdCard { get; set; }//身份证反面或学生证注册报到页
 
         public bool InUIBE { get; set; }//是否为校友
 
@@ -152,10 +155,12 @@ namespace Web.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Administrator);
+            modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
             //modelBuilder.Entity<User>().HasOptional(u => u.TeamRecord).WithRequired(t => t.Receiver);
             modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<User>().HasOptional(u => u.IdentityRecord).WithRequired(i => i.User);
+            modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
+            modelBuilder.Entity<Team>().HasOptional(t => t.Company);
             base.OnModelCreating(modelBuilder);
         }
 

@@ -11,27 +11,8 @@ namespace Web.Models
     {
         public Guid Id { get; set; }
 
-        public virtual User Administrator { get; set; }
+        public virtual User Admin { get; set; }
 
-        public ProjectInformation Information { get; set; }
-
-        public DateTime Time { get; set; } 
-
-        public virtual Team Team { get; set; }
-
-        public Project (User user,ProjectInformation info)
-        {
-            Id = Guid.NewGuid();
-            Administrator = user;
-            Information = info;
-            Time = DateTime.Now;
-            Team = new Team(user,info.Name);
-        }
-    }
-
-    [ComplexType]
-    public class ProjectInformation
-    {
         [Display(Name = "项目名称")]
         public string Name { get; set; }
 
@@ -70,6 +51,23 @@ namespace Web.Models
 
         [Display(Name = "项目信息是否公开")]
         public bool Privacy { get; set; }
+
+        [Display(Name = "管理员批复")]
+        public string Note { get; set; }
+
+        public DateTime Time { get; set; }
+
+        public ProjectStatus Status { get; set; }
+
+        public virtual Team Team { get; set; }
+
+        public void NewProject(BaseDbContext db)
+        {
+            Id = Guid.NewGuid();
+            Admin = db.Users.Find(Extensions.GetCurrentUser().Id);
+            Time = DateTime.Now;
+            Status = ProjectStatus.ToApprove;
+        }
     }
 
     public class Team:IListPage
@@ -78,7 +76,7 @@ namespace Web.Models
 
         public string Name { get; set; }
 
-        public User Administrator { get; set; }
+        public User Admin { get; set; }
 
         public DateTime Time { get; set; }
 
@@ -89,15 +87,18 @@ namespace Web.Models
         public bool Searchable { get; set; }
 
         public virtual Company Company { get; set; }
+        
+        public virtual IQueryable<TeamRecord> Member { get; set; }
 
-        public Team(User user,string name)
+        public void NewTeam(ref Project project)
         {
             Id = Guid.NewGuid();
-            Name = name;
-            Administrator = user;
+            Name = project.Name;
+            Admin = project.Admin;
             Time = DateTime.Now;
-            Introduction = "";
-            Announcement = "";
+            Introduction = "此处的信息将作为团队的对外介绍。";
+            Announcement = "此处的信息将作为团队的内部公告";
+            project.Team = this;
         }
     }
 
@@ -129,30 +130,13 @@ namespace Web.Models
 
     public class Company:IListPage
     {
+        [Display(Name ="公司申请编号")]
         public Guid Id { get; set; }
 
-        public User Administrator { get; set; }
+        [Display(Name = "公司创始人")]
+        public User Admin { get; set; }
 
-        public CompanyInformation Information { get; set; }
-
-        public DateTime Time { get; set; }
-
-        public CompanyStatus Status { get; set; }
-
-        public Company(User user,CompanyInformation info)
-        {
-            Id = Guid.NewGuid();
-            Administrator = user;
-            Information = info;
-            Time = DateTime.Now;
-            Status = CompanyStatus.ToApprove;
-        }
-    }
-
-    [ComplexType]
-    public class CompanyInformation
-    {
-        [Display(Name="公司名称")]
+        [Display(Name = "公司名称")]
         public string Name { get; set; }
 
         [Display(Name = "资金来源")]
@@ -191,27 +175,46 @@ namespace Web.Models
         [Display(Name = "投资计划")]
         public string Investment { get; set; }
 
-        [Display(Name = "提交时间")]
+        [Display(Name = "管理员批复")]
+        public string Note { get; set; }
+
+        [Display(Name = "申请时间")]
         public DateTime Time { get; set; }
 
-        [Display(Name = "公司审核状态")]
-        public CompanyStatus State { get; set; }
+        [Display(Name = "申请状态")]
+        public CompanyStatus Status { get; set; }
+
+        public void NewCompany(ref BaseDbContext db)
+        {
+            Id = Guid.NewGuid();
+            Admin = db.Users.Find(Extensions.GetCurrentUser().Id);
+            Time = DateTime.Now;
+            Status = CompanyStatus.ToApprove;
+        }
     }
 
-    public enum CompanyStatus:int
+    public enum ProjectStatus
     {
-        None=0,
-        NotFinished =1,
-        ToApprove=2,
-        Approved=3
+        None,
+        Denied,
+        ToApprove,
+        Done
+    }
+
+    public enum CompanyStatus
+    {
+        None,
+        Denied,
+        ToApprove,
+        Done
     }
 
     public enum TeamMemberStatus:int
     {
         Normal=0,
         Admin=1,
-        Applied=2,
-        Recruited=3
+        Apply=2,
+        Recruit=3
     }
 
     public enum ProjectProgressType

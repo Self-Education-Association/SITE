@@ -36,22 +36,6 @@ namespace Web.Models
         public string ConfirmPassword { get; set; }
     }
 
-    public class UserProfileViewModel:Profile
-    {
-
-    }
-
-    public class UserIdentityViewModel:IdentityRecord
-    {
-        
-    }
-
-    public class ProjectViewModel:ProjectInformation
-    {
-        [Display(Name = "提交时间")]
-        public DateTime Time { get; set; }
-    }
-
     public class TeamProfileViewModel
     {
         [Display(Name="团队编号")]
@@ -77,9 +61,5 @@ namespace Web.Models
 
         [Display(Name = "公开团队招募")]
         public bool Searchable { get; set; }
-    }
-
-    public class CompanyViewModel:CompanyInformation
-    {
     }
 }

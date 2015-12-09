@@ -394,6 +394,10 @@
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Manage\UserProfile.cshtml" />
     <Content Include="Views\Manage\UserIdentity.cshtml" />
+    <Content Include="Views\Manage\Project.cshtml" />
+    <Content Include="Views\Manage\ProjectProfile.cshtml" />
+    <Content Include="Views\Manage\TeamApply.cshtml" />
+    <Content Include="Views\Manage\TeamRecruit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

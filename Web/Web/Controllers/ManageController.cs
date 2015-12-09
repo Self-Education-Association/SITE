@@ -12,6 +12,7 @@ using System.Net;
 
 namespace Web.Controllers
 {
+    [Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -169,14 +170,14 @@ namespace Web.Controllers
         {
             User user = UserManager.FindById(User.Identity.GetUserId());
             //UserProfileViewModel model = (UserProfileViewModel)user.Profile;
-            UserProfileViewModel model = new UserProfileViewModel();
+            Profile model = new Profile();
 
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserProfile(UserProfileViewModel model)
+        public ActionResult UserProfile(Profile model)
         {
             if (ModelState.IsValid)
             {
@@ -199,18 +200,18 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserIdentity(UserIdentityViewModel model)
+        public ActionResult UserIdentity(IdentityRecord model)
         {
             if (ModelState.IsValid)
             {
                 if (Request.Files.Count != 2)
                     return View();
-                var allowExtensions = new string[] { ".jpg", ".png", ".jpeg" };
-                foreach (HttpPostedFileBase f in Request.Files)
+                /*var allowExtensions = new string[] { ".jpg", ".png", ".jpeg" };
+                foreach ( string f in Request.Files)
                 {
-                    if (allowExtensions.Contains(Path.GetExtension(f.FileName)))
+                    if (!allowExtensions.Contains(Path.GetExtension(Request.Files.Get(f).FileName)))
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
+                }*/
                 //根据日期生成服务器端文件名
                 string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(Request.Files[0].FileName);
                 //生成服务器端绝对路径
@@ -225,6 +226,12 @@ namespace Web.Controllers
                 //执行上传
                 Request.Files[1].SaveAs(absolutFileName);
                 model.BackIdCard = new Material(uploadFileName, "", MaterialType.Identity);
+                model.Status = IdentityStatus.ToApprove;
+                model.Time = DateTime.Now;
+                model.Id = Guid.NewGuid();
+                model.User = db.Users.Find(User.Identity.GetUserId());
+                db.IdentityRecords.Add(model);
+                db.SaveChanges();
                 return RedirectToAction("Index", new { Message = ManageMessageId.UserIdentitySuccess });
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
@@ -234,20 +241,39 @@ namespace Web.Controllers
         #region 项目、团队与公司模块
         public ActionResult Project()
         {
+            User user = db.Users.Find(Extensions.GetUserId());
+            if (user.TeamRecord != null && user.TeamRecord.Status != TeamMemberStatus.Admin)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
+            if (user.Project == null)
+                return View(new Project());
+            if (user.Project.Status != ProjectStatus.Done && user.Project.Status != ProjectStatus.ToApprove)
+                return View(user.Project);
 
-            return View(new ProjectViewModel());
+            return RedirectToAction("ProjectProfile");
+        }
+
+        public ActionResult ProjectProfile()
+        {
+            User user = db.Users.Find(Extensions.GetUserId());
+            if (user.Project.Status != ProjectStatus.Done && user.Project.Status != ProjectStatus.ToApprove)
+                return RedirectToAction("Project");
+
+            return View(user.Project);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Project(ProjectViewModel model)
+        public ActionResult Project(Project model)
         {
             if (ModelState.IsValid)
             {
-                if (db.Projects.Any(p => p.Administrator == Extensions.GetCurrentUser()))
-                    db.Projects.First(p => p.Administrator == Extensions.GetCurrentUser()).Information = model;
+                if (Extensions.GetCurrentUser().Project != null)
+                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 else
-                    db.Projects.Add(new Project(Extensions.GetCurrentUser(), model));
+                {
+                    model.NewProject(db);
+                    db.Projects.Add(model);
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
             }
@@ -263,6 +289,7 @@ namespace Web.Controllers
             return View(list);
         }
 
+        [ActionName("DoTeamApply")]
         public ActionResult TeamApply(Guid teamId)
         {
             if (Extensions.GetCurrentUser().TeamRecord != null)
@@ -270,7 +297,8 @@ namespace Web.Controllers
             Team team = db.Teams.Find(teamId);
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Applied));
+            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply));
+            db.Messages.Add(new Message(team.Admin, MessageType.System, MessageTemplate.TeamApply));
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
         }
@@ -284,34 +312,46 @@ namespace Web.Controllers
             return View(list);
         }
 
+        [ActionName("DoTeamRecruit")]
         public ActionResult TeamRecruit(string userId)
         {
             if (Extensions.GetCurrentUser().TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
-            Team team = db.Teams.First(u => u.Administrator.Id == Extensions.GetCurrentUser().Id);
+            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetCurrentUser().Id);
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Recruited, user));
+            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Recruit, user));
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });
         }
 
         public ActionResult TeamMember(int page = 0)
         {
-            Team team = Extensions.GetCurrentUser().TeamRecord.Team;
+            Team team = db.Users.Find(Extensions.GetUserId()).TeamRecord.Team;
             if (team == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
-            var list = new ListPage<TeamRecord>(db.TeamRecords.Where(u => u.Team == team), page, pageSize);
+            var list = new ListPage<TeamRecord>(team.Member, page, pageSize);
             return View(list);
         }
 
         public ActionResult TeamMemberDelete(string userId)
         {
-            if (Extensions.GetCurrentUser().TeamRecord.Status != TeamMemberStatus.Admin)
+            User user = db.Users.Find(userId);
+            if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            db.Entry(db.Users.Find(userId).TeamRecord).State = System.Data.Entity.EntityState.Deleted;
+            db.Entry(user.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
+        }
+
+        public ActionResult TeamMemberQuit()
+        {
+            User user = db.Users.Find(Extensions.GetUserId());
+            if (user.TeamRecord.Status == TeamMemberStatus.Admin)
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            db.Entry(user.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
         }
@@ -326,7 +366,7 @@ namespace Web.Controllers
             {
                 Id = team.Id,
                 Name = team.Name,
-                Administrator = team.Administrator.DisplayName,
+                Administrator = team.Admin.DisplayName,
                 Time = team.Time,
                 Introduction = team.Introduction,
                 Announcement = team.Announcement
@@ -361,23 +401,23 @@ namespace Web.Controllers
             if (user.TeamRecord.Team.Company != null)
             {
                 ViewBag.Status = user.TeamRecord.Team.Company.Status;
-                return View((CompanyViewModel)user.TeamRecord.Team.Company.Information);
+                return View(user.TeamRecord.Team.Company);
             }
 
             ViewBag.Status = CompanyStatus.None;
-            return View(new CompanyViewModel());
+            return View(new Company());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Company(CompanyViewModel model)
+        public ActionResult Company(Company model)
         {
             User user = Extensions.GetCurrentUser();
             if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (ModelState.IsValid)
             {
-                db.Teams.Find(user.TeamRecord.Team.Id).Company.Information = model;
+                db.Teams.Find(user.TeamRecord.Team.Id).Company = model;
                 db.SaveChanges();
                 return View();
             }

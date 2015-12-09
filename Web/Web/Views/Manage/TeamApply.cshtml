@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Web.Models.Team>
+
+@{
+    ViewBag.Title = "TeamApply";
+}
+
+<h2>TeamApply</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Introduction)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Introduction)
+            </td>
+            <td>
+                @Html.ActionLink("申请", "DoTeamApply", new { teamId = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

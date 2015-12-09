@@ -79,8 +79,12 @@ namespace Web.Models
             switch (template)
             {
                 case MessageTemplate.TeamFailure:
-                    Title = "";
-                    Content = "";
+                    Title = "项目申请被驳回";
+                    Content = "很遗憾，你的项目申请被管理员驳回，请返回项目申请页面查看，并对照管理员批复予以修改。";
+                    break;
+                case MessageTemplate.TeamApply:
+                    Title = "新成员申请加入团队";
+                    Content = "有新成员申请加入你的团队，请及时处理。";
                     break;
                 default:
                     Title = "";
@@ -117,7 +121,13 @@ namespace Web.Models
     public enum MessageTemplate
     {
         TeamFailure,
-        TeamSuccess
+        TeamSuccess,
+        TeamApply,
+        TeamRecruit,
+        ProjectFailure,
+        ProjectSuccess,
+        CompanyFailure,
+        CompanySuccess,
     }
 
     public enum ArticleStatus

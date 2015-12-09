@@ -139,7 +139,7 @@ namespace Web.Controllers
         #endregion
 
         #region 审核认证记录模块
-        public ActionResult IdentityRecords(int page)
+        public ActionResult IdentityRecords(int page=0)
         {
             var model = new ListPage<IdentityRecord>(db.IdentityRecords.Where(i => i.Status == IdentityStatus.ToApprove), page, pageSize);
 
@@ -176,6 +176,7 @@ namespace Web.Controllers
                 model.Status = IdentityStatus.Denied;
                 model.User.Identitied = false;
             }
+            db.SaveChanges();
 
             return RedirectToAction("IdentityRecords");
         }

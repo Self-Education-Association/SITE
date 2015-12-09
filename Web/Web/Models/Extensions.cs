@@ -36,6 +36,11 @@ namespace Web.Models
                 return db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
             }
         }
+
+        public static string GetUserId()
+        {
+            return HttpContext.Current.User.Identity.GetUserId();
+        }
     }
 
     /// <summary>
@@ -44,8 +49,6 @@ namespace Web.Models
     /// <typeparam name="T">泛型参数T,必须实现IListPage接口</typeparam>
     public class ListPage<T> : List<T> where T :class,IListPage
     {
-        private int page;
-
         /// <summary>
         /// 页面索引值
         /// </summary>

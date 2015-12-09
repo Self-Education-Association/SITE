@@ -1,0 +1,146 @@
+﻿@model Web.Models.Project
+
+@{
+    ViewBag.Title = "ProjectProfile";
+}
+
+<h2>ProjectProfile</h2>
+
+<div>
+    <h4>Project</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Industry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Industry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Introduction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Introduction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Feature)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Feature)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tech)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tech)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Progress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Progress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Desire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetCustomer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetCustomer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectBudget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectBudget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Webpage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Webpage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Privacy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Privacy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
