@@ -62,9 +62,10 @@
     </div>
 
     @RenderBody()
- <div class="col-md-12" style="margin-bottom: 0; margin-top: 0;background-color: #242B4B;">
-            <p><span style="text-align:left;float:left;color:white;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span></p>
- </div>
+    <div class="clearfix"></div>
+    <div>
+      <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

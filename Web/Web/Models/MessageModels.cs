@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Web.Models
 {
-    public class Article
+    public class Article:IListPage
     {
         public Guid ID { get; set; }
 
