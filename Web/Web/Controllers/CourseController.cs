@@ -15,10 +15,7 @@ namespace Web.Controllers
         {
             return View(CourseOperation.List(select, false));
         }
-        public ActionResult Index(string select)
-        {
-            return View(CourseOperation.List(select, false));
-        }
+
         public ActionResult Details(Guid? id)
         {
             if (id == null)
