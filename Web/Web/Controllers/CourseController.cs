@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Web.Models;
 
@@ -20,7 +15,10 @@ namespace Web.Controllers
         {
             return View(CourseOperation.List(select, false));
         }
-        
+        public ActionResult Index(string select)
+        {
+            return View(CourseOperation.List(select, false));
+        }
         public ActionResult Details(Guid? id)
         {
             if (id == null)

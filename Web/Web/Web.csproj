@@ -181,11 +181,9 @@
     <Compile Include="Controllers\ActivityController.cs" />
     <Compile Include="Controllers\AdministratorController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
-    <Compile Include="Controllers\CourseRecordsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\TutorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -376,7 +374,7 @@
     <Content Include="Views\Administrator\MaterialEdit.cshtml" />
     <Content Include="Views\Administrator\MaterialDelete.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Tutor\CourseList.cshtml" />
+    <Content Include="Views\Tutor\Index.cshtml" />
     <Content Include="Views\Tutor\Create.cshtml" />
     <Content Include="Views\Tutor\Create1.cshtml" />
     <Content Include="Views\Tutor\StudentList.cshtml" />
@@ -406,6 +404,8 @@
     <Content Include="Views\Manage\TeamApply.cshtml" />
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Tutor\Calendar.cshtml" />
+    <Content Include="Views\Manage\TeamMember.cshtml" />
+    <Content Include="Views\Manage\TeamProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

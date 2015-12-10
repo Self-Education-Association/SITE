@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Web.Models.TeamRecord>
+
+@{
+    ViewBag.Title = "TeamMember";
+}
+
+<h2>TeamMember</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActionTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActionTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "TeamMemberDelete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
