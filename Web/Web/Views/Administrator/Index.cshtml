@@ -3,49 +3,68 @@
 @{
     ViewBag.Title = "Index";
 }
+<div class="col-md-2">
+    <div class="navbar navbar-collapse" style="margin:50px 50px">
+        <ul class="nav nav-pills nav-stacked navbar-nav" style="padding-left:0;padding-right:0;">
+            <li><a href="Index">公告管理</a></li>
+            <li><a href="IdentityRecords" style="padding:0 0;margin-left:">用户认证管理</a></li>            
+            <li class="dropdown">
+                <a href="Materials" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">资源管理</a>
+                <ul class="dropdown-menu">
+                    <li><a href="MaterialCreate">新建资源</a></li>
+                    <li><a href="MaterialDelete">删除资源</a></li>
+                    <li><a href="MaterialDetails">资源细节</a></li>
+                    <li><a href="MaterialEdit">资源编辑</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-10">
+    <h2>Index</h2>
 
-<h2>Index</h2>
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Content)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th></th>
+        </tr>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Content)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th></th>
-    </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+        }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
-
-</table>
+    </table>
+</div>
