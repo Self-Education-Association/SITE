@@ -3,59 +3,88 @@
 @{
     ViewBag.Title = "IdentityRecords";
 }
+<style>
+    .nav-pills > li > a {
+    color:white;
 
-<h2>IdentityRecords</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.User.DisplayName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.InUIBE)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsStudent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Status)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.User.DisplayName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.InUIBE)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsStudent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "IdentityRecordDetails", new { id=item.Id })
-        </td>
-    </tr>
 }
+</style>
+<div class="col-md-2">
+    <div class="navbar navbar-collapse" style="margin:50px 3%">
+        <ul class="nav nav-pills nav-stacked navbar-nav" style="padding-left:0px;padding-right:0;">
+            <li><a href="Index">公告管理</a></li>
+            <li><a href="IdentityRecords">用户认证管理</a></li>
+            <li class="dropdown">
+                <a href="Materials" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">资源管理</a>
+                <ul class="dropdown-menu">
+                    <li><a href="MaterialCreate" style="color:white;background-color:#34495E">新建资源</a></li>
+                    <li><a href="MaterialDelete" style="color:white;background-color:#34495E">删除资源</a></li>
+                    <li><a href="MaterialDetails" style="color:white;background-color:#34495E">资源细节</a></li>
+                    <li><a href="MaterialEdit" style="color:white;background-color:#34495E">资源编辑</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="col-md-10">
+    <h4>IdentityRecords</h4>
+    <br />
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.User.DisplayName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
 
-</table>
+                @Html.DisplayNameFor(model => model.InUIBE)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsStudent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InUIBE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsStudent)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Details", "IdentityRecordDetails", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
