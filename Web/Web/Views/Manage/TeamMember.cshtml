@@ -1,18 +1,21 @@
-﻿@model IEnumerable<Web.Models.CourseRecord>
+﻿@model IEnumerable<Web.Models.TeamRecord>
 
 @{
-    ViewBag.Title = "StudentList";
+    ViewBag.Title = "TeamMember";
 }
 
-<h2>StudentList</h2>
+<h2>TeamMember</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create1")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Receiver.DisplayName)
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActionTime)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RemarkContent)
@@ -29,7 +32,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ActionTime)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RemarkContent)
@@ -41,7 +47,9 @@
             @Html.DisplayFor(modelItem => item.Time)
         </td>
         <td>
-            @Html.ActionLink("Remark", "Remark", new { id=item.Id }) 
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "TeamMemberDelete", new { id=item.Id })
         </td>
     </tr>
 }

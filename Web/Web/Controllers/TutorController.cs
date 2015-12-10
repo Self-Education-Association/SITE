@@ -154,8 +154,6 @@ namespace Web.Controllers
             if(Id==null)
                 return View(db.CourseRecords.ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
-            //if (user == null)
-            //    return View("Login");
             if (course == null)
             {
                 TempData["ErrorInfo"] = "该课程不存在！";
@@ -200,7 +198,8 @@ namespace Web.Controllers
             {
                 Monthcourse[i - 1] = AllCourseInThisMonth.Where(a => a.StartTime.Day == i);
             }
-            return View(Monthcourse);
+            var b = Monthcourse.AsEnumerable();
+            return View(b);
         }
         protected override void Dispose(bool disposing)
         {
