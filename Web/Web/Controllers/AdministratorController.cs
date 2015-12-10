@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,17 +17,115 @@ namespace Web.Controllers
         private BaseDbContext db = new BaseDbContext();
         private int pageSize = 5;
 
-        // GET: Administrator
-        public ActionResult Index()
+        #region 用户管理容器
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
+        public ApplicationSignInManager SignInManager
         {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
+        #endregion
+
+        // GET: Administrator
+        public ActionResult Index(AdminOperationStatus? status)
+        {
+            ViewBag.StatusMessage =
+                status == AdminOperationStatus.Error ? "操作失败。"
+                : status == AdminOperationStatus.Success ? "操作成功。" : "";
+
             return View(new ListPage<Article>(db.Articles, 0, 5));
         }
 
-        public ActionResult AdminNotice()
+        #region 文章管理模块
+        public ActionResult ArticleCreate()
         {
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ArticleCreate(Article model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.NewArticle();
+                db.Articles.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+            }
+
+            return View();
+        }
+
+        public ActionResult ArticleEdit(Guid? Id)
+        {
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Article model = db.Articles.Find(Id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ArticleEdit(Article model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Articles.Attach(model);
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+            }
+
+            return View();
+        }
+
+        public ActionResult ArticleDeleteConfirm(Guid? Id)
+        {
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Article model = db.Articles.Find(Id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
+        }
+
+        public ActionResult ArticleDelete(Guid? Id)
+        {
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            Article model = db.Articles.Find(Id);
+            if (model == null)
+                return HttpNotFound();
+
+            db.Articles.Remove(model);
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+        }
+        #endregion
 
         #region 上传文件模块
         // GET: Materials
@@ -138,8 +239,75 @@ namespace Web.Controllers
         }
         #endregion
 
+        #region 用户管理模块
+        public ActionResult TutorCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async System.Threading.Tasks.Task<ActionResult> TutorCreate(RegisterViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = new User { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = model.Email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //为账户添加角色
+                    var roleName = "tutor";
+                    ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(new BaseDbContext()));
+
+                    //判断角色是否存在
+                    if (!roleManager.RoleExists(roleName))
+                    {
+                        //角色不存在则建立角色
+                        await roleManager.CreateAsync(new IdentityRole(roleName));
+                    }
+                    //将用户加入角色
+                    await UserManager.AddToRoleAsync(user.Id, roleName);
+
+                    // 有关如何启用帐户确认和密码重置的详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=320771
+                    // 发送包含此链接的电子邮件
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
+
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            return View();
+        }
+
+        public ActionResult UserEdit(string Id)
+        {
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            User model = db.Users.Find(Id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UserEdit(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Users.Attach(model);
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            return View();
+        }
+        #endregion
+
         #region 审核认证记录模块
-        public ActionResult IdentityRecords(int page=0)
+        public ActionResult IdentityRecords(int page = 0)
         {
             var model = new ListPage<IdentityRecord>(db.IdentityRecords.Where(i => i.Status == IdentityStatus.ToApprove), page, pageSize);
 
@@ -193,5 +361,11 @@ namespace Web.Controllers
             base.Dispose(disposing);
         }
         #endregion
+
+        public enum AdminOperationStatus
+        {
+            Success,
+            Error,
+        }
     }
 }

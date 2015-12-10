@@ -4,17 +4,24 @@ using System.Linq;
 
 namespace Web.Models
 {
-    public class Article:IListPage
+    public class Article : IListPage
     {
         public Guid ID { get; set; }
 
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         public string Content { get; set; }
 
         public ArticleStatus Status { get; set; }
 
         public DateTime Time { get; set; }
+
+        public void NewArticle()
+        {
+            ID = Guid.NewGuid();
+            Time = DateTime.Now;
+            Status = ArticleStatus.Enabled;
+        }
     }
 
     public class Message
@@ -35,10 +42,10 @@ namespace Web.Models
 
         public DateTime Time { get; set; }
 
-        public Message(string title,string content,User user,MessageType type)
+        public Message(string title, string content, User user, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetCurrentUser();
+            Publisher = Extensions.GetContextUser(db);
             Receiver = user;
             Title = title;
             Content = content;
@@ -47,10 +54,10 @@ namespace Web.Models
             Time = DateTime.Now;
         }
 
-        public Message(User user,MessageType type,MessageTemplate template)
+        public Message(User user, MessageType type, MessageTemplate template, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetCurrentUser();
+            Publisher = Extensions.GetContextUser(db);
             Receiver = user;
             Type = type;
             HaveRead = false;
@@ -68,10 +75,10 @@ namespace Web.Models
             }
         }
 
-        public Message(User user, MessageType type, MessageTemplate template,string personal)
+        public Message(User user, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetCurrentUser();
+            Publisher = Extensions.GetContextUser(db);
             Receiver = user;
             Type = type;
             HaveRead = false;

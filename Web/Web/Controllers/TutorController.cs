@@ -63,7 +63,7 @@ namespace Web.Controllers
                         {
                             string title = "课程修改通知";
                             string content = "您好，你选择的课程" + courseOperation.Name + "已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
-                            Message message = new Message(title, content, user, 0);
+                            Message message = new Message(title, content, user, 0,db);
                             if (!message.Publish())
                             {
                                 ViewData["ErrorInfo"] = "无法给学生发布修改信息";
@@ -150,7 +150,7 @@ namespace Web.Controllers
         }
         public ActionResult StudentList(Guid? Id)
         {
-            var user = Extensions.GetCurrentUser();
+            var user = Extensions.GetContextUser(db);
             if(Id==null)
                 return View(db.CourseRecords.ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
@@ -193,7 +193,7 @@ namespace Web.Controllers
         }
         public ActionResult Calendar()
         {
-            var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetCurrentUser() && a.StartTime.Month == DateTime.Now.Month);
+            var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
             int Monthdays = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
             var Monthcourse = new IQueryable<CourseOperation>[Monthdays];
             for (int i = 1; i == Monthdays; i++)

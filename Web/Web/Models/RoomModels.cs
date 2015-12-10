@@ -32,7 +32,7 @@ namespace Web.Models
                         return true;
                     return false;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -190,7 +190,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }

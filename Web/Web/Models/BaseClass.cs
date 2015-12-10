@@ -22,8 +22,10 @@ namespace Web.Models
         public Remark()
         {
             Id = Guid.NewGuid();
-            Receiver = Extensions.GetCurrentUser();
+            //此处需要重构构造函数@龚齐翔。
+            //Receiver = Extensions.GetCurrentUser(db);
             ActionTime = DateTime.Now;
+            throw new NotImplementedException();
         }
     }
 
