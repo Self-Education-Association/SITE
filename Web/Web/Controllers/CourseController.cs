@@ -11,7 +11,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class CourseController : Controller
     {
         private BaseDbContext db = new BaseDbContext();

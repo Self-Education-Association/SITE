@@ -399,6 +399,13 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\Room\Details.cshtml" />
     <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Tutor\Remark.cshtml" />
+    <Content Include="Views\Tutor\Delete.cshtml" />
+    <Content Include="Views\Manage\Project.cshtml" />
+    <Content Include="Views\Manage\ProjectProfile.cshtml" />
+    <Content Include="Views\Manage\TeamApply.cshtml" />
+    <Content Include="Views\Manage\TeamRecruit.cshtml" />
+    <Content Include="Views\Tutor\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
