@@ -60,5 +60,9 @@ namespace Web.Controllers
 
             return View(paginatedNews);
         }
+        public ActionResult Constructing()
+        {
+            return View();
+        }
     }
 }
