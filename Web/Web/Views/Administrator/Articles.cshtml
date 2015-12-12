@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Web.Models.Article>
+
+    <div class="col-md-10">
+        <h2>Index</h2>
+
+        <p>
+            @Html.ActionLink("创建文章", "ArticleCreate")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Content)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "ArticleEdit", new { id = item.ID }) | 
+                        @Html.ActionLink("Delete", "ArticleDeleteConfirm", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        </table>
+        @Html.ActionLink("回到管理主页", "Index")
+    </div>

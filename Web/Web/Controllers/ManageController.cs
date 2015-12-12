@@ -335,7 +335,6 @@ namespace Web.Controllers
             var list = new ListPage<TeamRecord>(team.Member, page, pageSize);
             return View(list);
         }
-
         public ActionResult TeamMemberDelete(string userId)
         {
             User user = db.Users.Find(userId);

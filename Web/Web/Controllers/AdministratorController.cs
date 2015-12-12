@@ -149,6 +149,11 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.StartTime > model.EndTime)
+                {
+                    ViewData["ErrorInfo"] = "活动开始时间必须在结束时间之前。";
+                    return View();
+                }
                 model.NewActivity(db);
                 db.ActivityOperations.Add(model);
                 db.SaveChanges();
