@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -33,18 +34,26 @@ namespace Web.Models
     {
         public Guid Id { get; set; }
 
+        [Required]
         public string Name { get; set; }
 
         public User Creator { get; set; }
 
         public DateTime Time { get; set; }
 
+        [Required]
+        [DayRange(0,60)]
         public DateTime StartTime { get; set; }
 
+        [Required]
+        [DayRange(0,60)]
         public DateTime EndTime { get; set; }
 
+        [Required]
         public string Content { get; set; }
 
-        public int State { get; set; }
+        public string HtmlContent { get; set; }
+
+        public int Enabled { get; set; }
     }
 }

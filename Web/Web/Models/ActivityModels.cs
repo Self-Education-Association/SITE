@@ -7,16 +7,20 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
     public class ActivityOperation:Operation
     {
+        [Required]
         public int Count { get; set; }
 
+        [Required]
         public int Limit { get; set; }
 
         public virtual ICollection<ActivityRecord> Records { get; set; }
+
         public static bool Create(ActivityOperation ActivityOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -26,7 +30,7 @@ namespace Web.Models
                     ActivityOperation.Id = Guid.NewGuid();
                     ActivityOperation.Time = DateTime.Now;
                     ActivityOperation.Count = 0;
-                    ActivityOperation.State = 1;
+                    ActivityOperation.Enabled = 1;
                     ActivityOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.ActivityOperations.Add(ActivityOperation);
                     db.SaveChanges();
@@ -72,10 +76,10 @@ namespace Web.Models
                 try
                 {
                     ActivityOperation ActivityOperation = db.ActivityOperations.Find(id);
-                    ActivityOperation.State = 0;
+                    ActivityOperation.Enabled = 0;
                     db.Entry(ActivityOperation).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (ActivityOperation.State == 0)
+                    if (ActivityOperation.Enabled == 0)
                         return true;
                     return false;
                 }
@@ -93,7 +97,7 @@ namespace Web.Models
                 {
                     int pageSize = 5;
                     int page = 0;
-                    IQueryable<ActivityOperation> Activity = db.ActivityOperations.Where(a => a.State != 0);
+                    IQueryable<ActivityOperation> Activity = db.ActivityOperations.Where(a => a.Enabled != 0);
                     if (IsAdministrator)
                     {
                         var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
@@ -134,6 +138,14 @@ namespace Web.Models
                     return db.ActivityOperations.ToList();
                 }
             }
+        }
+
+        public void NewActivity(BaseDbContext db)
+        {
+            Id = Guid.NewGuid();
+            Creator = db.Users.Find(Extensions.GetUserId());
+            Time = DateTime.Now;
+            Enabled = 1;
         }
     }
 

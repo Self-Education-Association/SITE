@@ -298,7 +298,7 @@ namespace Web.Controllers
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply));
-            db.Messages.Add(new Message(team.Admin, MessageType.System, MessageTemplate.TeamApply, db));
+            db.Messages.Add(new Message(team.Admin.Id, MessageType.System, MessageTemplate.TeamApply, db));
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
         }

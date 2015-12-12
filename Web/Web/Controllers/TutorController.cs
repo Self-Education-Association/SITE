@@ -64,7 +64,7 @@ namespace Web.Controllers
                         {
                             string title = "课程修改通知";
                             string content = "您好，你选择的课程" + courseOperation.Name + "已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
-                            Message message = new Message(title, content, user, 0,db);
+                            Message message = new Message(title, content, user.Id, 0,db);
                             if (!message.Publish())
                             {
                                 ViewData["ErrorInfo"] = "无法给学生发布修改信息";
