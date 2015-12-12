@@ -6,15 +6,11 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class CourseController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
 
-        public ActionResult Index(string select)
-        {
-            return View(CourseOperation.List(select, false));
-        }
         public ActionResult Index(string select)
         {
             return View(CourseOperation.List(select, false));

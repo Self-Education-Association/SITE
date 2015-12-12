@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using Web.Models;
 
@@ -143,7 +144,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 if (CourseRecord.Remark(courseRecord))
-                return RedirectToAction("StudentList");
+                return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
                 ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
@@ -169,37 +170,31 @@ namespace Web.Controllers
                 return View(db.CourseRecords.ToList());
             return View(studentList);
         }
-
-        public ActionResult Create1()
-        {
-            return View("Create1");
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create1([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] CourseRecord courseRecord)
-        {
-            if (ModelState.IsValid)
-            {
-                courseRecord.ActionTime = DateTime.Now;
-                courseRecord.Time = new DateTime(2000,1,1,0,0,0);
-                courseRecord.Id = Guid.NewGuid();
-                db.CourseRecords.Add(courseRecord);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(courseRecord);
-        }
         public ActionResult Calendar()
         {
             var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
             int Monthdays = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            var Monthcourse = new IQueryable<CourseOperation>[Monthdays];
+            TempData["Days"] = Monthdays;
+            int t = 0;
             for (int i = 1; i == Monthdays; i++)
             {
-                Monthcourse[i - 1] = AllCourseInThisMonth.Where(a => a.StartTime.Day == i);
+                TempData["Days" + i] = AllCourseInThisMonth.Where(a => a.StartTime.Day == i).Count();
+                foreach (var a in AllCourseInThisMonth.Where(a => a.StartTime.Day == i))
+                {
+                    t++;
+                    TempData["Day" + i + t + "Id"] = a.Id;
+                    TempData["Day" + i + t+"Name"] = a.Name;
+                    TempData["Day" + i + t + "StartTime"] = a.StartTime;
+                    TempData["Day" + i + t + "Location"] = a.Location;
+                }
+                t = 0;
             }
-            var b = Monthcourse.AsEnumerable();
-            return View(b);
+            return View();
+        }
+
+        public ActionResult ToCourse(Guid? Id)
+        {
+            return RedirectToAction("StudentList");
         }
         protected override void Dispose(bool disposing)
         {

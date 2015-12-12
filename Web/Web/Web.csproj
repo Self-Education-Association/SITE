@@ -376,7 +376,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Tutor\Index.cshtml" />
     <Content Include="Views\Tutor\Create.cshtml" />
-    <Content Include="Views\Tutor\Create1.cshtml" />
     <Content Include="Views\Tutor\StudentList.cshtml" />
     <Content Include="Views\Tutor\Update.cshtml" />
     <Content Include="Views\Administrator\IdentityRecords.cshtml" />
@@ -403,9 +402,9 @@
     <Content Include="Views\Manage\ProjectProfile.cshtml" />
     <Content Include="Views\Manage\TeamApply.cshtml" />
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
+    <Content Include="Views\Tutor\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
