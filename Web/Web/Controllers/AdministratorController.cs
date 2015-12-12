@@ -324,6 +324,10 @@ namespace Web.Controllers
         #endregion
 
         #region 用户管理模块
+        public ActionResult UserList()
+        {
+            return View(db.Users.ToList());
+        }
         public ActionResult TutorCreate()
         {
             return View();
