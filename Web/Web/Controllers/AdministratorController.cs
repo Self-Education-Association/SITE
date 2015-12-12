@@ -258,7 +258,7 @@ namespace Web.Controllers
                 //执行上传
                 file.SaveAs(absolutFileName);
                 //添加Material记录
-                db.Materials.Add(new Material(uploadFileName, material.Description, MaterialType.Download));
+                db.Materials.Add(new Material(uploadFileName, material.Description, material.Type));
                 //保存更改
                 db.SaveChanges();
                 return RedirectToAction("Materials");

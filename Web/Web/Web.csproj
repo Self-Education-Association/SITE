@@ -272,6 +272,7 @@
     <Content Include="img\icons\png\Calendar.png" />
     <Content Include="img\icons\png\Chat.png" />
     <Content Include="img\icons\png\Clipboard.png" />
+    <Content Include="img\icons\png\Clipboard1.png" />
     <Content Include="img\icons\png\Compas.png" />
     <Content Include="img\icons\png\Gift-Box.png" />
     <Content Include="img\icons\png\Infinity-Loop.png" />
@@ -306,6 +307,7 @@
     <Content Include="img\subtle-grunge-texture-02.jpg" />
     <Content Include="img\tile\ribbon-2x.png" />
     <Content Include="img\tile\ribbon.png" />
+    <Content Include="img\viewfile.jpg" />
     <Content Include="img\wg_burned_and_scratched8.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -406,6 +408,7 @@
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
+    <Content Include="Views\Home\Constructing.cshtml" />
     <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Administrator\Activities.cshtml" />
     <Content Include="Views\Administrator\ActivityCreate.cshtml" />

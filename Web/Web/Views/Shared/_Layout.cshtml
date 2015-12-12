@@ -8,6 +8,7 @@
     @Styles.Render("~/Content/css")
     <link type="text/css" rel="stylesheet" href="~/Content/flat-ui.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/demo.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/Calendar.css" />
     <link rel="shortcut icon" href="~/img/favicon.ico">
     @Scripts.Render("~/bundles/modernizr")
     <style>
@@ -28,31 +29,76 @@
         .navbar-default .navbar-brand {
             color: white;
         }
-    </style>
 
+        .aa {
+            display: none;
+        }
+
+        .a:hover .aa {
+            display: block;
+        }
+        .navbar-nav > li > .dropdown-menu {
+            margin-top: 0px;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="padding-bottom:1%;padding-top:2%;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">X-Lab navigation</span>
                 </button>
-                <a class="navbar-brand" href="index">京贸创客</a>
+                <a class="navbar-brand" href="/home">京贸创客</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="~/Activity/Index"><span class="fui-calendar"></span>活动</a></li>
-                    <li><a href="~/Context/Index"><span class="fui-user"></span>比赛</a></li>
-                    <li><a href="~/Home/Download"><span class="fui-windows"></span>资料下载</a></li>
-                    <li class="dropdown">
-                        <a href="#fakelink" class="dropdown-toggle" data-toggle="dropdown"><span class="fui-new"></span>预约<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="~/Course/Index">课程</a></li>
-                            <li><a href="~/Room/Index">场地</a></li>
-                            <li><a href="~/Activity/Index">导师</a></li>
+                    <li class="a">
+                        <a href="#"><span class="fui-bookmark"></span>关于</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="#">京贸创客</a></li>
+                            <li><a href="#">创业企业</a></li>
+                            <li><a href="#">创业项目</a></li>
+                        </ul>
+                    </li>
+                    <li class="a">
+                        <a href="#"><span class="fui-mic"></span>声音</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Course/Index">近期新闻</a></li>
+                            <li><a href="/Home/constructing">新锐观点</a></li>
+                            <li><a href="/Home/constructing">比赛天地</a></li>
+                        </ul>
+                    </li>
+                    <li class="a"><a href="#"><span class="fui-windows-8"></span>学习</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Course/Index">学习A</a></li>
+                            <li><a href="/Home/constructing">学习B</a></li>
+                            <li><a href="/Home/constructing">学习C</a></li>
+                        </ul>
+                    </li>
+                    <li class="a"><a href="#"><span class="fui-new"></span>在线</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Course/Index">课程预约</a></li>
+                            <li><a href="/Home/constructing">场地预约</a></li>
+                            <li><a href="/Home/constructing">导师预约</a></li>
+                            <li><a href="/Home/constructing">视频库</a></li>
+                            <li><a href="/Home/constructing">资料下载</a></li>
+                        </ul>
+                    </li>
+                    <li class="a">
+                        <a href="#"><span class="fui-gear"></span>活动</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Course/Index">当期活动</a></li>
+                            <li><a href="/Home/constructing">往期活动</a></li>
+                        </ul>
+                    </li>
+                    <li class="a">
+                        <a href="#"><span class="fui-star"></span>培育</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Course/Index">导师在线</a></li>
+                            <li><a href="/Home/constructing">成为导师</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -64,7 +110,7 @@
     @RenderBody()
     <div class="clearfix"></div>
     <div>
-      <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
+        <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -73,5 +119,6 @@
     <script src="~/Scripts/flat-ui.js"></script>
     <script src="~/Scripts/flat-ui.min.js"></script>
     <script src="~/Scripts/npm.js"></script>
+    <script src="~/Scripts/Calendar.js"></script>
 </body>
 </html>
