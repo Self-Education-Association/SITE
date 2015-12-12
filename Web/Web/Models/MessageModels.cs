@@ -14,6 +14,8 @@ namespace Web.Models
 
         public ArticleStatus Status { get; set; }
 
+        public ArticleClass Class { get; set; }
+
         public DateTime Time { get; set; }
 
         public void NewArticle()
@@ -42,11 +44,11 @@ namespace Web.Models
 
         public DateTime Time { get; set; }
 
-        public Message(string title, string content, User user, MessageType type, BaseDbContext db)
+        public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();
             Publisher = Extensions.GetContextUser(db);
-            Receiver = user;
+            Receiver = db.Users.Find(userId);
             Title = title;
             Content = content;
             Type = type;
@@ -54,11 +56,11 @@ namespace Web.Models
             Time = DateTime.Now;
         }
 
-        public Message(User user, MessageType type, MessageTemplate template, BaseDbContext db)
+        public Message(string userId, MessageType type, MessageTemplate template, BaseDbContext db)
         {
             ID = Guid.NewGuid();
             Publisher = Extensions.GetContextUser(db);
-            Receiver = user;
+            Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;
             Time = DateTime.Now;
@@ -75,11 +77,11 @@ namespace Web.Models
             }
         }
 
-        public Message(User user, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
+        public Message(string userId, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
         {
             ID = Guid.NewGuid();
             Publisher = Extensions.GetContextUser(db);
-            Receiver = user;
+            Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;
             Time = DateTime.Now;
@@ -143,4 +145,8 @@ namespace Web.Models
         Disabled
     }
 
+    public enum ArticleClass
+    {
+
+    }
 }

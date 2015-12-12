@@ -15,7 +15,7 @@ namespace Web.Controllers
     public class AdministratorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
-        private int pageSize = 5;
+        private int pageSize = 15;
 
         #region 用户管理容器
         private ApplicationSignInManager _signInManager;
@@ -51,10 +51,15 @@ namespace Web.Controllers
                 status == AdminOperationStatus.Error ? "操作失败。"
                 : status == AdminOperationStatus.Success ? "操作成功。" : "";
 
-            return View(new ListPage<Article>(db.Articles, 0, 5));
+            return View();
         }
 
         #region 文章管理模块
+        public ActionResult Articles(int page = 0)
+        {
+            return View(new ListPage<Article>(db.Articles, page, pageSize));
+        }
+
         public ActionResult ArticleCreate()
         {
             return View();
@@ -124,6 +129,80 @@ namespace Web.Controllers
             db.SaveChanges();
 
             return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+        }
+        #endregion
+
+        #region 活动管理模块
+        public ActionResult Activities(int page = 0)
+        {
+            return View(new ListPage<ActivityOperation>(db.ActivityOperations, page, pageSize));
+        }
+
+        public ActionResult ActivityCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ActivityCreate(ActivityOperation model)
+        {
+            if (ModelState.IsValid)
+            {
+                model.NewActivity(db);
+                db.ActivityOperations.Add(model);
+                db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+            }
+            return View();
+        }
+
+        public ActionResult ActivityEdit(Guid? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var model = db.ActivityOperations.Find(id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ActivityEdit(ActivityOperation model)
+        {
+            if (ModelState.IsValid)
+            {
+                db.ActivityOperations.Attach(model);
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+            }
+            return View();
+        }
+
+        public ActionResult ActivityDelete(Guid? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var model = db.ActivityOperations.Find(id);
+            if (model == null)
+                return HttpNotFound();
+            db.Entry(model).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+            return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+        }
+
+        public ActionResult DeleteConfirm(Guid? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var model = db.ActivityOperations.Find(id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
         }
         #endregion
 

@@ -33,7 +33,7 @@ namespace Web.Models
                     courseOperation.Id = Guid.NewGuid();
                     courseOperation.Time = DateTime.Now;
                     courseOperation.Count = 0;
-                    courseOperation.State = 1;
+                    courseOperation.Enabled = 1;
                     courseOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.CourseOperations.Add(courseOperation);
                     db.SaveChanges();
@@ -79,10 +79,10 @@ namespace Web.Models
                 try
                 {
                     CourseOperation courseOperation = db.CourseOperations.Find(id);
-                    courseOperation.State = 0;
+                    courseOperation.Enabled = 0;
                     db.Entry(courseOperation).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (courseOperation.State == 0)
+                    if (courseOperation.Enabled == 0)
                         return true;
                     return false;
                 }
@@ -100,7 +100,7 @@ namespace Web.Models
                 {
                     int pageSize = 5;
                     int page = 0;
-                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.State != 0);
+                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.Enabled != 0);
                     if (IsTeacher)
                     {
                         var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());

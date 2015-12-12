@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using System.IO;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
@@ -109,5 +110,48 @@ namespace Web.Models
     public interface IListPage
     {
         DateTime Time { get; set; }
+    }
+
+    public class DayRangeAttribute : ValidationAttribute, IClientValidatable
+    {
+        private int _minDay;
+        private int _maxDay;
+
+        public DayRangeAttribute(int minDay, int maxDay)
+        {
+            if (minDay.CompareTo(maxDay) > -1)
+            {
+                throw new Exception("最小日期不能大于或等于最大日期");
+            }
+            _minDay = minDay;
+            _maxDay = maxDay;
+        }
+
+        public override bool IsValid(object value)
+        {
+            if (value == null)
+                return true;
+            var compareDate = value as DateTime?;
+            if (compareDate.HasValue)
+            {
+                compareDate = compareDate.Value.Date;
+                return compareDate.Value >= DateTime.Today.AddDays(_minDay).Date &&
+                       compareDate.Value <= DateTime.Today.AddDays(_maxDay).Date;
+            }
+            return false;
+        }
+
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(ModelMetadata metadata, ControllerContext context)
+        {
+            var rule = new ModelClientValidationRule
+            {
+                ValidationType = "dayrange", //这里的dayrange最终会成为data-val-dayrange属性被jquery侦测到
+                ErrorMessage = FormatErrorMessage(metadata.GetDisplayName())
+            };
+            //这里了的min和max将会作为jquery验证扩展方法的参数
+            rule.ValidationParameters["min"] = _minDay;
+            rule.ValidationParameters["max"] = _maxDay;
+            yield return rule;
+        }
     }
 }
