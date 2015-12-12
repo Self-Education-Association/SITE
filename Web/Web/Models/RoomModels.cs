@@ -23,7 +23,7 @@ namespace Web.Models
                     RoomOperation.Id = Guid.NewGuid();
                     RoomOperation.Time = DateTime.Now;
                     RoomOperation.Usable = 1;
-                    RoomOperation.State = 1;
+                    RoomOperation.Enabled = 1;
                     RoomOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.RoomOperations.Add(RoomOperation);
                     db.SaveChanges();
@@ -64,10 +64,10 @@ namespace Web.Models
                 try
                 {
                     RoomOperation RoomOperation = db.RoomOperations.Find(id);
-                    RoomOperation.State = 0;
+                    RoomOperation.Enabled = 0;
                     db.Entry(RoomOperation).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (RoomOperation.State == 0)
+                    if (RoomOperation.Enabled == 0)
                         return true;
                     return false;
                 }
@@ -99,7 +99,7 @@ namespace Web.Models
                         db.SaveChanges();
                     int pageSize = 5;
                     int page = 0;
-                    IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.State != 0);
+                    IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.Enabled != 0);
                     if (IsTeacher)
                     {
                         var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());

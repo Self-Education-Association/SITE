@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -344,6 +345,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jquery.validator.dayrange.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -378,7 +380,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Tutor\Index.cshtml" />
     <Content Include="Views\Tutor\Create.cshtml" />
-    <Content Include="Views\Tutor\Create1.cshtml" />
     <Content Include="Views\Tutor\StudentList.cshtml" />
     <Content Include="Views\Tutor\Update.cshtml" />
     <Content Include="Views\Administrator\IdentityRecords.cshtml" />
@@ -405,10 +406,10 @@
     <Content Include="Views\Manage\ProjectProfile.cshtml" />
     <Content Include="Views\Manage\TeamApply.cshtml" />
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
     <Content Include="Views\Home\Constructing.cshtml" />
+    <Content Include="Views\Tutor\Calendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

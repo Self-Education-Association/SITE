@@ -6,7 +6,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class CourseController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
@@ -15,7 +15,6 @@ namespace Web.Controllers
         {
             return View(CourseOperation.List(select, false));
         }
-
         public ActionResult Details(Guid? id)
         {
             if (id == null)
