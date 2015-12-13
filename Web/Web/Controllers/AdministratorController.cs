@@ -363,7 +363,7 @@ namespace Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
                 }
             }
             return View();
@@ -389,6 +389,7 @@ namespace Web.Controllers
                 db.Users.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
             return View();
         }

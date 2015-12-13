@@ -6,6 +6,61 @@
 
 <h2>UserList</h2>
 
+<style>
+    .nav-pills > li > a {
+        color: white;
+    }
+
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
+
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    dl {
+        text-align: center;
+    }
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+</style>
+<div class="col-md-2">
+    <div class="navbar navbar-collapse" style="margin:50px 50px">
+        <ul class="nav nav-pills nav-stacked navbar-nav" style="padding-left:0;padding-right:0;">
+            <li><a href="Index">公告管理</a></li>
+            <li><a href="Articles">文章管理</a></li>
+            <li><a href="Activities">活动管理</a></li>
+            <li><a href="UserList">用户管理</a></li>
+            <li><a href="IdentityRecords" style="padding:0 0;margin-left:">用户认证管理</a></li>
+            <li class="dropdown">
+                <a href="Materials" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">资源管理</a>
+                <ul class="dropdown-menu">
+                    <li><a href="MaterialCreate">新建资源</a></li>
+                    <li><a href="MaterialDelete">删除资源</a></li>
+                    <li><a href="MaterialDetails">资源细节</a></li>
+                    <li><a href="MaterialEdit">资源编辑</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
 <p>
     @Html.ActionLink("创建教师账号", "TutorCreate")
 </p>
@@ -24,7 +79,19 @@
             @Html.DisplayNameFor(model => model.DisplayName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Profile)
+            @Html.DisplayNameFor(model => model.Profile.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile.InformationPrivacy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile.Other)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profile.Searchable)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Identitied)
@@ -42,9 +109,6 @@
             @Html.DisplayNameFor(model => model.EmailConfirmed)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.SecurityStamp)
         </th>
         <th>
@@ -52,9 +116,6 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.LockoutEndDateUtc)
@@ -84,9 +145,21 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.DisplayName)
+        </td>        
+        <td>
+            @Html.DisplayNameFor(model => model.Profile.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Profile)
+            @Html.DisplayNameFor(model => model.Profile.InformationPrivacy)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Profile.Other)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Profile.Phone)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Profile.Searchable)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Identitied)
@@ -104,9 +177,6 @@
             @Html.DisplayFor(modelItem => item.EmailConfirmed)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PasswordHash)
-        </td>
-        <td>
             @Html.DisplayFor(modelItem => item.SecurityStamp)
         </td>
         <td>
@@ -114,9 +184,6 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
@@ -131,9 +198,7 @@
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "UserEdit", new { id=item.Id })
         </td>
     </tr>
 }

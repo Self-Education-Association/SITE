@@ -419,6 +419,8 @@
     <Content Include="Views\Administrator\ArticleDelete.cshtml" />
     <Content Include="Views\Administrator\Articles.cshtml" />
     <Content Include="Views\Administrator\UserList.cshtml" />
+    <Content Include="Views\Administrator\UserEdit.cshtml" />
+    <Content Include="Views\Administrator\TutorCreate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
