@@ -408,8 +408,8 @@
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
-    <Content Include="Views\Home\Constructing.cshtml" />
     <Content Include="Views\Tutor\Calendar.cshtml" />
+    <Content Include="Views\Home\Constructing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
