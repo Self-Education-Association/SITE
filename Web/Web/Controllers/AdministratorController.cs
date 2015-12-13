@@ -43,7 +43,7 @@ namespace Web.Controllers
             }
         }
         #endregion
-
+        
         // GET: Administrator
         public ActionResult Index(AdminOperationStatus? status)
         {
@@ -53,7 +53,7 @@ namespace Web.Controllers
 
             return View();
         }
-
+        //4 Views
         #region 文章管理模块
         public ActionResult Articles(int page = 0)
         {
@@ -131,7 +131,7 @@ namespace Web.Controllers
             return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
         }
         #endregion
-
+        //4 Views
         #region 活动管理模块
         public ActionResult Activities(int page = 0)
         {
@@ -210,7 +210,7 @@ namespace Web.Controllers
             return View(model);
         }
         #endregion
-
+        //5 Views
         #region 上传文件模块
         // GET: Materials
         public ActionResult Materials(int page = 0)
@@ -322,7 +322,7 @@ namespace Web.Controllers
             return RedirectToAction("Materials");
         }
         #endregion
-
+        //3 Views
         #region 用户管理模块
         public ActionResult UserList()
         {
@@ -363,7 +363,7 @@ namespace Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
                 }
             }
             return View();
@@ -389,11 +389,12 @@ namespace Web.Controllers
                 db.Users.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
+                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
             return View();
         }
         #endregion
-
+        //2 Views
         #region 审核认证记录模块
         public ActionResult IdentityRecords(int page = 0)
         {
