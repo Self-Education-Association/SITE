@@ -64,5 +64,13 @@ namespace Web.Controllers
         {
             return View();
         }
+        public ActionResult Voi_News()
+        {
+            return View();
+        }
+        public ActionResult Voi_Points()
+        {
+            return View();
+        }
     }
 }

@@ -237,6 +237,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\flat-ui.css.map" />
+    <Content Include="img\clouds-texture01.jpg" />
     <Content Include="img\demo\browser-2x.png" />
     <Content Include="img\demo\browser-author.jpg" />
     <Content Include="img\demo\browser-pic-1.jpg" />
@@ -250,6 +251,8 @@
     <Content Include="img\demo\logo-mask-2x.png" />
     <Content Include="img\demo\logo-mask.png" />
     <Content Include="img\demo\video.jpg" />
+    <Content Include="img\DSC_0128.JPG" />
+    <Content Include="img\DSC_0201.JPG" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\gallery\bg-login.jpg" />
     <Content Include="img\gallery\index_img2.jpg" />
@@ -304,11 +307,15 @@
     <Content Include="img\login\imac.png" />
     <Content Include="img\old-brick-wall-texture-02.jpg" />
     <Content Include="img\old-brick-wall-texture-05.jpg" />
+    <Content Include="img\qiusuo1.jpg" />
     <Content Include="img\subtle-grunge-texture-02.jpg" />
     <Content Include="img\tile\ribbon-2x.png" />
     <Content Include="img\tile\ribbon.png" />
     <Content Include="img\viewfile.jpg" />
     <Content Include="img\wg_burned_and_scratched8.jpg" />
+    <Content Include="img\timelane.jpg" />
+    <Content Include="img\mateone.jpg" />
+    <Content Include="img\chengxin.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\flat-ui.js" />
@@ -420,6 +427,8 @@
     <Content Include="Views\Administrator\ArticleDelete.cshtml" />
     <Content Include="Views\Administrator\Articles.cshtml" />
     <Content Include="Views\Administrator\UserList.cshtml" />
+    <Content Include="Views\Home\Voi_News.cshtml" />
+    <Content Include="Views\Home\Voi_Points.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
