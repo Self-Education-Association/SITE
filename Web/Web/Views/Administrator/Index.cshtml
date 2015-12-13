@@ -35,24 +35,69 @@
         font-family: Arial;
         font-size: larger;
     }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
 </style>
-<div class="col-md-2">
-    <div class="navbar navbar-collapse" style="margin:50px 50px">
-        <ul class="nav nav-pills nav-stacked navbar-nav" style="padding-left:0;padding-right:0;">
-            <li><a href="Index">公告管理</a></li>
-            <li><a href="Articles">文章管理</a></li>
-            <li><a href="Activities">活动管理</a></li>   
-            <li><a href="UserList">用户管理</a></li>
-            <li><a href="IdentityRecords" style="padding:0 0;margin-left:">用户认证管理</a></li>
-            <li class="dropdown">
-                <a href="Materials" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">资源管理</a>
-                <ul class="dropdown-menu">
-                    <li><a href="MaterialCreate">新建资源</a></li>
-                    <li><a href="MaterialDelete">删除资源</a></li>
-                    <li><a href="MaterialDetails">资源细节</a></li>
-                    <li><a href="MaterialEdit">资源编辑</a></li>
-                </ul>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
+            <li>
+                <a href="/Administrator/Index">管理中心</a>
+            </li>
+            <li>
+                <a href="/Administrator/TutorCreate">添加导师</a>
+            </li>
+            <li>
+                <a href="/Administrator/IdentityRecords">审核认证</a>
+            </li>
+            <li class="nav-header">
+                用户管理
+            </li>
+            <li>
+                <a href="/Administrator/UserList">用户列表</a>
+            </li>
+            <li class="nav-header">
+                活动管理
+            </li>
+            <li>
+                <a href="/Administrator/Activities">活动列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/ActivityCreate">添加活动</a>
+            </li>
+            <li class="nav-header">
+                文章管理
+            </li>
+            <li>
+                <a href="/Administrator/Articles">文章列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/ArticleCreate">添加文章</a>
+            </li>
+            <li class="nav-header">
+                材料管理
+            </li>
+            <li>
+                <a href="/Administrator/Materials">材料列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/MaterialCreate">添加材料</a>
             </li>
         </ul>
     </div>
+    <div class="col-md-10 col-xs-10">
+
+    </div>
 </div>
+
+

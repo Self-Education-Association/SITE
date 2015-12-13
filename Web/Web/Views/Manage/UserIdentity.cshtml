@@ -4,75 +4,140 @@
     ViewBag.Title = "UserIdentity";
 }
 
-<h2>UserIdentity</h2>
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
+            <li>
+                <a href="/Manage/Index">个人中心</a>
+            </li>
+            <li>
+                <a href="/Manage/Calendar">个人日历</a>
+            </li>
+            <li>
+                <a href="/Manage/RecordList">显示履历</a>
+            </li>
+            <li class="nav-header">
+                个人信息
+            </li>
+            <li>
+                <a href="/Manage/UserProfile">修改信息</a>
+            </li>
+            <li>
+                <a href="/Manage/UserIdentity">信息验证</a>
+            </li>
+            <li>
+                <a href="/Manage/ChangePassword">修改密码</a>
+            </li>
+            <li>
+                <a href="/Manage/Project">我的项目</a>
+            </li>
+            <li class="nav-header">
+                我的团队
+            </li>
+            <li>
+                <a href="/Manage/TeamProfile">创建团队</a>
+            </li>
+            <li>
+                <a href="/Manage/TeamApply">申请加入</a>
+            </li>
+            <li>
+                <a href="/Manage/TeamMember">团队成员</a>
+            </li>
+            <li>
+                <a href="/Manage/TeamRecruit">成员管理</a>
+            </li>
+            <li>
+                <a href="/Manage/Company">公司注册</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10 col-xs-10">
 
 
-@using (Html.BeginForm("UserIdentity", "Manage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+        @using (Html.BeginForm("UserIdentity", "Manage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>IdentityRecord</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-horizontal">
+                <h4>IdentityRecord</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdNumber, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdNumber, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdNumber, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IdNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.IdNumber, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.IdNumber, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.InUIBE, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.InUIBE, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
+                        @Html.ValidationMessageFor(model => model.InUIBE, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsStudent, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownListFor(model => model.IsStudent, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
+                        @Html.ValidationMessageFor(model => model.IsStudent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FrontIdCard, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input name="file" type="file" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BackIdCard, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input name="file" type="file" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.InUIBE, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.InUIBE, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
-                    @Html.ValidationMessageFor(model => model.InUIBE, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsStudent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.IsStudent, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
-                    @Html.ValidationMessageFor(model => model.IsStudent, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FrontIdCard, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input name="file" type="file" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BackIdCard, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <input name="file" type="file" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
+        <div>
+            @Html.ActionLink("Back to List", "Index")
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
