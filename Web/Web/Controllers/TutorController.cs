@@ -105,7 +105,7 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index");
         }
-        public ActionResult Remark(Guid? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
