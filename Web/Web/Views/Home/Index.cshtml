@@ -205,13 +205,13 @@
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
             <div class="item active">
-                    <img src="~/UserUpload/Administrator/@Model.Sliders[0].Name" alt="First slide" style="height:300px;width:100%">
+                    <img src="@Url.Content(Model.Sliders[0].GetUrl())" alt="First slide" style="height:300px;width:100%">
                 <div class="carousel-caption">@Model.Sliders[0].Description</div>
             </div>
                 @for (int i = 1; i < Model.Sliders.Count; i++)
             {
                 <div class="item">
-                        <img src="~/UserUpload/Administrator/@Model.Sliders[i].Name" alt="First slide" style="height:300px;width:100%">
+                        <img src="@Url.Content(Model.Sliders[i].GetUrl())" alt="First slide" style="height:300px;width:100%">
                     <div class="carousel-caption">@Model.Sliders[i].Description</div>
                 </div>
             }

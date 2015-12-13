@@ -17,79 +17,87 @@
     .table > tbody > tr > td {
         text-align: center;
     }
-    dl{
-        text-align:center;
+
+    dl {
+        text-align: center;
     }
-    dd{
-        color:#3C5B45;
-        font-family:Arial;
-        font-size:larger;
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
     }
-    dt{
-        color:#608D4E;
-        font-family:Arial;
-        font-size:larger;
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
     }
 </style>
-<h2>Details</h2>
-<div>@ViewData["ErrorInfo"]</div>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
 
-<div>
-    <h4>ActivityOperation</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Count)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Count)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Limit)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Limit)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndTime)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-    </dl>
 </div>
-<p>
-    @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
-    @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="col-md-1"></div>
+<div class="col-md-10" style="padding-top:2%;padding-bottom:2%">
+    <div>@ViewData["ErrorInfo"]</div>
+    <div>
+        <h4>ActivityOperation</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Count)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Count)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Limit)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Limit)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.StartTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.EndTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
+        @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+<div class="col-md-1"></div>

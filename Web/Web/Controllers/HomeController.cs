@@ -64,11 +64,31 @@ namespace Web.Controllers
         {
             return View();
         }
-        public ActionResult Voi_News()
+        public ActionResult VoiceNews()
         {
             return View();
         }
-        public ActionResult Voi_Points()
+        public ActionResult VoicePoints()
+        {
+            return View();
+        }
+        public ActionResult LearnSelf()
+        {
+            return View();
+        }
+        public ActionResult TutorOnline()
+        {
+            return View();
+        }
+        public ActionResult TutorJoin()
+        {
+            return View();
+        }
+        public ActionResult AboutSite()
+        {
+            return View();
+        }
+        public ActionResult AboutNew()
         {
             return View();
         }
