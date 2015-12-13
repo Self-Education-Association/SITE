@@ -43,7 +43,7 @@ namespace Web.Controllers
             }
         }
         #endregion
-
+        
         // GET: Administrator
         public ActionResult Index(AdminOperationStatus? status)
         {
@@ -53,7 +53,7 @@ namespace Web.Controllers
 
             return View();
         }
-
+        //4 Views
         #region 文章管理模块
         public ActionResult Articles(int page = 0)
         {
@@ -131,7 +131,7 @@ namespace Web.Controllers
             return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
         }
         #endregion
-
+        //4 Views
         #region 活动管理模块
         public ActionResult Activities(int page = 0)
         {
@@ -210,7 +210,7 @@ namespace Web.Controllers
             return View(model);
         }
         #endregion
-
+        //5 Views
         #region 上传文件模块
         // GET: Materials
         public ActionResult Materials(int page = 0)
@@ -322,7 +322,7 @@ namespace Web.Controllers
             return RedirectToAction("Materials");
         }
         #endregion
-
+        //3 Views
         #region 用户管理模块
         public ActionResult UserList()
         {
@@ -394,7 +394,7 @@ namespace Web.Controllers
             return View();
         }
         #endregion
-
+        //2 Views
         #region 审核认证记录模块
         public ActionResult IdentityRecords(int page = 0)
         {
