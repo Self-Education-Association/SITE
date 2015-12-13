@@ -408,6 +408,7 @@
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
+    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Home\Constructing.cshtml" />
     <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Administrator\Activities.cshtml" />
