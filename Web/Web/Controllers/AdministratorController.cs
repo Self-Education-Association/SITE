@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Ganss.XSS;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -55,8 +56,21 @@ namespace Web.Controllers
         }
         //4 Views
         #region 文章管理模块
-        public ActionResult Articles(int page = 0)
+        public ActionResult Articles(int type,int page = 0)
         {
+            IQueryable<Article> article;
+            //未完成
+            switch (type)
+            {
+                case 0:
+                    article = db.Articles.Where(a => a.Class == ArticleClass.a);
+                    break;
+                case 1:
+
+                default:
+                    article = db.Articles;
+                    break;
+            }
             return View(new ListPage<Article>(db.Articles, page, pageSize));
         }
 
@@ -67,10 +81,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ArticleCreate(Article model)
         {
             if (ModelState.IsValid)
             {
+                var s = new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 model.NewArticle();
                 db.Articles.Add(model);
                 db.SaveChanges();
@@ -93,10 +110,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ArticleEdit(Article model)
         {
             if (ModelState.IsValid)
             {
+                var s=new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 db.Articles.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -244,6 +264,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult MaterialCreate([Bind(Include = "Name,Description,Type")] Material material)
         {
             if (ModelState.IsValid)

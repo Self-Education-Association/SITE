@@ -1,5 +1,5 @@
 ﻿@model Web.Models.CourseOperation
-
+@Html.Partial("TutorIndex")
 @{
     ViewBag.Title = "Create";
 }
@@ -78,9 +78,9 @@
         <h4>CourseOperation</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div>
-            @ViewData["ErrorInfo"]
-        </div>
+        <br/>
+        <br/>
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.Limit, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">

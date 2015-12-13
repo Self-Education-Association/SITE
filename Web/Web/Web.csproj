@@ -49,12 +49,20 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="HtmlSanitizer, Version=2.0.5735.24296, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlSanitizer.2.0.5735.24296\lib\net40\HtmlSanitizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -712,9 +720,7 @@
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Home\Constructing.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Administrator\Activities.cshtml" />
     <Content Include="Views\Administrator\ActivityCreate.cshtml" />
     <Content Include="Views\Administrator\ActivityEdit.cshtml" />
@@ -734,6 +740,7 @@
     <Content Include="Views\Home\TutorJoin.cshtml" />
     <Content Include="Views\Home\AboutSite.cshtml" />
     <Content Include="Views\Home\AboutNew.cshtml" />
+    <Content Include="Views\Tutor\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

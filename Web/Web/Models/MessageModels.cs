@@ -147,6 +147,8 @@ namespace Web.Models
 
     public enum ArticleClass
     {
-
+        //随意加了用的，删除即可
+        a,
+        b
     }
 }
