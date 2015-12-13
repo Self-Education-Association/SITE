@@ -4,25 +4,26 @@
  */
 
 CKEDITOR.editorConfig = function (config) {
-    config.filebrowserImageUploadUrl = "Upload";
-
     config.toolbarGroups = [
-		{ name: 'document', groups: ['document', 'doctools', 'mode'] },
-		{ name: 'clipboard', groups: ['undo', 'clipboard'] },
-		{ name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
-		{ name: 'forms', groups: ['forms'] },
-		{ name: 'insert', groups: ['insert'] },
-		{ name: 'links', groups: ['links'] },
-		'/',
-		{ name: 'styles', groups: ['styles'] },
-		{ name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
-		{ name: 'colors', groups: ['colors'] },
-		{ name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
-		'/',
-		{ name: 'tools', groups: ['tools'] },
-		{ name: 'others', groups: ['others'] },
-		{ name: 'about', groups: ['about'] }
+        { name: 'clipboard', groups: ['undo', 'clipboard'] },
+        { name: 'document', groups: ['document', 'doctools', 'mode'] },
+        { name: 'forms', groups: ['forms'] },
+        { name: 'insert', groups: ['insert'] },
+        { name: 'editing', groups: ['find', 'selection', 'spellchecker', 'editing'] },
+        { name: 'links', groups: ['links'] },
+        { name: 'about', groups: ['about'] },
+        '/',
+        { name: 'styles', groups: ['styles'] },
+        { name: 'colors', groups: ['colors'] },
+        { name: 'basicstyles', groups: ['basicstyles', 'cleanup'] },
+        { name: 'paragraph', groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph'] },
+        '/',
+        { name: 'tools', groups: ['tools'] },
+        { name: 'others', groups: ['others'] }
     ];
 
-    config.removeButtons = 'About,Maximize,ShowBlocks,Iframe,PageBreak,Language';
+    config.removeButtons = 'Maximize,ShowBlocks,Iframe,PageBreak,Language,ImageButton,HiddenField';
+
+
+    config.filebrowserImageUploadUrl = "/Home/Upload";
 };

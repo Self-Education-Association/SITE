@@ -759,6 +759,7 @@
     <Folder Include="Properties\" />
     <Folder Include="UserUpload\Administrator\" />
     <Folder Include="UserUpload\Identity\" />
+    <Folder Include="UserUpload\Image\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
