@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="student")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

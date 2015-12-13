@@ -207,12 +207,12 @@
         </ol>
         <!-- 轮播（Carousel）项目 -->
         <div class="carousel-inner">
+            @if (Model.Sliders != null && Model.Sliders.Count != 0)
+            {
             <div class="item active">
                 <img src="~/UserUpload/Administrator/@Model.Sliders[0].Name" alt="First slide" style="min-height:300px;max-height:500px;width:100%">
                 <div class="carousel-caption">@Model.Sliders[0].Description</div>
             </div>
-            @if (Model.Sliders != null && Model.Sliders.Count != 0)
-            {
                 for (int i = 1; i < Model.Sliders.Count; i++)
                 {
                     <div class="item">

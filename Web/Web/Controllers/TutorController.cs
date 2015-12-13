@@ -8,11 +8,15 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TutorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
-
+        //菜单
+        public ActionResult TutorIndex()
+        {
+            return View();
+        }
         //作为tutor自己的课程列表，在使用时若无需检索请输入参数为null或"";
         public ActionResult Index()
         {

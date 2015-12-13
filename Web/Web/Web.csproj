@@ -408,9 +408,7 @@
     <Content Include="Views\Manage\TeamRecruit.cshtml" />
     <Content Include="Views\Manage\TeamMember.cshtml" />
     <Content Include="Views\Manage\TeamProfile.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Home\Constructing.cshtml" />
-    <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Administrator\Activities.cshtml" />
     <Content Include="Views\Administrator\ActivityCreate.cshtml" />
     <Content Include="Views\Administrator\ActivityEdit.cshtml" />
@@ -422,6 +420,8 @@
     <Content Include="Views\Administrator\UserList.cshtml" />
     <Content Include="Views\Administrator\UserEdit.cshtml" />
     <Content Include="Views\Administrator\TutorCreate.cshtml" />
+    <Content Include="Views\Tutor\TutorIndex.cshtml" />
+    <Content Include="Views\Manage\Company.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
