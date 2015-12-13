@@ -56,8 +56,21 @@ namespace Web.Controllers
         }
         //4 Views
         #region 文章管理模块
-        public ActionResult Articles(int page = 0)
+        public ActionResult Articles(int type,int page = 0)
         {
+            IQueryable<Article> article;
+            //未完成
+            switch (type)
+            {
+                case 0:
+                    article = db.Articles.Where(a => a.Class == ArticleClass.a);
+                    break;
+                case 1:
+
+                default:
+                    article = db.Articles;
+                    break;
+            }
             return View(new ListPage<Article>(db.Articles, page, pageSize));
         }
 

@@ -2,17 +2,18 @@
 
 @{
     ViewBag.Title = "Remark";
-}
+}@Html.Partial("TutorIndex")
 
 <h2>Remark</h2>
-<div>@ViewData["ErrorInfo"]</div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         <h4>CourseRecord</h4>
+        <br/>
+        <br/>
+        <br/>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
