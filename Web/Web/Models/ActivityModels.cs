@@ -146,6 +146,7 @@ namespace Web.Models
             Creator = db.Users.Find(Extensions.GetUserId());
             Time = DateTime.Now;
             Enabled = 1;
+            Count = 0;
         }
     }
 

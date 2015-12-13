@@ -410,6 +410,16 @@
     <Content Include="Views\Manage\TeamProfile.cshtml" />
     <Content Include="Views\Tutor\Calendar.cshtml" />
     <Content Include="Views\Home\Constructing.cshtml" />
+    <Content Include="Views\Tutor\Calendar.cshtml" />
+    <Content Include="Views\Administrator\Activities.cshtml" />
+    <Content Include="Views\Administrator\ActivityCreate.cshtml" />
+    <Content Include="Views\Administrator\ActivityEdit.cshtml" />
+    <Content Include="Views\Administrator\ActivityDelete.cshtml" />
+    <Content Include="Views\Administrator\ArticleCreate.cshtml" />
+    <Content Include="Views\Administrator\ArticleEdit.cshtml" />
+    <Content Include="Views\Administrator\ArticleDelete.cshtml" />
+    <Content Include="Views\Administrator\Articles.cshtml" />
+    <Content Include="Views\Administrator\UserList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

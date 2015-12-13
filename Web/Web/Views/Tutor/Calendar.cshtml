@@ -50,9 +50,9 @@
         <th></th>
     </tr>
 
-@for (int i = 1; i.ToString() != TempData["Days"].ToString(); i++)
+@for (int i = 1; i<= DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month); i++)
 {
-    for (int t = 0; t.ToString() != TempData["Days" + i].ToString(); t++)
+    for (int t = 0; t<=5; t++)
     {
     <tr>
         <td>
@@ -65,7 +65,7 @@
             @TempData["Day" + i + t+ "StartTime"] 
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = Guid.Parse(TempData["Day" + i + t + "Id"].ToString())})
+           
         </td>
     </tr>
     }
