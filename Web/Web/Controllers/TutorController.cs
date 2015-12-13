@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using System;
 using System.Data;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
@@ -11,21 +14,74 @@ namespace Web.Controllers
     [Authorize]
     public class TutorController : Controller
     {
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
         private BaseDbContext db = new BaseDbContext();
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
         //作为tutor自己的课程列表，在使用时若无需检索请输入参数为null或"";
         public ActionResult Index()
         {
             return View(CourseOperation.List("", true));
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new {  });
+            }
+            return View(model);
+        }
         //返回创建课程的页面
         public ActionResult Create()
         {
             return View("Create");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
+        public ActionResult Create([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
             if (ModelState.IsValid && courseOperation.StartTime <= courseOperation.EndTime)
             {
@@ -36,7 +92,8 @@ namespace Web.Controllers
             ViewData["ErrorInfo"] = "错误：无法创建课程，不符合创建课程要求";
             return View(courseOperation);
         }
-        public ActionResult Update(Guid? id)
+
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -52,7 +109,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Update([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
+        public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
             if (ModelState.IsValid)
             {
@@ -63,7 +120,7 @@ namespace Web.Controllers
                         foreach (User user in courseOperation.Students)
                         {
                             string title = "课程修改通知";
-                            string content = "您好，你选择的课程" + courseOperation.Name + "已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
+                            string content = "您好，你选择的课程[" + courseOperation.Name + "]已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
                             Message message = new Message(title, content, user.Id, 0,db);
                             if (!message.Publish())
                             {
@@ -74,7 +131,7 @@ namespace Web.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改,可能的问题：降低了人数上限，无法连接到服务器，修改后的内容超出规定";
+                ViewData["ErrorInfo"] = "无法修改,可能的问题：降低了人数上限，无法连接到服务器，修改后的内容不符合规定";
                 return View();
             }
             return View();
@@ -105,6 +162,7 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public ActionResult Remark(Guid? id)
         {
             if (id == null)
@@ -137,6 +195,7 @@ namespace Web.Controllers
             return RedirectToAction("Index");
             //return RedirectToAction("StudentList");
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] CourseRecord courseRecord)
@@ -149,6 +208,7 @@ namespace Web.Controllers
             }
             return View();
         }
+
         public ActionResult StudentList(Guid? Id)
         {
             var user = Extensions.GetContextUser(db);
@@ -170,6 +230,7 @@ namespace Web.Controllers
                 return View(db.CourseRecords.ToList());
             return View(studentList);
         }
+
         public ActionResult Calendar()
         {
             var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
@@ -196,6 +257,7 @@ namespace Web.Controllers
         {
             return RedirectToAction("StudentList");
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

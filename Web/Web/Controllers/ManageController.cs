@@ -19,16 +19,6 @@ namespace Web.Controllers
         private ApplicationUserManager _userManager;
         private BaseDbContext db = new BaseDbContext();
 
-        public ManageController()
-        {
-        }
-
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -169,8 +159,7 @@ namespace Web.Controllers
         public ActionResult UserProfile()
         {
             User user = UserManager.FindById(User.Identity.GetUserId());
-            //UserProfileViewModel model = (UserProfileViewModel)user.Profile;
-            Profile model = new Profile();
+            Profile model = user.Profile;
 
             return View(model);
         }
@@ -193,7 +182,7 @@ namespace Web.Controllers
 
         public ActionResult UserIdentity()
         {
-            //ViewBag.Status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord.Status;
+            ViewBag.Status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord.Status;
 
             return View();
         }

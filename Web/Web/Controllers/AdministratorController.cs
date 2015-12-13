@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Ganss.XSS;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -67,10 +68,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ArticleCreate(Article model)
         {
             if (ModelState.IsValid)
             {
+                var s = new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 model.NewArticle();
                 db.Articles.Add(model);
                 db.SaveChanges();
@@ -93,10 +97,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ArticleEdit(Article model)
         {
             if (ModelState.IsValid)
             {
+                var s=new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 db.Articles.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -244,6 +251,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult MaterialCreate([Bind(Include = "Name,Description,Type")] Material material)
         {
             if (ModelState.IsValid)
