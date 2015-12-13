@@ -743,10 +743,16 @@
     <Content Include="Views\Administrator\ArticleDelete.cshtml" />
     <Content Include="Views\Administrator\Articles.cshtml" />
     <Content Include="Views\Administrator\UserList.cshtml" />
-    <Content Include="Views\Home\Voi_News.cshtml" />
-    <Content Include="Views\Home\Voi_Points.cshtml" />
+    <Content Include="Views\Home\VoiceNews.cshtml" />
+    <Content Include="Views\Home\VoicePoints.cshtml" />
     <Content Include="Views\Administrator\UserEdit.cshtml" />
     <Content Include="Views\Administrator\TutorCreate.cshtml" />
+    <Content Include="Views\Home\LearnSelf.cshtml" />
+    <Content Include="Views\Home\Download.cshtml" />
+    <Content Include="Views\Home\TutorOnline.cshtml" />
+    <Content Include="Views\Home\TutorJoin.cshtml" />
+    <Content Include="Views\Home\AboutSite.cshtml" />
+    <Content Include="Views\Home\AboutNew.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
