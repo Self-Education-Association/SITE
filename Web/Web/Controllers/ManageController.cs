@@ -231,6 +231,7 @@ namespace Web.Controllers
         public ActionResult Project()
         {
             User user = db.Users.Find(Extensions.GetUserId());
+            ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
             if (user.TeamRecord != null && user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.Project == null)

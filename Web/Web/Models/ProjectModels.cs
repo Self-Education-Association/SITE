@@ -9,8 +9,10 @@ namespace Web.Models
 {
     public class Project
     {
+        [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
 
+        [Display(Name = "管理员")]
         public virtual User Admin { get; set; }
 
         [Display(Name = "项目名称")]
@@ -55,10 +57,13 @@ namespace Web.Models
         [Display(Name = "管理员批复")]
         public string Note { get; set; }
 
+        [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
+        [Display(Name = "状态")]
         public ProjectStatus Status { get; set; }
 
+        [Display(Name = "团队")]
         public virtual Team Team { get; set; }
 
         public void NewProject(BaseDbContext db)
@@ -72,22 +77,31 @@ namespace Web.Models
 
     public class Team:IListPage
     {
+        [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
 
+        [Display(Name = "团队名称")]
         public string Name { get; set; }
 
+        [Display(Name = "管理员")]
         public User Admin { get; set; }
 
+        [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
+        [Display(Name = "团队介绍")]
         public string Introduction { get; set; }
 
+        [Display(Name = "团队公告")]
         public string Announcement { get; set; }
 
+        [Display(Name = "公开招募")]
         public bool Searchable { get; set; }
 
+        [Display(Name = "注册公司")]
         public virtual Company Company { get; set; }
-        
+
+        [Display(Name = "团队成员")]
         public virtual IQueryable<TeamRecord> Member { get; set; }
 
         public void NewTeam(ref Project project)
@@ -104,8 +118,10 @@ namespace Web.Models
 
     public class TeamRecord : Remark
     {
+        [Display(Name = "团队")]
         public virtual Team Team { get; set; }
 
+        [Display(Name = "状态")]
         public TeamMemberStatus Status { get; set; }
 
         public TeamRecord(Team team):base()
@@ -195,33 +211,49 @@ namespace Web.Models
 
     public enum ProjectStatus
     {
+        [EnumDisplayName("无记录")]
         None,
+        [EnumDisplayName("未通过")]
         Denied,
+        [EnumDisplayName("待审批")]
         ToApprove,
+        [EnumDisplayName("已通过")]
         Done
     }
 
     public enum CompanyStatus
     {
+        [EnumDisplayName("无记录")]
         None,
+        [EnumDisplayName("未通过")]
         Denied,
+        [EnumDisplayName("待审批")]
         ToApprove,
+        [EnumDisplayName("已通过")]
         Done
     }
 
     public enum TeamMemberStatus:int
     {
-        Normal=0,
-        Admin=1,
-        Apply=2,
-        Recruit=3
+        [EnumDisplayName("成员")]
+        Normal,
+        [EnumDisplayName("管理员")]
+        Admin,
+        [EnumDisplayName("申请者")]
+        Apply,
+        [EnumDisplayName("招募者")]
+        Recruit
     }
 
     public enum ProjectProgressType
     {
-        None=0,
-        HaveTeam=1,
-        Done=2,
-        HaveCompany=3
+        [EnumDisplayName("项目尚未开始进行")]
+        None,
+        [EnumDisplayName("已经组建团队，尚在创业前期")]
+        HaveTeam,
+        [EnumDisplayName("创业进入中期阶段，预期稳定")]
+        Done,
+        [EnumDisplayName("创业后期，已经注册公司")]
+        HaveCompany
     }
 }
