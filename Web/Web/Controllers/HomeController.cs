@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -39,6 +40,20 @@ namespace Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult Upload(HttpPostedFileBase upload)
+        {
+            var fileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(upload.FileName);
+            string absolutFileName = Server.MapPath("~/") + "UserUpload/Image/" + fileName;
+            upload.SaveAs(absolutFileName);
+
+            var url = "/UserUpload/Image/" + fileName;
+            var CKEditorFuncNum = System.Web.HttpContext.Current.Request["CKEditorFuncNum"];
+
+            //上传成功后，我们还需要通过以下的一个脚本把图片返回到第一个tab选项
+            return Content("<script>window.parent.CKEDITOR.tools.callFunction(" + CKEditorFuncNum + ", \"" + url + "\");</script>");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -60,7 +75,43 @@ namespace Web.Controllers
 
             return View(paginatedNews);
         }
+
         public ActionResult Constructing()
+        {
+            return View();
+        }
+
+        public ActionResult VoiceNews()
+        {
+            return View();
+        }
+
+        public ActionResult VoicePoints()
+        {
+            return View();
+        }
+
+        public ActionResult LearnSelf()
+        {
+            return View();
+        }
+
+        public ActionResult TutorOnline()
+        {
+            return View();
+        }
+
+        public ActionResult TutorJoin()
+        {
+            return View();
+        }
+
+        public ActionResult AboutSite()
+        {
+            return View();
+        }
+
+        public ActionResult AboutNew()
         {
             return View();
         }

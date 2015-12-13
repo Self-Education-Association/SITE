@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Web.Models.Material>
+
+@{
+    ViewBag.Title = "Download";
+}
+
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    dl {
+        text-align: center;
+    }
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
+
+</div>
+<div class="col-md-1"></div>
+<div class="col-md-10" style="padding-top:2%;padding-bottom:2%">
+    <div class="row">
+        <ul class="breadcrumb col-md-6">
+            <li>
+                <a href="#">首页</a> <span class="divider"></span>
+            </li>
+            <li class="active">
+                在线<span class="divider"></span>
+            </li>
+            <li class="active">资料下载</li>
+        </ul>
+    </div>
+    <table class="table table-striped">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <a href=@Url.Content(item.GetUrl())>@item.Description</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+            </tr>
+        }
+    </table>
+    </div>
+    <div class="col-md-1"></div>

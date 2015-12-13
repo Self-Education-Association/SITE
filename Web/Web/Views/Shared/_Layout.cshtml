@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="~/Content/demo.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/Calendar.css" />
     <link rel="shortcut icon" href="~/img/favicon.ico">
+    <script type="text/javascript" src="~/ckeditor/ckeditor.js"></script>
     @Scripts.Render("~/bundles/modernizr")
     <style>
         body {
@@ -45,7 +46,7 @@
 
 <body>
 
-    <div class="navbar navbar-default" role="navigation" style="padding-bottom:1%;padding-top:2%;">
+    <div class="navbar navbar-default" role="navigation" style="padding-bottom:1%;padding-top:1%;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -54,51 +55,49 @@
                 <a class="navbar-brand" href="/home">京贸创客</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="a">
-                        <a href="#"><span class="fui-bookmark"></span>关于</a>
-                        <ul class="dropdown-menu aa">
-                            <li><a href="#">京贸创客</a></li>
-                            <li><a href="#">创业企业</a></li>
-                            <li><a href="#">创业项目</a></li>
-                        </ul>
-                    </li>
+                <ul class="nav navbar-nav"> 
                     <li class="a">
                         <a href="#"><span class="fui-mic"></span>声音</a>
                         <ul class="dropdown-menu aa">
-                            <li><a href="/Course/Index">近期新闻</a></li>
-                            <li><a href="/Home/constructing">新锐观点</a></li>
+                            <li><a href="/Home/VoiceNews">近期新闻</a></li>
+                            <li><a href="/Home/VoicePoints">新锐观点</a></li>
                             <li><a href="/Home/constructing">比赛天地</a></li>
                         </ul>
                     </li>
                     <li class="a"><a href="#"><span class="fui-windows-8"></span>学习</a>
                         <ul class="dropdown-menu aa">
-                            <li><a href="/Course/Index">学习A</a></li>
-                            <li><a href="/Home/constructing">学习B</a></li>
-                            <li><a href="/Home/constructing">学习C</a></li>
+                            <li><a href="/Home/LearnSelf">个人学习</a></li>
+                            <li><a href="/Home/LearnSelf#Cou">课程学习</a></li>
+                            <li><a href="/Home/LearnSelf#Pro">项目学习</a></li>
                         </ul>
                     </li>
                     <li class="a"><a href="#"><span class="fui-new"></span>在线</a>
-                        <ul class="dropdown-menu aa">
-                            <li><a href="/Course/Index">课程预约</a></li>
-                            <li><a href="/Home/constructing">场地预约</a></li>
-                            <li><a href="/Home/constructing">导师预约</a></li>
+                        <ul class="dropdown-menu aa">     
+                            <li><a href="/Room/Index">场地预约</a></li>
+                            <li><a href="/Home/Download">资料下载</a></li>
                             <li><a href="/Home/constructing">视频库</a></li>
-                            <li><a href="/Home/constructing">资料下载</a></li>
                         </ul>
                     </li>
                     <li class="a">
                         <a href="#"><span class="fui-gear"></span>活动</a>
                         <ul class="dropdown-menu aa">
-                            <li><a href="/Course/Index">当期活动</a></li>
-                            <li><a href="/Home/constructing">往期活动</a></li>
+                            <li><a href="/Activity/Index">目前活动</a></li>
+                            <li><a href="/Activity/Index">往期活动</a></li>
                         </ul>
                     </li>
                     <li class="a">
                         <a href="#"><span class="fui-star"></span>培育</a>
                         <ul class="dropdown-menu aa">
-                            <li><a href="/Course/Index">导师在线</a></li>
-                            <li><a href="/Home/constructing">成为导师</a></li>
+                            <li><a href="/Home/TutorOnline">导师在线</a></li>
+                            <li><a href="/Home/TutorJoin">成为导师</a></li>
+                        </ul>
+                    </li>
+                    <li class="a">
+                        <a href="#"><span class="fui-bookmark"></span>关于</a>
+                        <ul class="dropdown-menu aa">
+                            <li><a href="/Home/AboutSite">京贸创客</a></li>
+                            <li><a href="/Home/AboutNew">创业企业</a></li>
+                            <li><a href="/Home/AboutNew#Companies">创业项目</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -108,6 +107,50 @@
     </div>
 
     @RenderBody()
+    <div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:225px;background-color:#ececec;font-size:8px;">
+        <div>
+            <dl class="col-md-1 col-xs-2">
+                <dt>声音</dt>
+                <dd><a href="/?c=activity">近期新闻</a></dd>
+                <dd><a href="/?c=activity&amp;old=1">新锐观点</a></dd>
+                <dd><a href="/?c=activity&amp;old=1">比赛天地</a></dd>
+            </dl>
+            <dl class="col-md-1 col-xs-2">
+                <dt>学习</dt>
+                <dd><a href="/?c=learn#zwxx">个人学习</a></dd>
+                <dd><a href="/?c=learn#kcxx">课程学习</a></dd>
+                <dd><a href="/?c=learn#xmxx">项目学习</a></dd>
+            </dl>
+            <dl class="col-md-1 col-xs-2">
+                <dt>在线</dt>
+                <dd><a href="/?c=learn#xmxx">场地预约</a></dd>
+                <dd><a href="/?c=learn#xmxx">视频库</a></dd>
+                <dd><a href="/?c=learn#xmxx">资料下载</a></dd>
+            </dl>
+            <dl class="col-md-1 col-xs-2">
+                <dt>活动</dt>
+                <dd><a href="/ad-xlab/">目前活动</a></dd>
+                <dd><a href="/?c=pages&amp;a=daoshi">往期活动</a></dd>
+            </dl>
+            <dl class="col-md-1 col-xs-2">
+                <dt>培育</dt>
+                <dd><a href="/?c=members">导师在线</a></dd>
+                <dd><a href="/?c=reservations">成为导师</a></dd>
+            </dl>
+            <dl class="col-md-1 col-xs-2">
+                <dt>关于</dt>
+                <dd><a href="/about.html#xlabjj">京贸创客</a></dd>
+                <dd><a href="/?c=nurture&amp;a=fshow&amp;id=6">创业企业</a></dd>
+                <dd><a href="/?c=nurture&amp;a=fshow&amp;id=8">创业项目</a></dd>
+            </dl>
+        </div>
+        <div>
+            <dl class="col-md-4 col-xs-4 pull-right">
+                <dt>关注微信</dt>
+                <dd><img src="~/img/viewfile.jpg" style="height:150px;width:150px;"></dd>
+            </dl>
+        </div>
+    </div>
     <div class="clearfix"></div>
     <div>
         <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
