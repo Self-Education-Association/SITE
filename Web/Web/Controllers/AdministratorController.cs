@@ -371,7 +371,6 @@ namespace Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     //为账户添加角色
                     var roleName = "tutor";
                     ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(new BaseDbContext()));

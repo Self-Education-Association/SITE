@@ -96,11 +96,11 @@ namespace Web.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "入学时间")]
-        public int StartYear { get; set; }//开始年份
+        public DateTime StartYear { get; set; }//开始年份
 
         [DataType(DataType.Date)]
         [Display(Name = "毕业时间")]
-        public int EndYear { get; set; }//结束年份
+        public DateTime EndYear { get; set; }//结束年份
 
         [Display(Name = "学校名称")]
         public string School { get; set; }//学校名称
@@ -117,10 +117,10 @@ namespace Web.Models
         public Guid Id { get; set; }
 
         [Display(Name ="入职时间")]
-        public int StartYear { get; set; }//开始年份
+        public DateTime StartYear { get; set; }//开始年份
 
         [Display(Name = "离职时间")]
-        public int EndYear { get; set; }//结束年份
+        public DateTime EndYear { get; set; }//结束年份
 
         [Display(Name = "公司名称")]
         public string Company { get; set; }//公司名称
@@ -170,11 +170,14 @@ namespace Web.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
-            //modelBuilder.Entity<User>().HasOptional(u => u.TeamRecord).WithRequired(t => t.Receiver);
-            modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<User>().HasOptional(u => u.IdentityRecord).WithRequired(i => i.User);
             modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
+            modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<Team>().HasOptional(t => t.Company);
+            modelBuilder.Entity<WorkRecord>().Property(w => w.StartYear).HasColumnType("Date");
+            modelBuilder.Entity<WorkRecord>().Property(w => w.EndYear).HasColumnType("Date");
+            modelBuilder.Entity<EducationRecord>().Property(w => w.StartYear).HasColumnType("Date");
+            modelBuilder.Entity<EducationRecord>().Property(w => w.EndYear).HasColumnType("Date");
             base.OnModelCreating(modelBuilder);
         }
 
