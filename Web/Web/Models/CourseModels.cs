@@ -15,15 +15,20 @@ namespace Web.Models
 {
     public class CourseOperation : Operation
     {
+        [Display(Name = "报名人数")]
         public int Count { get; set; }
 
+        [Display(Name = "上限人数")]
         public int Limit { get; set; }
 
+        [Display(Name = "状态")]
         public string Status { get; set; }
 
-        public List<User> Students { get; set; }
+        public virtual List<User> Students { get; set; }
 
+        [Display(Name = "上限人数")]
         public string Location { get; set; }
+
         public static bool Create(CourseOperation courseOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -33,7 +38,7 @@ namespace Web.Models
                     courseOperation.Id = Guid.NewGuid();
                     courseOperation.Time = DateTime.Now;
                     courseOperation.Count = 0;
-                    courseOperation.Enabled = 1;
+                    courseOperation.Enabled = true;
                     courseOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.CourseOperations.Add(courseOperation);
                     db.SaveChanges();
@@ -48,6 +53,7 @@ namespace Web.Models
                 }
             }
         }
+
         public static bool Update([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -72,6 +78,7 @@ namespace Web.Models
                 }
             }
         }
+
         public static bool Delete(Guid id)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -79,10 +86,10 @@ namespace Web.Models
                 try
                 {
                     CourseOperation courseOperation = db.CourseOperations.Find(id);
-                    courseOperation.Enabled = 0;
+                    courseOperation.Enabled = false;
                     db.Entry(courseOperation).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (courseOperation.Enabled == 0)
+                    if (courseOperation.Enabled == false)
                         return true;
                     return false;
                 }
@@ -92,6 +99,7 @@ namespace Web.Models
                 }
             }
         }
+
         public static List<CourseOperation> List(string select, bool IsTeacher)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -100,7 +108,7 @@ namespace Web.Models
                 {
                     int pageSize = 5;
                     int page = 0;
-                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.Enabled != 0);
+                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.Enabled != false);
                     if (IsTeacher)
                     {
                         var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
@@ -143,6 +151,7 @@ namespace Web.Models
             }
         }
     }
+
     public class CourseRecord : Remark
     {
         public CourseOperation CourseOperation { get; set; }
@@ -152,16 +161,12 @@ namespace Web.Models
             {
                 try
                 {
-                    if (courseRecord.RemarkRate > 0 && courseRecord.RemarkRate <= 5)
-                    {
-                        User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                        courseRecord.CourseOperation = db.CourseOperations.First(t => t.Creator == user);
-                        courseRecord.Time = DateTime.Now;
-                        db.Entry(courseRecord).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return true;
-                    }
-                    return false;
+                    User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    courseRecord.CourseOperation = db.CourseOperations.First(t => t.Creator == user);
+                    courseRecord.Time = DateTime.Now;
+                    db.Entry(courseRecord).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
                 }
                 catch
                 {
@@ -182,8 +187,8 @@ namespace Web.Models
                         CourseOperation = CourseOperation,
                         ActionTime = DateTime.Now,
                         Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
-                        RemarkContent = "未评价",
-                        RemarkRate = 0,
+                        RemarkContent = "",
+                        RemarkRate = RemarkType.None,
                         Time = new DateTime(2000, 1, 1, 0, 0, 0)
                     };
                     CourseOperation.Count++;
@@ -205,11 +210,11 @@ namespace Web.Models
                 {
                     var CourseOperation = db.CourseOperations.Find(Id);
                     var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    var courseRecord = (from a in db.CourseRecords where a.Receiver.Id==user.Id && a.CourseOperation.Id == CourseOperation.Id select a).First();
+                    var courseRecord = (from a in db.CourseRecords where a.Receiver.Id == user.Id && a.CourseOperation.Id == CourseOperation.Id select a).First();
                     CourseOperation.Count--;
                     if (CourseOperation.Students != null)
                     {
-                        if(CourseOperation.Students.Contains(user))
+                        if (CourseOperation.Students.Contains(user))
                             CourseOperation.Students.Remove(user);
                     }
                     db.CourseRecords.Remove(courseRecord);
@@ -222,9 +227,5 @@ namespace Web.Models
                 }
             }
         }
-    }
-    public class Courses
-    {
-        public CourseOperation courses { get; set; }
     }
 }

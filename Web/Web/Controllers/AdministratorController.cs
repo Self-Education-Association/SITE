@@ -76,6 +76,9 @@ namespace Web.Controllers
 
         public ActionResult ArticleCreate()
         {
+            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
+
             return View();
         }
 
@@ -104,6 +107,8 @@ namespace Web.Controllers
             Article model = db.Articles.Find(Id);
             if (model == null)
                 return HttpNotFound();
+            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
 
             return View(model);
         }
@@ -259,6 +264,7 @@ namespace Web.Controllers
         // GET: Materials/Create
         public ActionResult MaterialCreate()
         {
+            ViewData["TypeList"] = EnumExtension.GetSelectList(typeof(MaterialType));
             return View();
         }
 
@@ -300,6 +306,7 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewData["TypeList"] = EnumExtension.GetSelectList(typeof(MaterialType));
             return View(material);
         }
 
@@ -364,7 +371,6 @@ namespace Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     //为账户添加角色
                     var roleName = "tutor";
                     ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(new BaseDbContext()));

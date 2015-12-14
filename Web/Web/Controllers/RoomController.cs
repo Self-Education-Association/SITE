@@ -38,7 +38,7 @@ namespace Web.Controllers
             {
                 var RoomOperation = db.RoomOperations.Find(Id);
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                if (RoomOperation.Usable == 0)
+                if (RoomOperation.Usable == false)
                 {
                     TempData["ErrorInfo"] = "该场地已被使用！";
                     return RedirectToAction("Index");

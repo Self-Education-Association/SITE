@@ -65,139 +65,147 @@
         </ul>
     </div>
     <div class="col-md-10 col-xs-10">        
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Status)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Industry)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Industry)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Introduction)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Industry)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Introduction)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Industry)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Product)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Introduction)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Product)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Introduction)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Feature)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Feature)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Product)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Tech)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Feature)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Tech)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Feature)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Progress)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tech)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Progress)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Tech)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Patent)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Progress)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Patent)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Progress)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Desire)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Patent)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Desire)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Patent)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.TargetCustomer)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Desire)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.TargetCustomer)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Desire)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.ProjectBudget)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetCustomer)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.ProjectBudget)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.TargetCustomer)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Webpage)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectBudget)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Webpage)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.ProjectBudget)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Privacy)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Webpage)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Privacy)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Webpage)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Note)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Privacy)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Note)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Privacy)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Time)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Time)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Status)
-                </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Status)
-                </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
 
-            </dl>   
-        <p>
-            @Html.ActionLink("回到个人主页", "Index")
-        </p>
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+<p>
+    @Html.ActionLink("回到个人主页", "Index")
+</p>
     </div>
 </div>
 

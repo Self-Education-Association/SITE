@@ -70,47 +70,47 @@
         </ul>
     </div>
     <div class="col-md-10 col-xs-10">
-        <h2>StudentList</h2>
+<h2>StudentList</h2>
 
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver.DisplayName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkContent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkRate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Time)
-                </th>
-                <th></th>
-            </tr>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Receiver.DisplayName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RemarkRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Time)
+        </th>
+        <th></th>
+    </tr>
 
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkContent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkRate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Time)
-                    </td>
-                    <td>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RemarkRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Time)
+        </td>
+        <td>
                         @Html.ActionLink("Remark", "Remark", new { id = item.Id })
-                    </td>
-                </tr>
-            }
+        </td>
+    </tr>
+}
 
-        </table>
+</table>
     </div>
 </div>
 

@@ -7,13 +7,17 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
     public class RoomOperation : Operation
     {
-        public int Usable { get; set; }
+        [Display(Name = "可使用")]
+        public bool Usable { get; set; }
+
         public virtual List<RoomRecord> RoomRecords { get; set; }
+
         public static bool Create(RoomOperation RoomOperation)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -22,8 +26,8 @@ namespace Web.Models
                 {
                     RoomOperation.Id = Guid.NewGuid();
                     RoomOperation.Time = DateTime.Now;
-                    RoomOperation.Usable = 1;
-                    RoomOperation.Enabled = 1;
+                    RoomOperation.Usable = true;
+                    RoomOperation.Enabled = true;
                     RoomOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.RoomOperations.Add(RoomOperation);
                     db.SaveChanges();
@@ -64,10 +68,10 @@ namespace Web.Models
                 try
                 {
                     RoomOperation RoomOperation = db.RoomOperations.Find(id);
-                    RoomOperation.Enabled = 0;
+                    RoomOperation.Enabled = false;
                     db.Entry(RoomOperation).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (RoomOperation.Enabled == 0)
+                    if (RoomOperation.Enabled == false)
                         return true;
                     return false;
                 }
@@ -83,7 +87,6 @@ namespace Web.Models
             {
                 try
                 {
-                    string changed = "0";
                     //模拟触发器
                     foreach (RoomOperation roomOperation in db.RoomOperations)
                     {
@@ -91,15 +94,13 @@ namespace Web.Models
                         {
                             roomOperation.StartTime.AddDays(7.0);
                             roomOperation.EndTime.AddDays(7.0);
-                            roomOperation.Usable = 1;
-                            changed = "yes,you have changed";
+                            roomOperation.Usable = true;
                         }
                     }
-                    if (changed == "yes,you have changed")
-                        db.SaveChanges();
+                    db.SaveChanges();
                     int pageSize = 5;
                     int page = 0;
-                    IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.Enabled != 0);
+                    IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.Enabled != false);
                     if (IsTeacher)
                     {
                         var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
@@ -110,9 +111,9 @@ namespace Web.Models
                         else
                         {
                             Room = (from a in db.RoomOperations
-                                      where a.Creator.Id == user.Id && a.Name == @select
-                                      orderby a.Name
-                                      select a).AsQueryable();
+                                    where a.Creator.Id == user.Id && a.Name == @select
+                                    orderby a.Name
+                                    select a).AsQueryable();
                         }
                     }
                     else
@@ -120,16 +121,16 @@ namespace Web.Models
                         if (select == null)
                         {
                             Room = (from a in db.RoomOperations
-                                      where a.StartTime > DateTime.Now
-                                      orderby a.Time
-                                      select a).AsQueryable();
+                                    where a.StartTime > DateTime.Now
+                                    orderby a.Time
+                                    select a).AsQueryable();
                         }
                         else
                         {
                             Room = (from a in db.RoomOperations
-                                      where a.Name == @select && a.StartTime > DateTime.Now
-                                      orderby a.Time
-                                      select a).AsQueryable();
+                                    where a.Name == @select && a.StartTime > DateTime.Now
+                                    orderby a.Time
+                                    select a).AsQueryable();
                         }
                     }
                     var paginatedNews = new ListPage<RoomOperation>(Room, page, pageSize);
@@ -145,22 +146,19 @@ namespace Web.Models
     public class RoomRecord : Remark
     {
         public RoomOperation RoomOperation { get; set; }
+
         public static bool Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] RoomRecord RoomRecord)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    if (RoomRecord.RemarkRate > 0 && RoomRecord.RemarkRate <= 5)
-                    {
-                        User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                        RoomRecord.RoomOperation = db.RoomOperations.First(t => t.Creator == user);
-                        RoomRecord.Time = DateTime.Now;
-                        db.Entry(RoomRecord).State = EntityState.Modified;
-                        db.SaveChanges();
-                        return true;
-                    }
-                    return false;
+                    User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    RoomRecord.RoomOperation = db.RoomOperations.First(t => t.Creator == user);
+                    RoomRecord.Time = DateTime.Now;
+                    db.Entry(RoomRecord).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return true;
                 }
                 catch
                 {
@@ -168,6 +166,7 @@ namespace Web.Models
                 }
             }
         }
+
         public static bool Apply(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -181,11 +180,11 @@ namespace Web.Models
                         RoomOperation = RoomOperation,
                         ActionTime = DateTime.Now,
                         Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
-                        RemarkContent = "未评价",
-                        RemarkRate = 0,
+                        RemarkContent = "",
+                        RemarkRate = RemarkType.None,
                         Time = new DateTime(2000, 1, 1, 0, 0, 0)
                     };
-                    RoomOperation.Usable = 0;
+                    RoomOperation.Usable = false;
                     db.RoomRecords.Add(RoomRecord);
                     db.SaveChanges();
                     return true;
@@ -196,6 +195,7 @@ namespace Web.Models
                 }
             }
         }
+
         public static bool Quit(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -205,7 +205,7 @@ namespace Web.Models
                     var RoomOperation = db.RoomOperations.Find(Id);
                     var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     var RoomRecord = (from a in db.RoomRecords where a.Receiver.Id == user.Id && a.RoomOperation.Id == RoomOperation.Id select a).First();
-                    RoomOperation.Usable=1;
+                    RoomOperation.Usable = true;
                     if (RoomOperation.RoomRecords != null)
                     {
                         if (RoomOperation.RoomRecords.Contains(RoomRecord))

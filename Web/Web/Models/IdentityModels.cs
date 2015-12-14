@@ -55,24 +55,34 @@ namespace Web.Models
     /// </summary>
     public class IdentityRecord:IListPage
     {
+        [Display(Name ="唯一编号")]
         public Guid Id { get; set; }
 
+        [Display(Name = "身份证号或学号")]
         public string IdNumber { get; set; }//身份证号或学号
 
+        [Display(Name = "用户")]
         public virtual User User { get; set; }//用户
 
+        [Display(Name = "真实姓名")]
         public string Name { get; set; } //真实姓名
 
+        [Display(Name = "身份证正面或学生证信息页")]
         public virtual Material FrontIdCard { get; set; }//身份证正面或学生证专业信息页
 
+        [Display(Name = "身份证反面或学生证注册页")]
         public virtual Material BackIdCard { get; set; }//身份证反面或学生证注册报到页
 
+        [Display(Name = "贸大校友")]
         public bool InUIBE { get; set; }//是否为校友
 
+        [Display(Name = "在校学生")]
         public bool IsStudent { get; set; }//是否为在校生
 
+        [Display(Name = "认证时间")]
         public DateTime Time { get; set; }//时间戳
 
+        [Display(Name = "审批状态")]
         public IdentityStatus Status { get; set; }//认证状态
 
     }
@@ -86,11 +96,11 @@ namespace Web.Models
 
         [DataType(DataType.Date)]
         [Display(Name = "入学时间")]
-        public int StartYear { get; set; }//开始年份
+        public DateTime StartYear { get; set; }//开始年份
 
         [DataType(DataType.Date)]
         [Display(Name = "毕业时间")]
-        public int EndYear { get; set; }//结束年份
+        public DateTime EndYear { get; set; }//结束年份
 
         [Display(Name = "学校名称")]
         public string School { get; set; }//学校名称
@@ -107,10 +117,10 @@ namespace Web.Models
         public Guid Id { get; set; }
 
         [Display(Name ="入职时间")]
-        public int StartYear { get; set; }//开始年份
+        public DateTime StartYear { get; set; }//开始年份
 
         [Display(Name = "离职时间")]
-        public int EndYear { get; set; }//结束年份
+        public DateTime EndYear { get; set; }//结束年份
 
         [Display(Name = "公司名称")]
         public string Company { get; set; }//公司名称
@@ -119,7 +129,7 @@ namespace Web.Models
     [ComplexType]
     public class Profile
     {
-        [Display(Name ="电子邮箱（默认为账户名）")]
+        [Display(Name ="电子邮箱（默认为账户名，与认证邮箱不同）")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -139,9 +149,13 @@ namespace Web.Models
 
     public enum IdentityStatus
     {
+        [EnumDisplayName("无记录")]
         None,
+        [EnumDisplayName("未通过")]
         Denied,
+        [EnumDisplayName("待审批")]
         ToApprove,
+        [EnumDisplayName("已通过")]
         Done
     }
 
@@ -156,11 +170,14 @@ namespace Web.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
-            //modelBuilder.Entity<User>().HasOptional(u => u.TeamRecord).WithRequired(t => t.Receiver);
-            modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<User>().HasOptional(u => u.IdentityRecord).WithRequired(i => i.User);
             modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
+            modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<Team>().HasOptional(t => t.Company);
+            modelBuilder.Entity<WorkRecord>().Property(w => w.StartYear).HasColumnType("Date");
+            modelBuilder.Entity<WorkRecord>().Property(w => w.EndYear).HasColumnType("Date");
+            modelBuilder.Entity<EducationRecord>().Property(w => w.StartYear).HasColumnType("Date");
+            modelBuilder.Entity<EducationRecord>().Property(w => w.EndYear).HasColumnType("Date");
             base.OnModelCreating(modelBuilder);
         }
 
