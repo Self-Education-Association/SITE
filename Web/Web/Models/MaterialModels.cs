@@ -68,8 +68,11 @@ namespace Web.Models
 
     public enum MaterialType
     {
-        Download=0,
-        Identity=1,
-        Slider=2
+        [EnumDisplayName("下载文件")]
+        Download =0,
+        [EnumDisplayName("认证图片")]
+        Identity =1,
+        [EnumDisplayName("海报图片")]
+        Slider =2
     }
 }

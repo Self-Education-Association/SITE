@@ -28,92 +28,133 @@
         font-family:Arial;
         font-size:larger;
     }
-    dt{
-        color:#608D4E;
-        font-family:Arial;
-        font-size:larger;
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
     }
 
 </style>
-<div class="col-md-2">
-    <div class="navbar navbar-collapse" style="margin:50px 3%">
-        <ul class="nav nav-pills nav-stacked navbar-nav" style="padding-left:0px;padding-right:0;">
-            <li><a href="Index">公告管理</a></li>
-            <li><a href="Articles">文章管理</a></li>  
-            <li><a href="Activities">活动管理</a></li>                                 
-             <li><a href="UserList">用户管理</a></li>
-            <li><a href="IdentityRecords">用户认证管理</a></li>
-            <li class="dropdown">
-                <a href="Materials" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">资源管理</a>
-                <ul class="dropdown-menu">
-                    <li><a href="MaterialCreate" style="color:white;background-color:#34495E">新建资源</a></li>
-                    <li><a href="MaterialDelete" style="color:white;background-color:#34495E">删除资源</a></li>
-                    <li><a href="MaterialDetails" style="color:white;background-color:#34495E">资源细节</a></li>
-                    <li><a href="MaterialEdit" style="color:white;background-color:#34495E">资源编辑</a></li>
-                </ul>
+
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
+            <li>
+                <a href="/Administrator/Index">管理中心</a>
+            </li>
+            <li>
+                <a href="/Administrator/TutorCreate">添加导师</a>
+            </li>
+            <li>
+                <a href="/Administrator/IdentityRecords">审核认证</a>
+            </li>
+            <li class="nav-header">
+                用户管理
+            </li>
+            <li>
+                <a href="/Administrator/UserList">用户列表</a>
+            </li>
+            <li class="nav-header">
+                活动管理
+            </li>
+            <li>
+                <a href="/Administrator/Activities">活动列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/ActivityCreate">添加活动</a>
+            </li>
+            <li class="nav-header">
+                文章管理
+            </li>
+            <li>
+                <a href="/Administrator/Articles">文章列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/ArticleCreate">添加文章</a>
+            </li>
+            <li class="nav-header">
+                材料管理
+            </li>
+            <li>
+                <a href="/Administrator/Materials">材料列表</a>
+            </li>
+            <li>
+                <a href="/Administrator/MaterialCreate">添加材料</a>
             </li>
         </ul>
     </div>
-</div>
-<div class="col-md-10">
-    <h4>IdentityRecords</h4>
-    <br />
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User.DisplayName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
+    <div class="col-md-10 col-xs-10">
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
 
-                @Html.DisplayNameFor(model => model.InUIBE)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsStudent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-
-        {
+        <table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.DisplayName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.InUIBE)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsStudent)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Time)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.User.DisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
 
-                <td>
-                    @Html.ActionLink("Details", "IdentityRecordDetails", new { id = item.Id })
-                </td>
+                    @Html.DisplayNameFor(model => model.InUIBE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsStudent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
             </tr>
-        }
 
-    </table>
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.User.DisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.InUIBE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsStudent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("Details", "IdentityRecordDetails", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
 </div>
+    

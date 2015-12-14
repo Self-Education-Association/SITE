@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 
@@ -6,16 +7,22 @@ namespace Web.Models
 {
     public class Article : IListPage
     {
+        [Display(Name ="唯一编号")]
         public Guid ID { get; set; }
 
+        [Display(Name = "文章标题")]
         public string Title { get; set; }
 
+        [Display(Name = "文章内容")]
         public string Content { get; set; }
 
+        [Display(Name = "文章状态")]
         public ArticleStatus Status { get; set; }
 
+        [Display(Name = "文章类别")]
         public ArticleClass Class { get; set; }
 
+        [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
         public void NewArticle()
@@ -28,20 +35,28 @@ namespace Web.Models
 
     public class Message
     {
+        [Display(Name = "唯一编号")]
         public Guid ID { get; set; }
 
+        [Display(Name = "发送方")]
         public User Publisher { get; set; }
 
+        [Display(Name = "接收方")]
         public User Receiver { get; set; }
 
+        [Display(Name = "标题")]
         public string Title { get; set; }
 
+        [Display(Name = "消息内容")]
         public string Content { get; set; }
 
+        [Display(Name = "消息类别")]
         public MessageType Type { get; set; }
 
+        [Display(Name = "阅读状态")]
         public bool HaveRead { get; set; }
 
+        [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
         public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
@@ -122,8 +137,11 @@ namespace Web.Models
 
     public enum MessageType
     {
+        [EnumDisplayName("系统消息")]
         System,
+        [EnumDisplayName("团队消息")]
         Team,
+        [EnumDisplayName("私聊消息")]
         Person
     }
 
@@ -141,7 +159,9 @@ namespace Web.Models
 
     public enum ArticleStatus
     {
+        [EnumDisplayName("启用")]
         Enabled,
+        [EnumDisplayName("禁用")]
         Disabled
     }
 

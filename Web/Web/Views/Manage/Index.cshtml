@@ -2,11 +2,26 @@
 @{
     ViewBag.Title = "Index";
 }
-@ViewBag.StatusMessage
-<div class="col-md-2">
-   
+
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
+
 </div>
-<div class="col-md-10">
-<h2>Index</h2>
+<div class="col-md-12 col-xs-12">
+    @ViewBag.StatusMessage
+    <div class="col-md-2 col-xs-2">
+        @Html.Partial("_ManageMenuPartial")
+    </div>
+    <div class="col-md-10 col-xs-10" style="color:initial">
+
+    </div>
 </div>
+
 

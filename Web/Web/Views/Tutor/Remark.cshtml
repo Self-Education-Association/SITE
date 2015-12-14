@@ -2,51 +2,122 @@
 
 @{
     ViewBag.Title = "Remark";
-}@Html.Partial("TutorIndex")
-
-<h2>Remark</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>CourseRecord</h4>
-        <br/>
-        <br/>
-        <br/>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.ActionTime)
-        @Html.HiddenFor(model => model.Time)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RemarkContent, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RemarkContent, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RemarkContent, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RemarkRate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RemarkRate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.RemarkRate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
 }
+<style>
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "StudentList")
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    dl {
+        text-align: center;
+    }
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
+
 </div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
+            <li>
+                <a href="/Tutor/Calendar">活动日历</a>
+            </li>
+            <li class="nav-header">
+                课程相关
+            </li>
+            <li>
+                <a href="/Tutor/Create">创建课程</a>
+            </li>
+            <li>
+                <a href="/Tutor/Index">课程列表</a>
+            </li>
+            <li>
+                <a href="/Tutor/ChangePassword">修改密码</a>
+            </li>
+            <li>
+                <a href="/Tutor/StudentList">学生列表</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10 col-xs-10">
+        <h2>Remark</h2>
+        <div>@ViewData["ErrorInfo"]</div>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>CourseRecord</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.ActionTime)
+                @Html.HiddenFor(model => model.Time)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RemarkContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RemarkContent, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RemarkContent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RemarkRate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.RemarkRate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.RemarkRate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div>
+            @Html.ActionLink("Back to List", "StudentList")
+        </div>
+
+    </div>
+</div>
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

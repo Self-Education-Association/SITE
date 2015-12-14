@@ -33,14 +33,47 @@
         font-family: Arial;
         font-size: larger;
     }
+       body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
 </style>
-<h2>Create</h2>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
 
-
-@using (Html.BeginForm()) 
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
+            <li>
+                <a href="/Tutor/Calendar">活动日历</a>
+            </li> 
+            <li class="nav-header">
+                课程相关
+            </li>
+            <li>
+                <a href="/Tutor/Create">创建课程</a>
+            </li>
+            <li>
+                <a href="/Tutor/Index">课程列表</a>
+            </li>
+            <li>
+                <a href="/Tutor/ChangePassword">修改密码</a>
+            </li>
+            <li>
+                <a href="/Tutor/StudentList">学生列表</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-10 col-xs-10">
+ 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>CourseOperation</h4>
         <hr />
@@ -115,6 +148,13 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+    </div>
+</div>
+
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

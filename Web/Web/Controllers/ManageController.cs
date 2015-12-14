@@ -19,16 +19,6 @@ namespace Web.Controllers
         private ApplicationUserManager _userManager;
         private BaseDbContext db = new BaseDbContext();
 
-        public ManageController()
-        {
-        }
-
-        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
-
         public ApplicationSignInManager SignInManager
         {
             get
@@ -60,6 +50,12 @@ namespace Web.Controllers
                 : message == ManageMessageId.AddEducationSuccess ? "已添加你的一条教育经历。"
                 : message == ManageMessageId.AddWorkSuccess ? "已添加一条你的工作经历。"
                 : message == ManageMessageId.ChangePasswordSuccess ? "修改密码成功。"
+                :message==ManageMessageId.AcessDenied?"你没有权限进行这项操作。"
+                :message==ManageMessageId.ApplySuccess?"申请加入成功，请等待团队管理员审批。"
+                :message==ManageMessageId.ProjectSuccess?"项目申请成功，请等待管理员审批。"
+                :message==ManageMessageId.RecruitSuccess?"招募请求发送成功，请等待该用户响应。"
+                :message==ManageMessageId.UpdateUserProfileSuccess?"修改个人信息成功。"
+                :message==ManageMessageId.OperationSuccess?"操作成功。"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -169,8 +165,7 @@ namespace Web.Controllers
         public ActionResult UserProfile()
         {
             User user = UserManager.FindById(User.Identity.GetUserId());
-            //UserProfileViewModel model = (UserProfileViewModel)user.Profile;
-            Profile model = new Profile();
+            Profile model = user.Profile;
 
             return View(model);
         }
@@ -193,7 +188,8 @@ namespace Web.Controllers
 
         public ActionResult UserIdentity()
         {
-            //ViewBag.Status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord.Status;
+            var status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord;
+            ViewBag.Status = status != null ? status.Status : IdentityStatus.None;
 
             return View();
         }
@@ -242,6 +238,7 @@ namespace Web.Controllers
         public ActionResult Project()
         {
             User user = db.Users.Find(Extensions.GetUserId());
+            ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
             if (user.TeamRecord != null && user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.Project == null)
@@ -305,6 +302,9 @@ namespace Web.Controllers
 
         public ActionResult TeamRecruit(int page = 0)
         {
+
+            if (Extensions.GetContextUser(db).TeamRecord==null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
@@ -315,6 +315,8 @@ namespace Web.Controllers
         [ActionName("DoTeamRecruit")]
         public ActionResult TeamRecruit(string userId)
         {
+            if (Extensions.GetContextUser(db).TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
@@ -328,6 +330,8 @@ namespace Web.Controllers
 
         public ActionResult TeamMember(int page = 0)
         {
+            if (Extensions.GetContextUser(db).TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = db.Users.Find(Extensions.GetUserId()).TeamRecord.Team;
             if (team == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -337,6 +341,8 @@ namespace Web.Controllers
         }
         public ActionResult TeamMemberDelete(string userId)
         {
+            if (Extensions.GetContextUser(db).TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
             if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -347,6 +353,8 @@ namespace Web.Controllers
 
         public ActionResult TeamMemberQuit()
         {
+            if (Extensions.GetContextUser(db).TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(Extensions.GetUserId());
             if (user.TeamRecord.Status == TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
@@ -358,6 +366,8 @@ namespace Web.Controllers
         public ActionResult TeamProfile()
         {
             User user = Extensions.GetContextUser(db);
+            if (user.TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = user.TeamRecord.Team;
@@ -395,6 +405,8 @@ namespace Web.Controllers
         public ActionResult Company()
         {
             User user = Extensions.GetContextUser(db);
+            if (user.TeamRecord==null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.TeamRecord.Team.Company != null)
