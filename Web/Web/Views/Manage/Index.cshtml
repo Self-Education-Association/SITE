@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Index";
 }
-@ViewBag.StatusMessage
+
 <style>
     body {
         background: url(/img/HeaderGreyDenim.jpg);
@@ -10,18 +10,16 @@
     }    .nav-list > li > a {
         padding: 5px 8px;
     }
+
 </style>
 <div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
 
 </div>
-<div class="col-md-12 col-xs-12">
+<div class="col-md-12 col-xs-12">@ViewBag.StatusMessage
     <div class="col-md-2 col-xs-2">
         <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
             <li>
                 <a href="/Manage/Index">个人中心</a>
-            </li>
-            <li>
-                <a href="/Manage/Calendar">个人日历</a>
             </li>
             <li>
                 <a href="/Manage/RecordList">显示履历</a>
