@@ -522,6 +522,7 @@
     <Content Include="ckeditor\skins\office2013\images\lock.png" />
     <Content Include="ckeditor\skins\office2013\images\refresh.png" />
     <Content Include="ckeditor\styles.js" />
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -566,6 +567,8 @@
     <Content Include="img\DSC_0128.JPG" />
     <Content Include="img\DSC_0201.JPG" />
     <Content Include="img\favicon.ico" />
+    <Content Include="img\featuresbg.jpg" />
+    <Content Include="img\fuqin.jpg" />
     <Content Include="img\gallery\bg-login.jpg" />
     <Content Include="img\gallery\index_img2.jpg" />
     <Content Include="img\gallery\photo1.jpg" />
@@ -581,8 +584,15 @@
     <Content Include="img\gallery\photo7.jpg" />
     <Content Include="img\gallery\photo8.jpg" />
     <Content Include="img\gallery\photo9.jpg" />
+    <Content Include="img\gallery\qiusuo.JPG" />
     <Content Include="img\gallery\register_bg_img1.jpg" />
     <Content Include="img\HeaderGreyDenim.jpg" />
+    <Content Include="img\icons\ico1.png" />
+    <Content Include="img\icons\ico3.png" />
+    <Content Include="img\icons\ico4.png" />
+    <Content Include="img\icons\ico5.png" />
+    <Content Include="img\icons\ico6.png" />
+    <Content Include="img\icons\ico7.png" />
     <Content Include="img\icons\png\Book.png" />
     <Content Include="img\icons\png\Calendar.png" />
     <Content Include="img\icons\png\Chat.png" />
@@ -619,7 +629,11 @@
     <Content Include="img\login\imac.png" />
     <Content Include="img\old-brick-wall-texture-02.jpg" />
     <Content Include="img\old-brick-wall-texture-05.jpg" />
+    <Content Include="img\overlay.png" />
     <Content Include="img\qiusuo1.jpg" />
+    <Content Include="img\sea.jpg" />
+    <Content Include="img\story1.png" />
+    <Content Include="img\story3.png" />
     <Content Include="img\subtle-grunge-texture-02.jpg" />
     <Content Include="img\tile\ribbon-2x.png" />
     <Content Include="img\tile\ribbon.png" />
@@ -758,7 +772,7 @@
     <Content Include="Views\Administrator\UserEdit.cshtml" />
     <Content Include="Views\Administrator\TutorCreate.cshtml" />
     <Content Include="Views\Tutor\TutorIndex.cshtml" />
-    <Content Include="Views\Manage\Company.cshtml" />
+    <Content Include="Views\Manage\CompanyChanges.cshtml" />
     <Content Include="Views\Home\LearnSelf.cshtml" />
     <Content Include="Views\Home\Download.cshtml" />
     <Content Include="Views\Home\TutorOnline.cshtml" />
@@ -770,9 +784,8 @@
     <Content Include="Views\Manage\_ManageMenuPartial.cshtml" />
     <Content Include="Views\Manage\TeamAccess.cshtml" />
     <Content Include="Views\Administrator\_AdminMenuPartial.cshtml" />
-    <Content Include="Views\Manage\CompanyChanges.cshtml" />
+    <Content Include="Views\Manage\Company.cshtml" />
     <Content Include="Views\Tutor\_TutorMenuPartial.cshtml" />
-    <Content Include="Views\Manage\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
