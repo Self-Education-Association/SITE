@@ -48,7 +48,8 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "该场地现在不可预约！";
                     return RedirectToAction("Index");
                 }
-                if (RoomRecord.Apply(Id))
+                var roomRecord = new RoomRecord();
+                if (roomRecord.Apply(Id))
                     return RedirectToAction("Index"); ;
                 TempData["ErrorInfo"] = "你不符合预约要求！";
             }
