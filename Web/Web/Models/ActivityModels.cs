@@ -146,6 +146,7 @@ namespace Web.Models
                         if (ActivityOperation.Records.Contains(this))
                             ActivityOperation.Records.Remove(this);
                     }
+                    db.ActivityRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }

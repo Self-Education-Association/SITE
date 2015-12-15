@@ -211,6 +211,7 @@ namespace Web.Models
                         if (RoomOperation.RoomRecords.Contains(this))
                             RoomOperation.RoomRecords.Remove(this);
                     }
+                    db.RoomRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }
