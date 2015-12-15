@@ -113,6 +113,11 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (courseOperation.Content.Length<=50)
+                {
+                    courseOperation.ShortContent = courseOperation.Content;
+                }
+                courseOperation.ShortContent = courseOperation.Content.Substring(0, 50);
                 if (CourseOperation.Update(courseOperation))
                 {
                     if (courseOperation.Students != null)
