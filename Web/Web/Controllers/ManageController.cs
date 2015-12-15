@@ -343,7 +343,7 @@ namespace Web.Controllers
             if (Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
-            var list = new ListPage<TeamRecord>((from u in db.TeamRecords where u.Team.Admin.Id == User.Identity.GetUserId() && u.Status== TeamMemberStatus.Apply select u), page, pageSize);
+            var list = new ListPage<User>((from u in db.TeamRecords where u.Team.Admin.Id == User.Identity.GetUserId() && u.Status== TeamMemberStatus.Apply select u.Receiver), page, pageSize);
             return View(list);
         }
         [ActionName("DoTeamAccess")]
@@ -363,7 +363,6 @@ namespace Web.Controllers
             if (IsApprove)
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
-                
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
                 db.Messages.Add(new Message(user.Id, MessageType.System, MessageTemplate.TeamApplySuccess, db));
             }
@@ -384,8 +383,8 @@ namespace Web.Controllers
             if (team == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
-
-            var list = new ListPage<TeamRecord>(team.Member, page, pageSize);
+            var teamMember = team.Member.Where(m => m.Status == TeamMemberStatus.Apply | m.Status == TeamMemberStatus.Admin);
+            var list = new ListPage<TeamRecord>(teamMember, page, pageSize);
             return View(list);
         }
         public ActionResult TeamMemberDelete(string userId)
