@@ -9,62 +9,15 @@
     <link type="text/css" rel="stylesheet" href="~/Content/flat-ui.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/demo.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/Calendar.css" />
+    <link type="text/css" rel="stylesheet" href="~/Content/animate.css" />
     <link rel="shortcut icon" href="~/img/favicon.ico">
     <script type="text/javascript" src="~/ckeditor/ckeditor.js"></script>
     @Scripts.Render("~/bundles/modernizr")
-    <style>
-        body {
-            padding-top: 0px;
-            padding-bottom: 0px;
-        }
-
-        .navbar {
-            margin-bottom: 0;
-            background-color: #242B4B;
-        }
-
-        .navbar-default .navbar-nav > li > a {
-            color: white;
-        }
-
-
-        .navbar-default .navbar-brand {
-            color: white;
-        }
-
-        .navbar-nav > li > .dropdown-menu {
-            margin-top: 0px;
-        }
-
-        .aa {
-            display: none;
-        }
-
-        .a:hover .aa {
-            display: block;
-        }
-
-        dl.col-xs-1 {
-            text-align: center;
-        }
-
-        dl.col-xs-4 {
-            text-align: center;
-            width: 28%;
-        }
-
-        .col-xs-10 {
-            margin-top: 1%;
-            margin-bottom: 1%;
-            color: black;
-        }
-
-    </style>
 </head>
 
 <body>
 
-    <div class="navbar navbar-default" role="navigation" style="padding-bottom:1%;padding-top:1%;">
+    <div class="navbar" role="navigation" style="padding-bottom:1%;padding-top:1%;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -170,7 +123,7 @@
     </div>
     <div class="clearfix"></div>
     <div>
-        <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
+        <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;z-index:1000;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
@@ -180,5 +133,19 @@
     <script src="~/Scripts/flat-ui.min.js"></script>
     <script src="~/Scripts/npm.js"></script>
     <script src="~/Scripts/Calendar.js"></script>
+    <script>
+        $("#myCarousel").hover(function () {
+            $("#myCarousel").css({ "box-shadow": "20px 20px 20px rgba(0,0,0,0.5)" });
+        }, function () {
+            $("#myCarousel").css({ "box-shadow": "10px 10px 20px rgba(0,0,0,0.5)" });
+        });
+    </script>
+    <script>
+        $(".feature").hover(function () {
+            $(this).css({ "box-shadow": "20px 20px 20px rgba(0,0,0,0.5)" });
+        }, function () {
+            $(this).css({ "box-shadow": "1px 1px 2px rgba(0,0,0,0.19)" });
+        });
+    </script>
 </body>
 </html>

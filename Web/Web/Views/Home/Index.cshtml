@@ -124,172 +124,165 @@
         }
     }
 </script>
-
-<style type="text/css">
-    body {
-        padding-top: 0px;
-        padding-bottom: 0px;
-    }
-
-    .body-content {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-
-    .row {
-        margin-left: 0px;
-        margin-right: 0px;
-    }
-
-    .Calendar {
-        font-family: Verdana;
-        font-size: 12px;
-        text-align: center;
-        padding: 10px;
-        line-height: 2.5em;
-        color: white;
-    }
-
-        .Calendar a {
-            color: #1e5494;
-        }
-
-        .Calendar table {
-            width: 100%;
-            border: 0;
-        }
-
-            .Calendar table thead {
-                color: #acacac;
-            }
-
-            .Calendar table td {
-                font-size: 11px;
-                padding: 1px;
-            }
-
-    #idCalendarPre {
-        cursor: pointer;
-        float: left;
-        padding-right: 5px;
-    }
-
-    #idCalendarNext {
-        cursor: pointer;
-        float: right;
-        padding-right: 5px;
-    }
-
-    #idCalendar td.onToday {
-        font-weight: bold;
-        color: #C60;
-    }
-
-    #idCalendar td.onSelect {
-        font-weight: bold;
-    }
-</style>
-<!--下面是轮播图片-->
-@if (Model.Sliders.Count > 0)
-{
-<div style="background-image:url(../../img/old-brick-wall-texture-05.jpg);background-size:cover;background-attachment:fixed;padding-top:35px;padding-bottom:35px;">
-    <div id="myCarousel" class="carousel slide" style="margin-right:15%;margin-left:15%;height:300px;">
-        <!-- 轮播（Carousel）指标 -->
-        <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            @for (int i = 1; i < Model.Sliders.Count; i++)
-            {
-                <li data-target="#myCarousel" data-slide-to="@i"></li>
-            }
-        </ol>
-        <!-- 轮播（Carousel）项目 -->
-        <div class="carousel-inner">
-            <div class="item active">
-                    <img src="@Url.Content(Model.Sliders[0].GetUrl())" alt="First slide" style="height:300px;width:100%">
-                <div class="carousel-caption">@Model.Sliders[0].Description</div>
-            </div>
-                @for (int i = 1; i < Model.Sliders.Count; i++)
-            {
-                <div class="item">
-                        <img src="@Url.Content(Model.Sliders[i].GetUrl())" alt="First slide" style="height:300px;width:100%">
-                    <div class="carousel-caption">@Model.Sliders[i].Description</div>
-                </div>
-            }
-        </div>
-        <!-- 轮播（Carousel）导航 -->
-        <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
-        <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
+<!--第一部分：大标题-->
+<section class="sec">
+    <div class="cover">
     </div>
-</div>
-}
+    <div class="row animated fadeIn">
+        <b class="secheader">京贸创客 | UCreater </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<!--第二部分：轮播图-->
+<section class="secblank">
+    <div class="row" style="padding-left:10%;padding-right:10%;">
+        <div style="float:left" class="col-md-4 col-xs-12">
+            <h1 class="showtitle" style="font-size:40px;">风采展示|Show</h1>
+            <p class="showpara">这里是京贸创客风采展示。</p>
+            <p class="showpara">这里是京贸创客风采展示。</p>
+            <p class="showpara">这里是京贸创客风采展示。</p>
+            <p class="showpara">这里是京贸创客风采展示。</p>
+            <p class="showpara">这里是京贸创客风采展示。</p>
+        </div>
+        <div style="margin-top:20px;" class="col-md-8 col-xs-12">
+            <div id="myCarousel" class="carousel slide" style="height:300px;cursor:pointer;box-shadow:0 0 20px rgba(0,0,0,0.5)">
+                @if (Model.Sliders.Count > 0)
+                {
 
-<!--上面是轮播图片-->
-<!--下面是公告栏-->
-<div style="padding-top:80px;padding-bottom:80px;margin-bottom:0;margin-top:0;background:url(../../img/HeaderGreyDenim.jpg)center top repeat ;background-size:cover">
-    <h4 style="font-family:'Microsoft YaHei';text-align:center">近期公告</h4><br>
-    <div class="row demo-tiles" style="padding-left:75px;padding-right:75px;margin-bottom:0px;">
+                <!-- 轮播（Carousel）指标 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        @for (int i = 1; i < Model.Sliders.Count; i++)
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i"></li>
+                        }
+                    </ol>
+                <!-- 轮播（Carousel）项目 -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="@Url.Content(Model.Sliders[0].GetUrl())" alt="First slide" style="height:300px;width:100%">
+                            <div class="carousel-caption">@Model.Sliders[0].Description</div>
+                        </div>
+                        @for (int i = 1; i < Model.Sliders.Count; i++)
+                        {
+                            <div class="item">
+                                <img src="@Url.Content(Model.Sliders[i].GetUrl())" alt="First slide" style="height:300px;width:100%">
+                                <div class="carousel-caption">@Model.Sliders[i].Description</div>
+                            </div>
+                        }
+                    </div>
+                <!-- 轮播（Carousel）导航 -->
+                    <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
+                    <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!--第三部分：公告栏-->
+<section class="secblank" style="background-image:url(../../img/featuresbg.jpg);background-size: cover;background-position: center;background-attachment:fixed;">
+    <div class="row" style="padding-left:10%;padding-right:10%;">
+        <b class="secheader col-xs-12">近期活动|In</b>
         @foreach (var a in Model.LatestActivitys)
         {
-            <div class="col-md-3 col-xs-6">
-                <div class="tile" style="height:300px">
-                    <img src="~/img/icons/png/Clipboard.png" alt="Compas" class="tile-image big-illustration">
-                    <h3 class="tile-title">@a.Name</h3>
-                    <p>@a.Content</p>
-                    <a class="btn btn-primary btn-large btn-block" href="#" style="background-color:rgb(0,161,196)">阅读详细</a>
-                </div>
+        <div class="col-md-3 col-xs-6">
+            <div class="feature">
+                <img src="~/img/timelane1.jpg" alt="Compas">
+                <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@a.Name</h3>
+                <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;">@a.Content</p>
+                <a class="btn btn-primary btn-large btn-block" href="#" style="background-color:rgb(0,161,196)">阅读详细</a>
             </div>
+        </div>
         }
     </div>
-</div>
-
-<!--上面是公告栏-->
-<!--下面是日历-->
-<div class="col-md-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:350px;background-color:#488D94">
-    <div class="col-md-3"><img style="height:150px;width:150px;" src="~/img/icons/png/Calendar.png" /></div>
-    <div class="col-md-3"></div>
-    <div class="Calendar col-md-6">
-            <div id="idCalendarPre">&lt;&lt;</div>
-            <div id="idCalendarNext">&gt;&gt;</div>
-            <span id="idCalendarYear"></span>年 <span id="idCalendarMonth"></span>月
-            <table cellspacing="0">
-                <thead>
-                    <tr>
-                        <td>日</td>
-                        <td>一</td>
-                        <td>二</td>
-                        <td>三</td>
-                        <td>四</td>
-                        <td>五</td>
-                        <td>六</td>
-                    </tr>
-                </thead>
-                <tbody id="idCalendar"></tbody>
-            </table>
+</section>
+<!--第四部分：团队故事-->
+<section class="secblank">
+    <div class="row" style="padding-left:10%;padding-right:10%;text-align:center;">
+        <div class="col-xs-12 secheader" style="color:black;">团队故事|Story</div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="~/img/story1.png" alt="">
         </div>
-
-        <script language="JavaScript">
-
-            var cale = new Calendar("idCalendar", {
-                SelectDay: new Date().setDate(10),
-                onSelectDay: function (o) { o.className = "onSelect"; },
-                onToday: function (o) { o.className = "onToday"; },
-                onFinish: function () {
-                    $("idCalendarYear").innerHTML = this.Year; $("idCalendarMonth").innerHTML = this.Month;
-                    var flag = [10, 15, 20];
-                    for (var i = 0, len = flag.length; i < len; i++) {
-                        this.Days[flag[i]].innerHTML = "<a href='javascript:void(0);' onclick=\"alert('日期是:" + this.Year + "/" + this.Month + "/" + flag[i] + "');return false;\">" + flag[i] + "</a>";
-                    }
-                }
-            });
-
-            $("idCalendarPre").onclick = function () { cale.PreMonth(); }
-            $("idCalendarNext").onclick = function () { cale.NextMonth(); }
-
-            $("idCalendarPreYear").onclick = function () { cale.PreYear(); }
-            $("idCalendarNextYear").onclick = function () { cale.NextYear(); }
-
-            $("idCalendarNow").onclick = function () { cale.NowMonth(); }
-
-        </script>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="~/img/fuqin.jpg" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="/img/story1.png" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="~/img/fuqin.jpg" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="~/img/fuqin.jpg" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="/img/story3.png" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="~/img/fuqin.jpg" alt="">
+        </div>
+        <div class="col-md-3 col-xs-6 showitem">
+            <img class="img-responsive" src="/img/story3.png" alt="">
+        </div>
     </div>
+
+</section>
+<!--第五部分：日历-->
+<section class="secblank" style="background-color:#313131">
+    <div class="row cover" style="padding-left:10%;padding-right:10%;padding-top:60px;padding-bottom:60px;">
+        <div class="col-xs-12">
+            <div class="col-xs-3"><img style="height:100px;width:100px;" src="~/img/icons/png/Calendar.png" /></div>
+            <div class="col-xs-3">
+                <h1 class="showtitle" style="font-size:30px;color:white;font-family:'Microsoft YaHei UI'">日历|Calendar</h1>
+            </div>
+            <div class="Calendar col-xs-6">
+                <div id="idCalendarPre">&lt;&lt;</div>
+                <div id="idCalendarNext">&gt;&gt;</div>
+                <span id="idCalendarYear"></span>年 <span id="idCalendarMonth"></span>月
+                <table cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td>日</td>
+                            <td>一</td>
+                            <td>二</td>
+                            <td>三</td>
+                            <td>四</td>
+                            <td>五</td>
+                            <td>六</td>
+                        </tr>
+                    </thead>
+                    <tbody id="idCalendar"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<script language="JavaScript">
+
+    var cale = new Calendar("idCalendar", {
+        SelectDay: new Date().setDate(10),
+        onSelectDay: function (o) { o.className = "onSelect"; },
+        onToday: function (o) { o.className = "onToday"; },
+        onFinish: function () {
+            $("idCalendarYear").innerHTML = this.Year; $("idCalendarMonth").innerHTML = this.Month;
+            var flag = [10, 15, 20];
+            for (var i = 0, len = flag.length; i < len; i++) {
+                this.Days[flag[i]].innerHTML = "<a href='javascript:void(0);' onclick=\"alert('日期是:" + this.Year + "/" + this.Month + "/" + flag[i] + "');return false;\">" + flag[i] + "</a>";
+            }
+        }
+    });
+
+    $("idCalendarPre").onclick = function () { cale.PreMonth(); }
+    $("idCalendarNext").onclick = function () { cale.NextMonth(); }
+
+    $("idCalendarPreYear").onclick = function () { cale.PreYear(); }
+    $("idCalendarNextYear").onclick = function () { cale.NextYear(); }
+
+    $("idCalendarNow").onclick = function () { cale.NowMonth(); }
+
+</script>
+
 <!--上面是日历-->
