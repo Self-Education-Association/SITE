@@ -48,26 +48,7 @@
 </div>
 <div class="col-md-12 col-xs-12">
     <div class="col-md-2 col-xs-2">
-        <ul class="nav nav-list well" style="margin-top:15%;margin-bottom:15%;font-size:small;min-width:120px">
-            <li>
-                <a href="/Tutor/Calendar">活动日历</a>
-            </li>
-            <li class="nav-header">
-                课程相关
-            </li>
-            <li>
-                <a href="/Tutor/Create">创建课程</a>
-            </li>
-            <li>
-                <a href="/Tutor/Index">课程列表</a>
-            </li>
-            <li>
-                <a href="/Tutor/ChangePassword">修改密码</a>
-            </li>
-            <li>
-                <a href="/Tutor/StudentList">学生列表</a>
-            </li>
-        </ul>
+        @Html.Partial("_TutorMenuPartial")
     </div>
     <div class="col-md-10 col-xs-10">
 <h2>StudentList</h2>
