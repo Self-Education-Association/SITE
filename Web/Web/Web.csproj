@@ -742,7 +742,9 @@
     <Content Include="Views\Home\AboutNew.cshtml" />
     <Content Include="Views\Tutor\ChangePassword.cshtml" />
     <Content Include="Views\Manage\_ManageMenuPartial.cshtml" />
+    <Content Include="Views\Administrator\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Manage\Company.cshtml" />
+    <Content Include="Views\Tutor\_TutorMenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
