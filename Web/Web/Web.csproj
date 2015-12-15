@@ -770,8 +770,9 @@
     <Content Include="Views\Manage\_ManageMenuPartial.cshtml" />
     <Content Include="Views\Manage\TeamAccess.cshtml" />
     <Content Include="Views\Administrator\_AdminMenuPartial.cshtml" />
-    <Content Include="Views\Manage\Company.cshtml" />
+    <Content Include="Views\Manage\CompanyChanges.cshtml" />
     <Content Include="Views\Tutor\_TutorMenuPartial.cshtml" />
+    <Content Include="Views\Manage\UserDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

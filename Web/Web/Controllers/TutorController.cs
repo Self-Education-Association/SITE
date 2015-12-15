@@ -11,7 +11,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class TutorController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -90,7 +90,6 @@ namespace Web.Controllers
                     ViewData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
                     return View();
                 }
-                courseOperation = new CourseOperation();
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
@@ -132,7 +131,6 @@ namespace Web.Controllers
                         return View();
                     }
                 }
-                courseOperation = new CourseOperation();
                 if (courseOperation.Edit())
                 {
                     if (courseOperation.Students != null)
@@ -174,9 +172,9 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DoDelete(Guid id)
+        public ActionResult DoDelete(CourseOperation courseOperation)
         {
-            if (!CourseOperation.Delete(id))
+            if (!courseOperation.Delete())
             {
                 ViewData["ErrorInfo"] = "无法删除";
                 return View();
@@ -223,7 +221,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (CourseRecord.Remark(courseRecord))
+                if (courseRecord.Remark())
                 return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
                 ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }

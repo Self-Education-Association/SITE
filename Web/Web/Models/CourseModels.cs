@@ -75,17 +75,16 @@ namespace Web.Models
             }
         }
 
-        public static bool Delete(Guid id)
+        public bool Delete()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    CourseOperation courseOperation = db.CourseOperations.Find(id);
-                    courseOperation.Enabled = false;
-                    db.Entry(courseOperation).State = EntityState.Modified;
+                    Enabled = false;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (courseOperation.Enabled == false)
+                    if (this.Enabled == false)
                         return true;
                     return false;
                 }
@@ -151,16 +150,14 @@ namespace Web.Models
     public class CourseRecord : Remark
     {
         public CourseOperation CourseOperation { get; set; }
-        public static bool Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] CourseRecord courseRecord)
+        public bool Remark()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    courseRecord.CourseOperation = db.CourseOperations.First(t => t.Creator == user);
-                    courseRecord.Time = DateTime.Now;
-                    db.Entry(courseRecord).State = EntityState.Modified;
+                    Time = DateTime.Now;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     return true;
                 }
@@ -170,25 +167,22 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Apply(Guid Id)
+        public bool Apply(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var CourseOperation = db.CourseOperations.Find(Id);
-                    var courseRecord = new CourseRecord
-                    {
-                        Id = Guid.NewGuid(),
-                        CourseOperation = CourseOperation,
-                        ActionTime = DateTime.Now,
-                        Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
-                        RemarkContent = "",
-                        RemarkRate = RemarkType.None,
-                        Time = new DateTime(2000, 1, 1, 0, 0, 0)
-                    };
+                    CourseOperation = db.CourseOperations.Find(Id);
+                    Id = Guid.NewGuid();
+                    ActionTime = DateTime.Now;
+                    Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    RemarkContent = "";
+                    RemarkRate = RemarkType.None;
+                    Time = new DateTime(2000, 1, 1, 0, 0, 0);
                     CourseOperation.Count++;
-                    db.CourseRecords.Add(courseRecord);
+                    CourseOperation.Students.Add(Receiver);
+                    db.CourseRecords.Add(this);
                     db.SaveChanges();
                     return true;
                 }
@@ -198,22 +192,22 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Quit(Guid Id)
+        public bool Quit(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var CourseOperation = db.CourseOperations.Find(Id);
-                    var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    var courseRecord = (from a in db.CourseRecords where a.Receiver.Id == user.Id && a.CourseOperation.Id == CourseOperation.Id select a).First();
+                    var courseOperation = db.CourseOperations.Find(Id);
+                    if (courseOperation != CourseOperation)
+                        return false;
                     CourseOperation.Count--;
                     if (CourseOperation.Students != null)
                     {
-                        if (CourseOperation.Students.Contains(user))
-                            CourseOperation.Students.Remove(user);
+                        if (CourseOperation.Students.Contains(Receiver))
+                            CourseOperation.Students.Remove(Receiver);
                     }
-                    db.CourseRecords.Remove(courseRecord);
+                    db.CourseRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }

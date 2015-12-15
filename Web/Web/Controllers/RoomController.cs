@@ -60,8 +60,8 @@ namespace Web.Controllers
             {
                 var RoomOperation = db.RoomOperations.Find(Id);
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var Roomrecord = (from a in db.RoomRecords where a.RoomOperation.Id == RoomOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (Roomrecord == null)
+                var roomRecord = (from a in db.RoomRecords where a.RoomOperation.Id == RoomOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
+                if (roomRecord == default(RoomRecord) | roomRecord == null)
                 {
                     TempData["ErrorInfo"] = "您未选该场地！";
                     return RedirectToAction("Index");
@@ -71,7 +71,7 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "现在不是可退选的时间！";
                     return RedirectToAction("Index");
                 }
-                if (RoomRecord.Quit(Id))
+                if (roomRecord.Quit(Id))
                     return RedirectToAction("Index");
                 TempData["ErrorInfo"] = "无法退选！";
             }

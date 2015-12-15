@@ -88,16 +88,14 @@ namespace Web.Models
     {
         public virtual ActivityOperation ActivityOperation { get; set; }
 
-        public static bool Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] ActivityRecord ActivityRecord)
+        public bool Remark()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    ActivityRecord.ActivityOperation = db.ActivityOperations.First(t => t.Creator == user);
-                    ActivityRecord.Time = DateTime.Now;
-                    db.Entry(ActivityRecord).State = EntityState.Modified;
+                    Time = DateTime.Now;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     return true;
                 }
@@ -107,25 +105,22 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Apply(Guid Id)
+        public bool Apply(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var ActivityOperation = db.ActivityOperations.Find(Id);
-                    var ActivityRecord = new ActivityRecord
-                    {
-                        Id = Guid.NewGuid(),
-                        ActivityOperation = ActivityOperation,
-                        ActionTime = DateTime.Now,
-                        Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
-                        RemarkContent = "",
-                        RemarkRate = RemarkType.None,
-                        Time = new DateTime(2000, 1, 1, 0, 0, 0)
-                    };
+                    var activityOperation = db.ActivityOperations.Find(Id);
+                    Id = Guid.NewGuid();
+                    ActivityOperation = activityOperation;
+                    ActionTime = DateTime.Now;
+                    Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    RemarkContent = "";
+                    RemarkRate = RemarkType.None;
+                    Time = new DateTime(2000, 1, 1, 0, 0, 0);
                     ActivityOperation.Count++;
-                    db.ActivityRecords.Add(ActivityRecord);
+                    db.ActivityRecords.Add(this);
                     db.SaveChanges();
                     return true;
                 }
@@ -135,22 +130,22 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Quit(Guid Id)
+        public bool Quit(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var ActivityOperation = db.ActivityOperations.Find(Id);
+                    var activityOperation = db.ActivityOperations.Find(Id);
+                    if (ActivityOperation != activityOperation)
+                        return false;
                     var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    var ActivityRecord = (from a in db.ActivityRecords where a.Receiver.Id == user.Id && a.ActivityOperation.Id == ActivityOperation.Id select a).First();
                     ActivityOperation.Count--;
                     if (ActivityOperation.Records != null)
                     {
-                        if (ActivityOperation.Records.Contains(ActivityRecord))
-                            ActivityOperation.Records.Remove(ActivityRecord);
+                        if (ActivityOperation.Records.Contains(this))
+                            ActivityOperation.Records.Remove(this);
                     }
-                    db.ActivityRecords.Remove(ActivityRecord);
                     db.SaveChanges();
                     return true;
                 }

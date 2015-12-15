@@ -38,8 +38,8 @@ namespace Web.Controllers
             {
                 var ActivityOperation = db.ActivityOperations.Find(Id);
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var Activityrecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (Activityrecord != null)
+                var activityRecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
+                if (activityRecord != null)
                 {
                         TempData["ErrorInfo"] = "您已选过该活动！";
                         return RedirectToAction("Index");
@@ -54,7 +54,7 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "该活动现在不可预约！";
                     return RedirectToAction("Index");
                 }
-                if (ActivityRecord.Apply(Id))
+                if (activityRecord.Apply(Id))
                     return RedirectToAction("Index"); ;
                 TempData["ErrorInfo"] = "你不符合预约要求！";
             }
@@ -66,8 +66,8 @@ namespace Web.Controllers
             {
                 var ActivityOperation = db.ActivityOperations.Find(Id);
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var Activityrecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (Activityrecord == null)
+                var activityRecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
+                if (activityRecord == null)
                 {
                         TempData["ErrorInfo"] = "您未选过该活动！";
                         return RedirectToAction("Index");
@@ -77,7 +77,7 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "现在不是可退选的时间！";
                     return RedirectToAction("Index");
                 }
-                if (ActivityRecord.Quit(Id))
+                if (activityRecord.Quit(Id))
                     return RedirectToAction("Index");
                 TempData["ErrorInfo"] = "无法退选！";
             }
