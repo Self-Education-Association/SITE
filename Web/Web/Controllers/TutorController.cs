@@ -11,7 +11,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class TutorController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -83,14 +83,19 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid && courseOperation.StartTime <= courseOperation.EndTime)
+            if (ModelState.IsValid && courseOperation != null)
             {
+                if(courseOperation.StartTime <= courseOperation.EndTime)
+                {
+                    ViewData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
+                    return View();
+                }
                 courseOperation = new CourseOperation();
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
-            ViewData["ErrorInfo"] = "错误：无法创建课程，不符合创建课程要求";
+            ViewData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
             return View(courseOperation);
         }
 
@@ -112,7 +117,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && courseOperation !=null)
             {
                 if (courseOperation.Content.Length<=50)
                 {
@@ -123,7 +128,7 @@ namespace Web.Controllers
                 {
                     if (courseOperation.Students.Count > courseOperation.Limit)
                     {
-                        ViewData["ErrorInfo"] = "新人数上限小于现有人数！请审核修改内容。";
+                        ViewData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
                         return View();
                     }
                 }
@@ -146,9 +151,10 @@ namespace Web.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改,无法连接到服务器.";
+                ViewData["ErrorInfo"] = "无法修改！无法连接到服务器.";
                 return View();
             }
+            ViewData["ErrorInfo"] = "无法修改！对象不存在或无效。";
             return View();
         }
         

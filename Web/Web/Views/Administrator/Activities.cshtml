@@ -117,9 +117,8 @@
                         @Html.DisplayFor(modelItem => item.Enabled)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "ActivityEdit", new { id = item.Id }) |
-                        @Html.ActionLink("Details", "ActivityDetails", new { id = item.Id }) |
-                        @Html.ActionLink("Delete", "ActivityDelete", new { id = item.Id })
+                        @Html.ActionLink("ActivityEdit", "ActivityEdit", new { id = item.Id }) |
+                        @Html.ActionLink("ActivityDelete", "ActivityDelete", new { id = item.Id })
                     </td>
                 </tr>
             }
