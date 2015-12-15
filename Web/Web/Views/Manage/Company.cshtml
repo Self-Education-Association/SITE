@@ -4,12 +4,28 @@
     ViewBag.Title = "Company";
 }
 
-<h2>Company</h2>
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
 
-@using (Html.BeginForm()) 
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        @Html.Partial("_ManageMenuPartial")
+    </div>
+    <div class="col-md-10 col-xs-10" style="color:initial">
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Company</h4>
         <hr />
@@ -125,3 +141,6 @@
         </div>
     </div>
 }
+
+    </div>
+</div>

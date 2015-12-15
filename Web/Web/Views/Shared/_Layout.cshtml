@@ -27,8 +27,13 @@
             color: white;
         }
 
+
         .navbar-default .navbar-brand {
             color: white;
+        }
+
+        .navbar-nav > li > .dropdown-menu {
+            margin-top: 0px;
         }
 
         .aa {
@@ -39,30 +44,21 @@
             display: block;
         }
 
-        .navbar-nav > li > .dropdown-menu {
-            margin-top: 0px;
-        }
-
-     .col-xs-12 >    dl {
+        dl.col-xs-1 {
             text-align: center;
         }
 
-    .col-xs-12 >     dd {
-            color: #3C5B45;
-            font-family: Arial;
-            font-size: larger;
+        dl.col-xs-4 {
+            text-align: center;
+            width: 28%;
         }
 
-    .col-xs-12 > dt {
-            color: #608D4E;
-            font-family: Arial;
-            font-size: larger;
-        }
         .col-xs-10 {
-            margin-top:1%;
-            margin-bottom:1%;
-            color:black;
+            margin-top: 1%;
+            margin-bottom: 1%;
+            color: black;
         }
+
     </style>
 </head>
 
@@ -131,45 +127,45 @@
     </div>
 
     @RenderBody()
-    <div class="col-md-12 col-xs-12" style="padding-top:10px;padding-bottom:10px;padding-left:30px;padding-right:30px;min-height:225px;background-color:#ececec;font-size:8px;">
-            <dl class="col-md-1 col-xs-1">
-                <dt>声音</dt>
-                <dd><a href="/Home/VoiceNews">近期新闻</a></dd>
-                <dd><a href="/Home/VoicePoints">新锐观点</a></dd>
-                <dd><a href="/Home/constructing">比赛天地</a></dd>
-            </dl>
-            <dl class="col-md-1 col-xs-1">
-                <dt>学习</dt>
-                <dd><a href="/Home/LearnSelf">个人学习</a></dd>
-                <dd><a href="/Home/LearnSelf#Cou">课程学习</a></dd>
-                <dd><a href="/Home/LearnSelf#Pro">项目学习</a></dd>
-            </dl>
-            <dl class="col-md-1 col-xs-1">
-                <dt>在线</dt>
-                <dd><a href="/Room/Index">场地预约</a></dd>
-                <dd><a href="/Home/Download">资料下载</a></dd>
-                <dd><a href="/Home/constructing">视频库</a></dd>
-            </dl>
-            <dl class="col-md-1 col-xs-1">
-                <dt>活动</dt>
-                <dd><a href="/Activity/Index">目前活动</a></dd>
-                <dd><a href="/Activity/Index">往期活动</a></dd>
-            </dl>
-            <dl class="col-md-1 col-xs-1">
-                <dt>培育</dt>
-                <dd><a href="/Home/TutorOnline">导师在线</a></dd>
-                <dd><a href="/Home/TutorJoin">成为导师</a></dd>
-            </dl>
-            <dl class="col-md-1 col-xs-1">
-                <dt>关于</dt>
-                <dd><a href="/Home/AboutSite">京贸创客</a></dd>
-                <dd><a href="/Home/AboutNew">创业企业</a></dd>
-                <dd><a href="/Home/AboutNew#Companies">创业项目</a></dd>
-            </dl>   
-            <dl class="col-md-4 col-xs-4 pull-right">
-                <dt>关注微信</dt>
-                <dd><img src="~/img/viewfile.jpg" style="height:150px;width:150px;"></dd>
-            </dl>
+    <div class="col-md-12 col-xs-12" style="padding-top:10px;padding-bottom:10px;padding-left:20%;padding-right:30px;min-height:225px;background-color:#ececec;font-size:8px;">
+        <dl class="col-md-1 col-xs-1">
+            <dt>声音</dt>
+            <dd><a href="/Home/VoiceNews">近期新闻</a></dd>
+            <dd><a href="/Home/VoicePoints">新锐观点</a></dd>
+            <dd><a href="/Home/constructing">比赛天地</a></dd>
+        </dl>
+        <dl class="col-md-1 col-xs-1">
+            <dt>学习</dt>
+            <dd><a href="/Home/LearnSelf">个人学习</a></dd>
+            <dd><a href="/Home/LearnSelf#Cou">课程学习</a></dd>
+            <dd><a href="/Home/LearnSelf#Pro">项目学习</a></dd>
+        </dl>
+        <dl class="col-md-1 col-xs-1">
+            <dt>在线</dt>
+            <dd><a href="/Room/Index">场地预约</a></dd>
+            <dd><a href="/Home/Download">资料下载</a></dd>
+            <dd><a href="/Home/constructing">视频库</a></dd>
+        </dl>
+        <dl class="col-md-1 col-xs-1">
+            <dt>活动</dt>
+            <dd><a href="/Activity/Index">目前活动</a></dd>
+            <dd><a href="/Activity/Index">往期活动</a></dd>
+        </dl>
+        <dl class="col-md-1 col-xs-1">
+            <dt>培育</dt>
+            <dd><a href="/Home/TutorOnline">导师在线</a></dd>
+            <dd><a href="/Home/TutorJoin">成为导师</a></dd>
+        </dl>
+        <dl class="col-md-1 col-xs-1">
+            <dt>关于</dt>
+            <dd><a href="/Home/AboutSite">京贸创客</a></dd>
+            <dd><a href="/Home/AboutNew">创业企业</a></dd>
+            <dd><a href="/Home/AboutNew#Companies">创业项目</a></dd>
+        </dl>
+        <dl class="col-md-4 col-xs-4">
+            <dt>关注微信</dt>
+            <dd><img src="~/img/viewfile.jpg" style="height:150px;width:150px;"></dd>
+        </dl>
 
     </div>
     <div class="clearfix"></div>
