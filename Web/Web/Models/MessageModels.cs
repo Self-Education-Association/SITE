@@ -110,6 +110,18 @@ namespace Web.Models
                     Title = "新成员申请加入团队";
                     Content = "有新成员申请加入你的团队，请及时处理。";
                     break;
+                case MessageTemplate.TeamApplySuccess:
+                    Title = "您已成功加入团队";
+                    Content = "您申请的团队已通过您的申请！请在我的团队页面查看。";
+                    break;
+                case MessageTemplate.TeamRecruit:
+                    Title = "您已成功创建团队招募";
+                    Content = "您申请的团队招募已通过！请等待他人的加入申请。";
+                    break;
+                case MessageTemplate.TeamApplyFail:
+                    Title = "您未能加入团队";
+                    Content = "您申请的团队拒绝了你的申请，详情请向团队管理员咨询。";
+                    break;
                 default:
                     Title = "";
                     Content = "";
@@ -148,9 +160,10 @@ namespace Web.Models
     public enum MessageTemplate
     {
         TeamFailure,
-        TeamSuccess,
         TeamApply,
         TeamRecruit,
+        TeamApplySuccess,
+        TeamApplyFail,
         ProjectFailure,
         ProjectSuccess,
         CompanyFailure,

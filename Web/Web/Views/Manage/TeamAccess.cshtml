@@ -1,9 +1,8 @@
 ﻿@model IEnumerable<Web.Models.User>
 
 @{
-    ViewBag.Title = "TeamRecruit";
+    ViewBag.Title = "TeamAccess";
 }
-
 <style>
     body {
         background: url(/img/HeaderGreyDenim.jpg);
@@ -44,7 +43,8 @@
                         @Html.DisplayFor(modelItem => item.Identitied)
                     </td>
                     <td>
-                        @Html.ActionLink("Details", "UserDetails", new { id = item.Id })
+                        @Html.ActionLink("同意加入", "DoTeamAccess", "Manage", new { id = item.Id, IsApprove = true })
+                        @Html.ActionLink("拒绝加入", "DoTeamAccess", "Manage", new { id = item.Id, IsApprove = false })
                     </td>
                 </tr>
             }
@@ -53,5 +53,3 @@
 
     </div>
 </div>
-
-

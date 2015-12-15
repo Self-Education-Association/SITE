@@ -18,20 +18,20 @@ namespace Web.Models
 
         public virtual List<RoomRecord> RoomRecords { get; set; }
 
-        public static bool Create(RoomOperation RoomOperation)
+        public bool Create()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    RoomOperation.Id = Guid.NewGuid();
-                    RoomOperation.Time = DateTime.Now;
-                    RoomOperation.Usable = true;
-                    RoomOperation.Enabled = true;
-                    RoomOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    db.RoomOperations.Add(RoomOperation);
+                    Id = Guid.NewGuid();
+                    Time = DateTime.Now;
+                    Usable = true;
+                    Enabled = true;
+                    Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    db.RoomOperations.Add(this);
                     db.SaveChanges();
-                    var Room = db.RoomOperations.Find(RoomOperation.Id);
+                    var Room = db.RoomOperations.Find(Id);
                     if (Room != null)
                         return true;
                     return false;
@@ -167,25 +167,24 @@ namespace Web.Models
             }
         }
 
-        public static bool Apply(Guid Id)
+        public bool Apply(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var RoomOperation = db.RoomOperations.Find(Id);
-                    var RoomRecord = new RoomRecord
-                    {
-                        Id = Guid.NewGuid(),
-                        RoomOperation = RoomOperation,
-                        ActionTime = DateTime.Now,
-                        Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId()),
-                        RemarkContent = "",
-                        RemarkRate = RemarkType.None,
-                        Time = new DateTime(2000, 1, 1, 0, 0, 0)
-                    };
+                    var roomOperation = db.RoomOperations.Find(Id);
+                    if (roomOperation == null)
+                        return false;
+                    Id = Guid.NewGuid();
+                    RoomOperation = roomOperation;
+                    ActionTime = DateTime.Now;
+                    Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    RemarkContent = "";
+                    RemarkRate = RemarkType.None;
+                    Time = new DateTime(2000, 1, 1, 0, 0, 0);
                     RoomOperation.Usable = false;
-                    db.RoomRecords.Add(RoomRecord);
+                    db.RoomRecords.Add(this);
                     db.SaveChanges();
                     return true;
                 }
@@ -196,22 +195,23 @@ namespace Web.Models
             }
         }
 
-        public static bool Quit(Guid Id)
+        public bool Quit(Guid Id)
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var RoomOperation = db.RoomOperations.Find(Id);
+                    var roomOperation = db.RoomOperations.Find(Id);
+                    if (RoomOperation != roomOperation)
+                        return false;
                     var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    var RoomRecord = (from a in db.RoomRecords where a.Receiver.Id == user.Id && a.RoomOperation.Id == RoomOperation.Id select a).First();
                     RoomOperation.Usable = true;
                     if (RoomOperation.RoomRecords != null)
                     {
-                        if (RoomOperation.RoomRecords.Contains(RoomRecord))
-                            RoomOperation.RoomRecords.Remove(RoomRecord);
+                        if (RoomOperation.RoomRecords.Contains(this))
+                            RoomOperation.RoomRecords.Remove(this);
                     }
-                    db.RoomRecords.Remove(RoomRecord);
+                    db.RoomRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }

@@ -50,17 +50,22 @@ namespace Web.Models
 
         [Required]
         [Display(Name = "开始时间")]
+        [DataType(DataType.DateTime)]
         [DayRange(0,60)]
         public DateTime StartTime { get; set; }
 
         [Required]
         [Display(Name = "结束时间")]
+        [DataType(DataType.DateTime)]
         [DayRange(0,60)]
         public DateTime EndTime { get; set; }
 
-        [Required]
         [Display(Name = "描述")]
         public string Content { get; set; }
+
+        [Display(Name ="摘要")]
+        [MaxLength(50)]
+        public string ShortContent { get; set; }
 
         [Display(Name = "启用中")]
         public bool Enabled { get; set; }

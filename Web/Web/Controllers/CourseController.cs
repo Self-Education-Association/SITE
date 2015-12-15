@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
+using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Web.Models;
@@ -28,7 +29,7 @@ namespace Web.Controllers
             }
             return View(courseOperation);
         }
-        
+
         public ActionResult Apply(Guid Id)
         {
             if (ModelState.IsValid)
@@ -47,13 +48,14 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "该课程已满！";
                     return RedirectToAction("Index");
                 }
-                if ( DateTime.Now > CourseOperation.StartTime)
+                if (DateTime.Now > CourseOperation.StartTime)
                 {
                     TempData["ErrorInfo"] = "该课程现在不可预约！";
                     return RedirectToAction("Index");
                 }
-                if (CourseRecord.Apply(Id))
-                    return RedirectToAction("Index");;
+                var courseRecord = new CourseRecord();
+                if (courseRecord.Apply(Id))
+                    return RedirectToAction("Index"); ;
                 TempData["ErrorInfo"] = "你不符合预约要求！";
             }
             return RedirectToAction("Index");
@@ -65,8 +67,13 @@ namespace Web.Controllers
                 var CourseOperation = db.CourseOperations.Find(Id);
                 if (CourseOperation.Students == null)
                 {
-                        TempData["ErrorInfo"] = "您未选过该课程！";
-                        return RedirectToAction("Index");
+                    TempData["ErrorInfo"] = "该课程不存在！";
+                    return RedirectToAction("Index");
+                }
+                if (CourseOperation.Students == null)
+                {
+                    TempData["ErrorInfo"] = "您未选过该课程！";
+                    return RedirectToAction("Index");
                 }
                 if (CourseOperation.Students != null)
                 {
@@ -81,11 +88,13 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "现在不是可退选的时间！";
                     return RedirectToAction("Index");
                 }
-                    if (CourseRecord.Quit(Id))
-                return RedirectToAction("Index");
+                var courseRecord = (from a in db.CourseRecords where a.CourseOperation == CourseOperation && a.Receiver.Id == User.Identity.GetUserId() select a).FirstOrDefault();
+                if (courseRecord != default(CourseRecord))
+                    if (courseRecord.Quit(Id))
+                        return RedirectToAction("Index");
                 TempData["ErrorInfo"] = "无法退选！";
             }
-            return RedirectToAction("Index"); 
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

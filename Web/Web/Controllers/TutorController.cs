@@ -83,13 +83,18 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid && courseOperation.StartTime <= courseOperation.EndTime)
+            if (ModelState.IsValid && courseOperation != null)
             {
+                if(courseOperation.StartTime <= courseOperation.EndTime)
+                {
+                    ViewData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
+                    return View();
+                }
                 //创建成功返回至列表菜单
-                if (CourseOperation.Create(courseOperation))
+                if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
-            ViewData["ErrorInfo"] = "错误：无法创建课程，不符合创建课程要求";
+            ViewData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
             return View(courseOperation);
         }
 
@@ -111,9 +116,22 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && courseOperation !=null)
             {
-                if (CourseOperation.Update(courseOperation))
+                if (courseOperation.Content.Length<=50)
+                {
+                    courseOperation.ShortContent = courseOperation.Content;
+                }
+                courseOperation.ShortContent = courseOperation.Content.Substring(0, 50);
+                if (courseOperation.Students != null)
+                {
+                    if (courseOperation.Students.Count > courseOperation.Limit)
+                    {
+                        ViewData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
+                        return View();
+                    }
+                }
+                if (courseOperation.Edit())
                 {
                     if (courseOperation.Students != null)
                     {
@@ -131,9 +149,10 @@ namespace Web.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改,可能的问题：降低了人数上限，无法连接到服务器，修改后的内容不符合规定";
+                ViewData["ErrorInfo"] = "无法修改！无法连接到服务器.";
                 return View();
             }
+            ViewData["ErrorInfo"] = "无法修改！对象不存在或无效。";
             return View();
         }
         
@@ -153,9 +172,9 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DoDelete(Guid id)
+        public ActionResult DoDelete(CourseOperation courseOperation)
         {
-            if (!CourseOperation.Delete(id))
+            if (!courseOperation.Delete())
             {
                 ViewData["ErrorInfo"] = "无法删除";
                 return View();
@@ -202,7 +221,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (CourseRecord.Remark(courseRecord))
+                if (courseRecord.Remark())
                 return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
                 ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
