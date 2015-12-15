@@ -85,8 +85,9 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && courseOperation.StartTime <= courseOperation.EndTime)
             {
+                courseOperation = new CourseOperation();
                 //创建成功返回至列表菜单
-                if (CourseOperation.Create(courseOperation))
+                if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
             ViewData["ErrorInfo"] = "错误：无法创建课程，不符合创建课程要求";
@@ -118,7 +119,16 @@ namespace Web.Controllers
                     courseOperation.ShortContent = courseOperation.Content;
                 }
                 courseOperation.ShortContent = courseOperation.Content.Substring(0, 50);
-                if (CourseOperation.Update(courseOperation))
+                if (courseOperation.Students != null)
+                {
+                    if (courseOperation.Students.Count > courseOperation.Limit)
+                    {
+                        ViewData["ErrorInfo"] = "新人数上限小于现有人数！请审核修改内容。";
+                        return View();
+                    }
+                }
+                courseOperation = new CourseOperation();
+                if (courseOperation.Edit())
                 {
                     if (courseOperation.Students != null)
                     {
@@ -136,7 +146,7 @@ namespace Web.Controllers
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改,可能的问题：降低了人数上限，无法连接到服务器，修改后的内容不符合规定";
+                ViewData["ErrorInfo"] = "无法修改,无法连接到服务器.";
                 return View();
             }
             return View();

@@ -29,20 +29,20 @@ namespace Web.Models
         [Display(Name = "上限人数")]
         public string Location { get; set; }
 
-        public static bool Create(CourseOperation courseOperation)
+        public bool Create()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    courseOperation.Id = Guid.NewGuid();
-                    courseOperation.Time = DateTime.Now;
-                    courseOperation.Count = 0;
-                    courseOperation.Enabled = true;
-                    courseOperation.Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    db.CourseOperations.Add(courseOperation);
+                    Id = Guid.NewGuid();
+                    Time = DateTime.Now;
+                    Count = 0;
+                    Enabled = true;
+                    Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
+                    db.CourseOperations.Add(this);
                     db.SaveChanges();
-                    var course = db.CourseOperations.Find(courseOperation.Id);
+                    var course = db.CourseOperations.Find(this.Id);
                     if (course != null)
                         return true;
                     return false;
@@ -54,21 +54,17 @@ namespace Web.Models
             }
         }
 
-        public static bool Update([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,State")] CourseOperation courseOperation)
+        public bool Edit()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    if (courseOperation.Students != null)
-                    {
-                        if (courseOperation.Students.Count > courseOperation.Limit)
-                            return false;
-                    }
-                    courseOperation.Time = DateTime.Now;
-                    db.Entry(courseOperation).State = EntityState.Modified;
+                    Time = DateTime.Now;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (db.CourseOperations.Find(courseOperation.Id) != null)
+                    if (db.CourseOperations.Find(Id) != null)
+                        if(db.CourseOperations.Find(Id) == this)
                         return true;
                     return false;
                 }
