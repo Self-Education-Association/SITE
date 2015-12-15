@@ -56,21 +56,9 @@ namespace Web.Controllers
         }
         //4 Views
         #region 文章管理模块
-        public ActionResult Articles(int type,int page = 0)
+        public ActionResult Articles(int page = 0)
         {
-            IQueryable<Article> article;
-            //未完成
-            switch (type)
-            {
-                case 0:
-                    article = db.Articles.Where(a => a.Class == ArticleClass.a);
-                    break;
-                case 1:
-
-                default:
-                    article = db.Articles;
-                    break;
-            }
+            
             return View(new ListPage<Article>(db.Articles, page, pageSize));
         }
 
@@ -170,6 +158,7 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ActivityCreate(ActivityOperation model)
         {
             if (ModelState.IsValid)
@@ -179,6 +168,8 @@ namespace Web.Controllers
                     ViewData["ErrorInfo"] = "活动开始时间必须在结束时间之前。";
                     return View();
                 }
+                var s = new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 model.NewActivity(db);
                 db.ActivityOperations.Add(model);
                 db.SaveChanges();
@@ -200,10 +191,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult ActivityEdit(ActivityOperation model)
         {
             if (ModelState.IsValid)
             {
+                var s = new HtmlSanitizer();
+                model.Content = s.Sanitize(Request.Params["ck"]);
                 db.ActivityOperations.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
