@@ -38,6 +38,11 @@ namespace Web.Controllers
             {
                 var RoomOperation = db.RoomOperations.Find(Id);
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
+                if (RoomOperation == null)
+                {
+                    TempData["ErrorInfo"] = "该场地不存在！";
+                    return RedirectToAction("Index");
+                }
                 if (RoomOperation.Usable == false)
                 {
                     TempData["ErrorInfo"] = "该场地已被使用！";
