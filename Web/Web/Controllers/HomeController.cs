@@ -110,5 +110,13 @@ namespace Web.Controllers
         {
             return View();
         }
+        public ActionResult NewsPage()
+        {
+            return View();
+        }
+        public ActionResult VoiceRace()
+        {
+            return View();
+        }
     }
 }

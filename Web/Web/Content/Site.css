@@ -34,6 +34,7 @@ textarea {
 }
 
 
+
 .a:hover .aa {
     display: block;
     -webkit-animation-duration: 0.8s;
@@ -45,17 +46,20 @@ textarea {
 }
 
 
+dl > dt {
+    color: black;
+}
 
 dl.col-xs-1 {
     text-align: center;
-    padding-left:0;
-    padding-right:0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 dl.col-xs-4 {
     text-align: center;
-    padding-left:0;
-    padding-right:0;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .col-xs-10 {
@@ -75,6 +79,24 @@ dl.col-xs-4 {
     z-index: 0;
 }
 
+.pagesec {
+    display: table;
+    height: auto;
+    color: black;
+    position: relative;
+    padding: 70px 0;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.pagecontainer {
+    background-color: white;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
 .sec {
     background: url(../img/sea.jpg) center fixed;
     background-size: cover;
@@ -87,6 +109,7 @@ dl.col-xs-4 {
     position: relative;
     z-index: 1;
 }
+
 .sec2 {
     background: url(../img/qiusuo1.jpg) center fixed;
     background-size: cover;
@@ -138,15 +161,7 @@ dl.col-xs-4 {
     padding-right: 100px;
 }
 
-.showpara {
-    padding-left: 30px;
-}
 
-.showtitle {
-    font-family: 'Arial Unicode MS','Microsoft YaHei UI';
-    margin-bottom: 30px;
-    margin-top: 0px;
-}
 
 .feature {
     border-radius: 5px;
@@ -159,14 +174,27 @@ dl.col-xs-4 {
     box-shadow: 1px 1px 2px rgba(0,0,0,0.19);
     cursor: pointer;
 }
-.feature:hover {
-    box-shadow:10px 10px 10px rgba(0,0,0,0.5);
-}
+
+    .feature:hover {
+        box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
+    }
+
     .feature img {
         border-radius: 5px 5px 0 0;
         width: 100%;
         height: 150px;
     }
+
+.showpara {
+    padding-left: 30px;
+}
+
+.showtitle {
+    font-family: 'Arial Unicode MS','Microsoft YaHei UI';
+    margin-bottom: 30px;
+    margin-top: 0px;
+}
+
 .showitem {
     padding: 0;
     margin: 0;
@@ -176,46 +204,88 @@ dl.col-xs-4 {
         width: 100%;
         height: 262px;
     }
-    /*calendar*/
+
+.imgbtn {
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
+}
+
+    .imgbtn:hover {
+        box-shadow: 5px 5px 7px rgba(0,0,0,0.5);
+    }
+/*calendar*/
 .Calendar {
-	font-family:Verdana;
-	font-size:12px;
-    color:white;
-	text-align:center;
-	width:100%;
-	height:100%;
-	padding:10px;
-	line-height:2em;
-}
-.Calendar a{
-	color:#1e5494;
+    font-family: Verdana;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    line-height: 2em;
 }
 
-.Calendar table{
-	width:100%; 
-	border:0;
+    .Calendar a {
+        color: #1e5494;
+    }
+
+    .Calendar table {
+        width: 100%;
+        border: 0;
+    }
+
+        .Calendar table thead {
+            color: #acacac;
+        }
+
+        .Calendar table td {
+            font-size: 11px;
+            padding: 1px;
+        }
+
+#idCalendarPre {
+    cursor: pointer;
+    float: left;
+    padding-right: 5px;
 }
 
-.Calendar table thead{color:#acacac;}
+#idCalendarNext {
+    cursor: pointer;
+    float: right;
+    padding-right: 5px;
+}
 
-.Calendar table td {
-	font-size: 11px;
-	padding:1px;
-}
-#idCalendarPre{
-	cursor:pointer;
-	float:left;
-	padding-right:5px;
-}
-#idCalendarNext{
-	cursor:pointer;
-	float:right;
-	padding-right:5px;
-}
 #idCalendar td.onToday {
-	font-weight:bold;
-	color:#C60;
+    font-weight: bold;
+    color: #C60;
 }
+
 #idCalendar td.onSelect {
-	font-weight:bold;
+    font-weight: bold;
 }
+/*calendar*/
+.comdiv {
+    overflow: hidden;
+    position: relative !important;
+    cursor: pointer;
+    padding:20px 15px;
+}
+
+.comimg {
+    height: 130px;
+    width: 160px;
+    -webkit-transition: -webkit-transform 1s; /* For Safari 3.1 to 6.0 */
+    transition: transform 1s;
+}
+
+    .comimg:hover {
+        -webkit-transform: rotate(360deg); /* Chrome, Safari, Opera */
+        transform: rotate(360deg);
+    }
+
+.comtext {
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: Arial,'Microsoft YaHei UI';
+}
+
