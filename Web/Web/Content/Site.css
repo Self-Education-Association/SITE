@@ -288,4 +288,9 @@ dl.col-xs-4 {
     font-weight: 600;
     font-family: Arial,'Microsoft YaHei UI';
 }
-
+.loginheader{
+    font-family:'Microsoft YaHei';
+    text-align:center;
+    font-size:30px;
+    font-weight:bolder;
+}

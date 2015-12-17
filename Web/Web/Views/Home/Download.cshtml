@@ -4,11 +4,14 @@
     ViewBag.Title = "Download";
 }
 
+
 <style>
-    body {
-        background: url(/img/HeaderGreyDenim.jpg);
-        background-repeat: repeat;
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
     }
+
     .table > tbody > tr > th {
         text-align: center;
     }
@@ -32,50 +35,51 @@
         font-family: Arial;
         font-size: larger;
     }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
 </style>
-<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/mate1.jpg);background-size:cover;">
-
-</div>
-<div class="col-md-1"></div>
-<div class="col-md-10" style="padding-top:2%;padding-bottom:2%">
-    <div class="row">
-        <ul class="breadcrumb col-md-6">
-            <li>
-                <a href="#">首页</a> <span class="divider"></span>
-            </li>
-            <li class="active">
-                在线<span class="divider"></span>
-            </li>
-            <li class="active">资料下载</li>
-        </ul>
+<section class="sec2" style="background-image:url(../../img/mate1.jpg);">
+    <div class="cover">
     </div>
-    <table class="table table-striped">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Type)
-            </th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
+    <div class="row animated pulse">
+        <b class="secheader">资料 | 资料下载 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <table class="table table-striped">
             <tr>
-                <td>
-                    <a href=@Url.Content(item.GetUrl())>@item.Description</a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Time)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
             </tr>
-        }
-    </table>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <a href=@Url.Content(item.GetUrl())>@item.Description</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                </tr>
+            }
+        </table>
     </div>
-    <div class="col-md-1"></div>
+</section>  

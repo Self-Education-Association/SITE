@@ -32,77 +32,74 @@
         color: #608D4E;
         font-family: Arial;
         font-size: larger;
-    }  
-      body {
+    }
+
+    body {
         background: url(/img/HeaderGreyDenim.jpg);
         background-repeat: repeat;
     }
-
-    .nav-list > li > a {
-        padding: 5px 8px;
-    }
 </style>
-<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/mate1.jpg);background-size:cover;background-position:center;">
+<section class="sec2" style="background-image:url(../../img/mate1.jpg);">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">场地 | 场地详情 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Usable)
+            </dt>
 
-</div>
-<div class="col-md-12 col-xs-12">
-    <div class="col-md-1 col-xs-10"></div>
-    <div class="col-md-10 col-xs-10" style="padding-top:2%;padding-bottom:2%">
-        <h2>Details</h2>
+            <dd>
+                @Html.DisplayFor(model => model.Usable)
+            </dd>
 
-        <div>
-            <h4>RoomOperation</h4>
-            <hr />
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Usable)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Usable)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.StartTime)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.StartTime)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.StartTime)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.EndTime)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.StartTime)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.EndTime)
+            </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.EndTime)
-                </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.EndTime)
-                </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Content)
+            </dd>
+        </dl>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Content)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Content)
-                </dd>
-            </dl>
-        </div>
         <p>
             @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
             @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
             @Html.ActionLink("Back to List", "Index")
         </p>
-        </div>
-    <div class="col-md-1 col-xs-1"></div>
     </div>
+</section>
 
 
 

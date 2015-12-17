@@ -4,6 +4,11 @@
     ViewBag.Title = "Details";
 }
 <style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
     h2 {
         font-family: 'Microsoft YaHei';
         color: #577492;
@@ -34,14 +39,18 @@
         font-size: larger;
     }
 </style>
-<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
-
-</div>
-<div class="col-md-1 col-xs-1"></div>
-<div class="col-md-10 col-xs-10" style="padding-top:2%;padding-bottom:2%">
-    <div>
-        <h4>CourseOperation</h4>
-        <hr />
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">课程预约 | 课程详情</b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
         <dl class="dl-horizontal">
             <dt>
                 @Html.DisplayNameFor(model => model.Count)
@@ -107,11 +116,12 @@
                 @Html.DisplayFor(model => model.Content)
             </dd>
         </dl>
+        <p>
+            @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
+            @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+
     </div>
-    <p>
-        @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
-        @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</div>
-<div class="col-md-1 col-xs-1"></div>
+</section>
+
