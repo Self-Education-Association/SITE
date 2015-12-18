@@ -369,7 +369,7 @@ namespace Web.Controllers
             else
             {
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Deleted;
-                db.Messages.Add(new Message(user.Id, MessageType.System, MessageTemplate.TeamFailure, db));
+                db.Messages.Add(new Message(user.Id, MessageType.System, MessageTemplate.ProjectFailure, db));
             }
             db.SaveChanges();
             return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });

@@ -1,0 +1,189 @@
+﻿@model IEnumerable<Web.Models.ProjectIdentityRecord>
+
+@{
+    ViewBag.Title = "ProjectIdentityRecords";
+}
+<style>
+    .nav-pills > li > a {
+        color: white;
+    }
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
+
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+    dl{
+        text-align:center;
+    }
+    dd{
+        color:#3C5B45;
+        font-family:Arial;
+        font-size:larger;
+    }
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+
+</style>
+
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/qiusuo1.jpg);background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        @Html.Partial("_AdminMenuPartial")
+    </div>
+    <div class="col-md-10 col-xs-10">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Admin.DisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Admin.Identitied)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Admin.UserName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Industry)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Introduction)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Product)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Feature)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tech)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Progress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Patent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Desire)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TargetCustomer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProjectBudget)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Webpage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Privacy)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Admin.DisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Admin.Identitied)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Admin.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Industry)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Introduction)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Product)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Feature)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tech)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Progress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Patent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Desire)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TargetCustomer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProjectBudget)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Webpage)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Privacy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "IdentityRecordDetails", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>
+    

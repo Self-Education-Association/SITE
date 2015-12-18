@@ -53,6 +53,7 @@ namespace Web.Models
     /// <summary>
     /// 认证记录
     /// </summary>
+    #region 个人认证记录
     public class IdentityRecord:IListPage
     {
         [Display(Name ="唯一编号")]
@@ -85,6 +86,132 @@ namespace Web.Models
         [Display(Name = "审批状态")]
         public IdentityStatus Status { get; set; }//认证状态
 
+    }
+    #endregion
+
+    #region 项目认证记录
+    public class ProjectIdentityRecord : IListPage
+    {
+        [Display(Name = "唯一编号")]
+        public Guid Id { get; set; }
+
+        [Display(Name = "创建人")]
+        public virtual User Admin { get; set; }
+
+        [Display(Name = "项目名称")]
+        public string Name { get; set; }
+
+        [Display(Name = "目标行业")]
+        public string Industry { get; set; }
+
+        [Display(Name = "项目介绍")]
+        public string Introduction { get; set; }
+
+        [Display(Name = "预计产品")]
+        public string Product { get; set; }
+
+        [Display(Name = "产品特点")]
+        public string Feature { get; set; }
+
+        [Display(Name = "技术特点")]
+        public string Tech { get; set; }
+
+        [Display(Name = "项目进程")]
+        public ProjectProgressType Progress { get; set; }
+
+        [Display(Name = "专利所有")]
+        public string Patent { get; set; }
+
+        [Display(Name = "希望获得的支持")]
+        public string Desire { get; set; }
+
+        [Display(Name = "目标人群")]
+        public string TargetCustomer { get; set; }
+
+        [Display(Name = "项目预算")]
+        public string ProjectBudget { get; set; }
+
+        [Display(Name = "项目网页")]
+        public string Webpage { get; set; }
+
+        [Display(Name = "项目信息是否公开")]
+        public bool Privacy { get; set; }
+
+        [Display(Name = "创建时间")]
+        public DateTime Time { get; set; }
+        
+        [Display(Name = "审批状态")]
+        public IdentityStatus Status { get; set; }
+    }
+    #endregion
+
+    #region 公司认证记录
+    public class CompanyIdentityRecord : IListPage
+    {
+        [Display(Name = "唯一编号")]
+        public Guid Id { get; set; }
+
+        [Display(Name = "公司创始人")]
+        public User Admin { get; set; }
+
+        [Display(Name = "公司名称")]
+        public string Name { get; set; }
+
+        [Display(Name = "资金来源")]
+        public string SourcesOfFunds { get; set; }
+
+        [Display(Name = "公司法人代表")]
+        public string Corporation { get; set; }
+
+        [Display(Name = "注册网站")]
+        public string RegisterSite { get; set; }
+
+        [Display(Name = "营业执照编号")]
+        public string CodeOfBusinessLicense { get; set; }
+
+        [Display(Name = "公司人数")]
+        public int MembersCount { get; set; }
+
+        [Display(Name = "注册资本")]
+        public int AmountOfMoney { get; set; }
+
+        [Display(Name = "近期营业额")]
+        public int RecentTurnover { get; set; }
+
+        [Display(Name = "公司资产")]
+        public int CompanyValuation { get; set; }
+
+        [Display(Name = "融资金额")]
+        public int FinancingAmount { get; set; }
+
+        [Display(Name = "已售出股份")]
+        public double SharesSold { get; set; }
+
+        [Display(Name = "融资时机")]
+        public string FinancingTime { get; set; }
+
+        [Display(Name = "投资计划")]
+        public string Investment { get; set; }
+
+        [Display(Name = "管理员批复")]
+        public string Note { get; set; }
+
+        [Display(Name = "申请时间")]
+        public DateTime Time { get; set; }
+        
+        [Display(Name = "审批状态")]
+        public IdentityStatus Status { get; set; }
+    }
+    #endregion
+
+    public enum IdentityType
+    {
+        [EnumDisplayName("用户认证")]
+        User,
+        [EnumDisplayName("项目认证")]
+        Project,
+        [EnumDisplayName("公司认证")]
+        Company
     }
 
     /// <summary>
@@ -217,6 +344,10 @@ namespace Web.Models
         public virtual DbSet<Company> Companys { get; set; }
 
         public virtual DbSet<IdentityRecord> IdentityRecords { get; set; }
+
+        public virtual DbSet<ProjectIdentityRecord > ProjectIdentityRecords { get; set; }
+
+        public virtual DbSet<CompanyIdentityRecord> CompanyIdentityRecords { get; set; }
 
         public System.Data.Entity.DbSet<Web.Models.TeamProfileViewModel> TeamProfileViewModels { get; set; }
     }
