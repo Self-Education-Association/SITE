@@ -18,86 +18,80 @@
         text-align: center;
     }
 
-    dl {
-        text-align: center;
-    }
-
-    dd {
-        color: #3C5B45;
-        font-family: Arial;
-        font-size: larger;
-    }
-
-    dt {
-        color: #608D4E;
-        font-family: Arial;
-        font-size: larger;
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
     }
 </style>
-<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/chengxin1.jpg);background-size:cover;">
-
-</div>
-<div class="col-md-1"></div>
-<div class="col-md-10" style="padding-top:2%;padding-bottom:2%">
-    <div>@ViewData["ErrorInfo"]</div>
-    <div>
-        <h4>ActivityOperation</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Count)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Count)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Limit)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Limit)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.StartTime)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EndTime)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Content)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Content)
-            </dd>
-
-        </dl>
+<section class="sec2">
+    <div class="cover">
     </div>
-    <p>
-        @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
-        @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</div>
-<div class="col-md-1"></div>
+    <div class="row animated pulse">
+        <b class="secheader">活动 | 目前活动 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <div>@ViewData["ErrorInfo"]</div>
+        <div>
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Count)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Count)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Limit)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Limit)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StartTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EndTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Content)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Content)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
+            @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+</section>

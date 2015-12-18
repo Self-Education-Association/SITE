@@ -16,11 +16,8 @@
 </style>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="col-md-4 col-xs-4">            
-        </div>
-        <div class="login-form col-md-4 col-xs-4" style="margin-top:100px;margin-bottom:100px">
-            <h5 align="center">创建新账户</h5>
-
+        <div class="login-form col-md-4 col-sm-8 col-xs-12 col-md-offset-4 col-sm-offset-2 col-xs-offset-0" style="margin-top:100px;margin-bottom:100px">
+            <h6 class="loginheader">创建新账户</h6>
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -28,39 +25,36 @@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <label class="login-field-icon fui-mail pull-left" for="Email">邮箱</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "login-filed col-md-10 col-xs-10", @placeholder = "请输入邮箱", @id = "Email" })<br />
-                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "login-filed col-xs-10", @placeholder = "请输入邮箱", @id = "Email" })
+                    <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })</div>
                 </div>
                 <div class="form-group">
                     <label class="login-field-icon fui-user pull-left" for="DisplayName">昵称</label>                   
-                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "login-filed col-md-10 col-xs-10", @placeholder = "请输入昵称", @id = "DisplayName" })
+                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "login-filed col-xs-10", @placeholder = "请输入昵称", @id = "DisplayName" })
+                    <div class="col-xs-12"></div>
                 </div>
                 <div class="form-group">
                     <div>
                         <label class="login-field-icon fui-lock pull-left" for="Password">密码</label>
-                        @Html.PasswordFor(m => m.Password, new { @class = "login-field col-md-10 col-xs-10", @placeholder = "请输入密码", @id = "Password" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "login-field  col-xs-10", @placeholder = "请输入密码", @id = "Password" })
+                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div> 
                     </div>
                 </div>
                 <div class="form-group">
                     <div>
                         <label class="login-field-icon fui-lock pull-left" for="ConfirmPassword">确认</label>
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "login-field col-md-10 col-xs-10", @placeholder = "请确认密码", @id = "ConfirmPassword" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "login-field col-xs-10", @placeholder = "请确认密码", @id = "ConfirmPassword" })
+                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
                     </div>
                 </div>
                 <div class="form-group">  
                     <button type="submit" value="注册" class="btn btn-primary btn-lg btn-block">注册</button>
                 </div>
             }
-
-
         </div><!--/row-->
-        <div class="col-md-4 col-xs-4">
      
         </div>
     </div><!--/.fluid-container-->
-    </div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
