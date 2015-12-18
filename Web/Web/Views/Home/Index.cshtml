@@ -69,8 +69,8 @@
             <div class="feature">
                 <img src="~/img/timelane1.jpg" alt="Compas">
                 <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@a.Name</h3>
-                <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">@a.Content</p>
-                <a class="btn btn-primary btn-large btn-block" href="#" style="background-color:rgb(0,161,196)">阅读详细</a>
+                <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">@Html.Raw(a.Content)</p>
+                <a class="btn btn-primary btn-large btn-block" href="~/Activity/Details/@a.Id" style="background-color:rgb(0,161,196)">阅读详细</a>
             </div>
         </div>
         }
