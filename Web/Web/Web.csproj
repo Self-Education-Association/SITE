@@ -757,6 +757,10 @@
     <Content Include="Views\Home\NewsPage.cshtml" />
     <Content Include="Views\Home\VoiceRace.cshtml" />
     <Content Include="Views\Manage\UserDetails.cshtml" />
+    <Content Include="Views\Administrator\ProjectIdentityRecords.cshtml" />
+    <Content Include="Views\Administrator\CompanyIdentityRecords.cshtml" />
+    <Content Include="Views\Administrator\ProjectIdentityRecordDetails.cshtml" />
+    <Content Include="Views\Administrator\CompanyIdentityRecordDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
