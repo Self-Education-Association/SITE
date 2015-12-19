@@ -295,7 +295,9 @@ dl.col-xs-4 {
     font-size: 30px;
     font-weight: bolder;
 }
-
+.panel{
+position:relative;
+}
 .panel:hover {
     box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
 }
@@ -314,11 +316,17 @@ dl.col-xs-4 {
 .panel-body > ul > li > a {
     color: black;
     font-family: Arial;
-    font-size: 16px;
+    font-size: 14px;
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
 }
 
     .panel-body > ul > li > a:hover {
         color: forestgreen;
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
     }
 
 .panel-body > ul > li {
@@ -333,4 +341,6 @@ dl.col-xs-4 {
 .board {
     background-color: white;
     border-radius: 5px;
+    position:relative;
+    font-family:'Microsoft YaHei UI',Arial;
 }

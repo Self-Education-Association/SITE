@@ -4,208 +4,187 @@
     ViewBag.Title = "ProjectIdentityRecordDetails";
 }
 
-<style>
-    .nav-pills > li > a {
-        color: white;
-
-    }
-    h2 {
-        font-family: 'Microsoft YaHei';
-        color: #577492;
-        text-align: center;
-    }
-
-    .table > tbody > tr > th {
-        text-align: center;
-    }
-
-    .table > tbody > tr > td {
-        text-align: center;
-    }
-    dl{
-        text-align:center;
-    }
-    dd{
-        color:#3C5B45;
-        font-family:Arial;
-        font-size:larger;
-    }
-    dt{
-        color:#608D4E;
-        font-family:Arial;
-        font-size:larger;
-    }
-
-</style>
-<div class="col-md-2">
-    <div class="navbar navbar-collapse" style="margin:50px 3%">
-        @Html.Partial("_AdminMenuPartial")
+<section class="sec2">
+    <div class="cover">
     </div>
-</div>
-<div class="col-md-10">
-
-    <div>
-        <h4>IdentityRecord</h4>
-        <hr />
-        <br />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Admin.DisplayName)
-            </dt>
-
-            <dt>
-                @Html.DisplayFor(model => model.Admin.DisplayName)
-            </dt>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Admin.Identitied)
-            </dt>
-
-            <dt>
-                @Html.DisplayFor(model => model.Admin.Identitied)
-            </dt>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Admin.UserName)
-            </dt>
-
-            <dt>
-                @Html.DisplayFor(model => model.Admin.UserName)
-            </dt>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
-            </dt>
-
-            <dt>
-                @Html.DisplayFor(model => model.Admin.PhoneNumber)
-            </dt>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Industry)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Industry)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Introduction)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Introduction)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Product)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Product)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Feature)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Feature)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Tech)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Tech)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Progress)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Progress)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Patent)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Patent)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Desire)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Desire)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.TargetCustomer)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.TargetCustomer)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.ProjectBudget)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.ProjectBudget)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Webpage)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Webpage)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Privacy)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Privacy)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Time)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Time)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Status)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Status)
-            </dd>
-        </dl>
+    <div class="row animated pulse">
+        <b class="secheader">管理员 | 项目详情 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
     </div>
-    <br />
-    <p>
-        @Html.ActionLink("审批通过", "IdentityRecordApprove", new { id = Model.Id, isApprove = true }) |
-        @Html.ActionLink("审批驳回", "IdentityRecordApprove", new { id = Model.Id, isApprove = false }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <div class="col-xs-2">
+            @Html.Partial("_AdminMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <div>
+                <h4>项目详情</h4>
+                <hr />
+
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Admin.DisplayName)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayFor(model => model.Admin.DisplayName)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Admin.Identitied)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayFor(model => model.Admin.Identitied)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Admin.UserName)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayFor(model => model.Admin.UserName)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayFor(model => model.Admin.PhoneNumber)
+                    </dt>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Industry)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Industry)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Introduction)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Introduction)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Product)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Product)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Feature)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Feature)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Tech)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Tech)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Progress)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Progress)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Patent)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Patent)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Desire)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Desire)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TargetCustomer)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.TargetCustomer)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ProjectBudget)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.ProjectBudget)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Webpage)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Webpage)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Privacy)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Privacy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Time)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Time)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Status)
+                    </dd>
+                </dl>
+            </div>
+            <br />
+            <p>
+                @Html.ActionLink("审批通过", "IdentityRecordApprove", new { id = Model.Id, isApprove = true }) |
+                @Html.ActionLink("审批驳回", "IdentityRecordApprove", new { id = Model.Id, isApprove = false }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
     </div>
+</section>
+
