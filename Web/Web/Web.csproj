@@ -761,11 +761,13 @@
     <Content Include="Views\Administrator\ProjectIdentityRecordDetails.cshtml" />
     <Content Include="Views\Administrator\CompanyIdentityRecordDetails.cshtml" />
     <Content Include="Views\Manage\Company.cshtml" />
+    <Content Include="Views\Manage\Avatar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Properties\" />
     <Folder Include="UserUpload\Administrator\" />
+    <Folder Include="UserUpload\Avatar\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
     <Folder Include="Views\Article\" />

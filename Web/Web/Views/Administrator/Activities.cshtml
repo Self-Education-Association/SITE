@@ -75,7 +75,7 @@
                             @Html.DisplayFor(modelItem => item.EndTime)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Content)
+                            @Html.Raw(item.Content)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Enabled)

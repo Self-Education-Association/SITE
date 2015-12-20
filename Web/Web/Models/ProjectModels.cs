@@ -7,13 +7,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
-    public class Project
+    public class Project:IListPage
     {
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
 
         [Display(Name = "管理员")]
         public virtual User Admin { get; set; }
+
+        [Display(Name="项目头像")]
+        public virtual Material Avatar { get; set; }
 
         [Display(Name = "项目名称")]
         public string Name { get; set; }
