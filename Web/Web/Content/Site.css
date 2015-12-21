@@ -103,7 +103,7 @@ dl.col-xs-4 {
     display: table;
     width: 100%;
     height: auto;
-    padding: 225px 0 225px;
+    padding: 250px 0 250px;
     text-align: center;
     color: #fff;
     position: relative;
@@ -128,7 +128,7 @@ dl.col-xs-4 {
     display: table;
     width: 100%;
     height: auto;
-    padding: 180px 0 180px;
+    padding: 225px 0 225px;
     color: black;
     position: relative;
     z-index: 1;
@@ -267,7 +267,7 @@ dl.col-xs-4 {
     overflow: hidden;
     position: relative !important;
     cursor: pointer;
-    padding:20px 15px;
+    padding: 20px 15px;
 }
 
 .comimg {
@@ -288,9 +288,59 @@ dl.col-xs-4 {
     font-weight: 600;
     font-family: Arial,'Microsoft YaHei UI';
 }
-.loginheader{
-    font-family:'Microsoft YaHei';
-    text-align:center;
-    font-size:30px;
-    font-weight:bolder;
+
+.loginheader {
+    font-family: 'Microsoft YaHei';
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+}
+.panel{
+position:relative;
+}
+.panel:hover {
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+.panel-group .panel + .panel {
+    margin-top: 10px;
+}
+
+.panel-title {
+    font-family: 'Microsoft YaHei';
+    font-size: 16px;
+    font-weight: 800;
+    color: inherit;
+}
+
+.panel-body > ul > li > a {
+    color: black;
+    font-family: Arial;
+    font-size: 14px;
+    -webkit-animation-duration: 1.5s;
+    animation-duration: 1.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+    .panel-body > ul > li > a:hover {
+        color: forestgreen;
+        -webkit-animation-name: fadeIn;
+        animation-name: fadeIn;
+    }
+
+.panel-body > ul > li {
+    padding-left: 10%;
+}
+
+.panel-body > ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.board {
+    background-color: white;
+    border-radius: 5px;
+    position:relative;
+    font-family:'Microsoft YaHei UI',Arial;
 }

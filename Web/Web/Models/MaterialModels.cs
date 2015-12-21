@@ -46,6 +46,8 @@ namespace Web.Models
                     return "~/UserUpload/Administrator/" + Name;
                 case MaterialType.Identity:
                     return "~/UserUpload/Identity/" + Name;
+                case MaterialType.Avatar:
+                    return "~/UserUpload/Avatar/" + Name;
                 default:
                     return "";
             }
@@ -69,10 +71,12 @@ namespace Web.Models
     public enum MaterialType
     {
         [EnumDisplayName("下载文件")]
-        Download =0,
+        Download,
         [EnumDisplayName("认证图片")]
-        Identity =1,
+        Identity,
         [EnumDisplayName("海报图片")]
-        Slider =2
+        Slider,
+        [EnumDisplayName("头像")]
+        Avatar
     }
 }

@@ -1,0 +1,32 @@
+﻿@using Web.Models
+@model Material
+@{
+    ViewBag.Title = "Avatar";
+}
+@using (Html.BeginForm("Avatar", "Manage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id);
+    @Html.HiddenFor(model => model.Time);
+    @Html.HiddenFor(model => model.Name);
+    @Html.HiddenFor(model => model.Type);
+    @Html.HiddenFor(model => model.Description);
+    <h4>项目头像</h4>
+    <hr />
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input name="file" type="file" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

@@ -15,43 +15,67 @@ namespace Web.Models
         [Display(Name = "管理员")]
         public virtual User Admin { get; set; }
 
+        [Display(Name="项目头像")]
+        public virtual Material Avatar { get; set; }
+
+        [Required]
         [Display(Name = "项目名称")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "目标行业")]
         public string Industry { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "项目介绍")]
         public string Introduction { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "预计产品")]
         public string Product { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "产品特点")]
         public string Feature { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "技术特点")]
         public string Tech { get; set; }
 
+        [Required]
         [Display(Name = "项目进程")]
         public ProjectProgressType Progress { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "专利所有")]
         public string Patent { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "希望获得的支持")]
         public string Desire { get; set; }
 
+        [Required]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "目标人群")]
         public string TargetCustomer { get; set; }
 
+        [Required]
+        [DataType(DataType.Currency)]
         [Display(Name = "项目预算")]
         public string ProjectBudget { get; set; }
 
+        [DataType(DataType.Url)]
         [Display(Name = "项目网页")]
         public string Webpage { get; set; }
 
-        [Display(Name = "项目信息是否公开")]
+        [Required]
+        [Display(Name = "公开项目信息")]
         public bool Privacy { get; set; }
 
         [Display(Name = "管理员批复")]

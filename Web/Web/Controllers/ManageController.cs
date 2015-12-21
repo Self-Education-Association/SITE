@@ -12,7 +12,7 @@ using System.Net;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles ="student")]
+    [Authorize(Roles = "student")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -50,12 +50,12 @@ namespace Web.Controllers
                 : message == ManageMessageId.AddEducationSuccess ? "已添加你的一条教育经历。"
                 : message == ManageMessageId.AddWorkSuccess ? "已添加一条你的工作经历。"
                 : message == ManageMessageId.ChangePasswordSuccess ? "修改密码成功。"
-                :message==ManageMessageId.AcessDenied?"你没有权限进行这项操作。"
-                :message==ManageMessageId.ApplySuccess?"申请加入成功，请等待团队管理员审批。"
-                :message==ManageMessageId.ProjectSuccess?"项目申请成功，请等待管理员审批。"
-                :message==ManageMessageId.RecruitSuccess?"招募请求发送成功，请等待该用户响应。"
-                :message==ManageMessageId.UpdateUserProfileSuccess?"修改个人信息成功。"
-                :message==ManageMessageId.OperationSuccess?"操作成功。"
+                : message == ManageMessageId.AcessDenied ? "你没有权限进行这项操作。"
+                : message == ManageMessageId.ApplySuccess ? "申请加入成功，请等待团队管理员审批。"
+                : message == ManageMessageId.ProjectSuccess ? "项目申请成功，请等待管理员审批。"
+                : message == ManageMessageId.RecruitSuccess ? "招募请求发送成功，请等待该用户响应。"
+                : message == ManageMessageId.UpdateUserProfileSuccess ? "修改个人信息成功。"
+                : message == ManageMessageId.OperationSuccess ? "操作成功。"
                 : "";
 
             var userId = User.Identity.GetUserId();
@@ -264,6 +264,10 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (model.Avatar == null)
+                {
+                    model.Avatar = new Material("", "", MaterialType.Avatar);
+                }
                 if (Extensions.GetContextUser(db).Project != null)
                     db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 else
@@ -272,6 +276,8 @@ namespace Web.Controllers
                     db.Projects.Add(model);
                 }
                 db.SaveChanges();
+                if (model.Avatar.Name == "")
+                    return RedirectToAction("Avatar", new { id = model.Avatar.Id });
                 return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
@@ -302,7 +308,7 @@ namespace Web.Controllers
 
         public ActionResult TeamRecruit(int page = 0)
         {
-            if (Extensions.GetContextUser(db).TeamRecord==null)
+            if (Extensions.GetContextUser(db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -343,11 +349,11 @@ namespace Web.Controllers
             if (Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
-            var list = new ListPage<User>((from u in db.TeamRecords where u.Team.Admin.Id == User.Identity.GetUserId() && u.Status== TeamMemberStatus.Apply select u.Receiver), page, pageSize);
+            var list = new ListPage<User>((from u in db.TeamRecords where u.Team.Admin.Id == User.Identity.GetUserId() && u.Status == TeamMemberStatus.Apply select u.Receiver), page, pageSize);
             return View(list);
         }
         [ActionName("DoTeamAccess")]
-        public ActionResult TeamAccess(string userId,bool IsApprove)
+        public ActionResult TeamAccess(string userId, bool IsApprove)
         {
             if (Extensions.GetContextUser(db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -445,7 +451,7 @@ namespace Web.Controllers
                 team.Introduction = model.Introduction;
                 team.Searchable = model.Searchable;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
@@ -453,7 +459,7 @@ namespace Web.Controllers
         public ActionResult Company()
         {
             User user = Extensions.GetContextUser(db);
-            if (user.TeamRecord==null)
+            if (user.TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -481,6 +487,48 @@ namespace Web.Controllers
                 return View();
             }
 
+            return View();
+        }
+
+        public ActionResult Avatar(Guid? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var model = db.Materials.Find(id);
+            if (model == null)
+                return HttpNotFound();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Avatar(Material model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Request.Files.Count != 1)//如果文件列表为空则返回
+                    return View();
+                var file = Request.Files[0];//只上传第一个文件
+                //根据日期生成服务器端文件名
+                string uploadFileName = model.Id + Path.GetExtension(file.FileName);
+                //生成服务器端绝对路径
+                string absolutFileName = Server.MapPath("~/") + "UserUpload/Avatar/" + uploadFileName;
+                //执行上传
+                if (System.IO.File.Exists(absolutFileName))
+                {
+                    System.IO.File.Delete(absolutFileName);
+                    file.SaveAs(absolutFileName);
+                }
+                //添加Material记录
+                db.Materials.Attach(model);
+                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                //保存更改
+                db.SaveChanges();
+                return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
+            }
+
+            ViewBag.Error = "存在错误，请检查输入。";
             return View();
         }
         #endregion

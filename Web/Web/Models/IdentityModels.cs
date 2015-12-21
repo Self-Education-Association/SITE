@@ -23,6 +23,7 @@ namespace Web.Models
             return userIdentity;
         }
 
+        [Display(Name ="昵称")]
         public string DisplayName { get; set; }//用户昵称
 
         public Profile Profile { get; set; }
@@ -43,10 +44,13 @@ namespace Web.Models
 
         public virtual List<ActivityRecord> Activity { get; set; }
 
+        [Display(Name = "实名认证")]
         public bool Identitied { get; set; } //是否通过实名认证
 
+        [Display(Name = "创建时间")]
         public DateTime Time { get; set; }//账户创建时间
 
+        [Display(Name = "禁用")]
         public bool IsDisabled { get; set; } //是否被禁用
     }
 
@@ -127,9 +131,11 @@ namespace Web.Models
     {
         public Guid Id { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name ="入职时间")]
         public DateTime StartYear { get; set; }//开始年份
 
+        [DataType(DataType.Date)]
         [Display(Name = "离职时间")]
         public DateTime EndYear { get; set; }//结束年份
 
@@ -140,7 +146,7 @@ namespace Web.Models
     [ComplexType]
     public class Profile
     {
-        [Display(Name ="电子邮箱（默认为账户名，与认证邮箱不同）")]
+        [Display(Name ="电子邮箱")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -151,10 +157,10 @@ namespace Web.Models
         [Display(Name = "其他联系方式（请注明）")]
         public string Other { get; set; }
 
-        [Display(Name = "对我的联系方式保密")]
+        [Display(Name = "联系方式保密")]
         public bool InformationPrivacy { get; set; }
 
-        [Display(Name = "允许在用户列表中搜索到我")]
+        [Display(Name = "允许搜索到我")]
         public bool Searchable { get; set; }
     }
 

@@ -7,14 +7,25 @@ namespace Web.Models
 {
     public class Article : IListPage
     {
-        [Display(Name ="唯一编号")]
+        [Display(Name = "唯一编号")]
         public Guid ID { get; set; }
 
         [Display(Name = "文章标题")]
         public string Title { get; set; }
 
         [Display(Name = "文章内容")]
-        public string Content { get; set; }
+        public string Content
+        {
+            get { return Content; }
+            set
+            {
+                Content = value;
+                ShortContent = Extensions.ReplaceHtmlTag(value, 50);
+            }
+        }
+
+        [Display(Name = "文章摘要")]
+        public string ShortContent { get; set; }
 
         [Display(Name = "文章状态")]
         public ArticleStatus Status { get; set; }
