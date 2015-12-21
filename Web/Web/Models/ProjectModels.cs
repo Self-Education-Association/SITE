@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
-    public class Project
+    public class Project:IListPage
     {
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
