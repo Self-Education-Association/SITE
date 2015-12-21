@@ -451,7 +451,7 @@ namespace Web.Controllers
                 team.Introduction = model.Introduction;
                 team.Searchable = model.Searchable;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
@@ -525,7 +525,7 @@ namespace Web.Controllers
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 //保存更改
                 db.SaveChanges();
-                return RedirectToAction("Materials");
+                return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
             }
 
             ViewBag.Error = "存在错误，请检查输入。";

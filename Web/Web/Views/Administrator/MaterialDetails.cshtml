@@ -56,11 +56,19 @@
                 </dd>
 
             </dl>
+            @if (Model.Type == Web.Models.MaterialType.Download)
+            {
+                <a href="@Url.Content(Model.GetUrl())">下载</a>
+            }
+            else
+            {
+                <img src="@Url.Content(Model.GetUrl())" style="height:200px;width:200px" />
+            }
 
             <p>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("编辑", "MaterialEdit", new { id = Model.Id }) |
 
-                @Html.ActionLink("Back to List", "Index")
+                @Html.ActionLink("返回列表", "Materials")
             </p>
         </div>
     </div>
