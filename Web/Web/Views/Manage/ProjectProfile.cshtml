@@ -4,180 +4,160 @@
     ViewBag.Title = "ProjectProfile";
 }
 
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
 
-<section class="sec2">
-    <div class="cover">
+    .nav-list > li > a {
+        padding: 5px 8px;
+    }
+</style>
+<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
+
+</div>
+<div class="col-md-12 col-xs-12">
+    <div class="col-md-2 col-xs-2">
+        @Html.Partial("_ManageMenuPartial")
     </div>
-    <div class="row animated pulse">
-        <b class="secheader">用户 |  项目简介</b>
-        <p class="seccontent">
-            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
-        </p>
+    <div class="col-md-10 col-xs-10">        
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Industry)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Industry)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Introduction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Introduction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Feature)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Feature)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tech)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tech)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Progress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Progress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Desire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Desire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetCustomer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetCustomer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProjectBudget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProjectBudget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Webpage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Webpage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Privacy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Privacy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+    </dl>
+<p>
+    @Html.ActionLink("回到个人主页", "Index")
+</p>
     </div>
-</section>
-<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
-    <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
-        <div class="col-xs-2">
-            @Html.Partial("_ManageMenuPartial")
-        </div>
-        <div class="col-xs-10 board">
-            <!--以下为模板内容-->
-            <h4>项目简介</h4>
-            <hr />
+</div>
 
-            <dl class="dl-horizontal">
-                <dt>
-                    @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Status)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Status)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Industry)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Industry)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Introduction)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Introduction)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Product)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Product)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Feature)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Feature)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Tech)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Tech)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Progress)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Progress)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Patent)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Patent)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Desire)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Desire)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.TargetCustomer)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.TargetCustomer)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ProjectBudget)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ProjectBudget)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Webpage)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Webpage)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Privacy)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Privacy)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Note)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Note)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Time)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Time)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Status)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Status)
-                </dd>
-
-            </dl>
-            <p>
-                @Html.ActionLink("回到个人主页", "Index")
-            </p>
-            <!--以上为模板内容-->
-        </div>
-    </div>
-</section>
-
-
-
-
-
-   
- 
 
 
 

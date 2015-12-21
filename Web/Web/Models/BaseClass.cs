@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Web.Models
 {
-    public class Remark:IListPage
+    public class Remark : IListPage
     {
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
@@ -51,19 +51,27 @@ namespace Web.Models
         [Required]
         [Display(Name = "开始时间")]
         [DataType(DataType.DateTime)]
-        [DayRange(0,60)]
+        [DayRange(0, 60)]
         public DateTime StartTime { get; set; }
 
         [Required]
         [Display(Name = "结束时间")]
         [DataType(DataType.DateTime)]
-        [DayRange(0,60)]
+        [DayRange(0, 60)]
         public DateTime EndTime { get; set; }
 
         [Display(Name = "描述")]
-        public string Content { get; set; }
+        public string Content
+        {
+            get { return Content; }
+            set
+            {
+                Content = value;
+                ShortContent = Extensions.ReplaceHtmlTag(value, 50);
+            }
+        }
 
-        [Display(Name ="摘要")]
+        [Display(Name = "摘要")]
         [MaxLength(50)]
         public string ShortContent { get; set; }
 
