@@ -417,7 +417,7 @@ namespace Web.Controllers
         #endregion
         //2 Views
         #region 审核认证记录模块
-        public IdentityType identityType { get; set; }
+        public IdentityType Type { get; set; }
         public ActionResult IdentityRecords(IdentityType? type, int page = 0)
         {
             if (type == null)
@@ -425,36 +425,36 @@ namespace Web.Controllers
             switch (type)
             {
                 case IdentityType.User:
-                    var model_user = new ListPage<IdentityRecord>(db.IdentityRecords.Where(i => i.Status == IdentityStatus.ToApprove), page, pageSize);
-                    identityType = IdentityType.User;
-                    return View("IdentityRecords", model_user);
+                    var user = new ListPage<IdentityRecord>(db.IdentityRecords.Where(i => i.Status == IdentityStatus.ToApprove), page, pageSize);
+                    Type = IdentityType.User;
+                    return View("IdentityRecords", user);
                 case IdentityType.Project:
-                    var model_project = new ListPage<Project>(db.Projects.Where(i => i.Status == ProjectStatus.ToApprove), page, pageSize);
-                    identityType = IdentityType.Project;
-                    return View("ProjectIdentityRecords", model_project);
+                    var project = new ListPage<Project>(db.Projects.Where(i => i.Status == ProjectStatus.ToApprove), page, pageSize);
+                    Type = IdentityType.Project;
+                    return View("ProjectIdentityRecords", project);
                 case IdentityType.Company:
-                    var model_company = new ListPage<Company>(db.Companys.Where(i => i.Status == CompanyStatus.ToApprove), page, pageSize);
-                    identityType = IdentityType.Company;
-                    return View("CompanyIdentityRecords", model_company);
+                    var company = new ListPage<Company>(db.Companys.Where(i => i.Status == CompanyStatus.ToApprove), page, pageSize);
+                    Type = IdentityType.Company;
+                    return View("CompanyIdentityRecords", company);
                 default:
                     var model = new ListPage<IdentityRecord>(db.IdentityRecords.Where(i => i.Status == IdentityStatus.ToApprove), page, pageSize);
-                    identityType = IdentityType.User;
+                    Type = IdentityType.User;
                     return View("IdentityRecords", model);
             }
         }
 
         public ActionResult ProjectIdentityRecords(int page = 0)
         {
-            var model_project = new ListPage<Project>(db.Projects.Where(i => i.Status == ProjectStatus.ToApprove), page, pageSize);
-            identityType = IdentityType.Project;
-            return View("ProjectIdentityRecords", model_project);
+            var project = new ListPage<Project>(db.Projects.Where(i => i.Status == ProjectStatus.ToApprove), page, pageSize);
+            Type = IdentityType.Project;
+            return View("ProjectIdentityRecords", project);
         }
 
         public ActionResult CompanyIdentityRecords(IdentityType type, int page = 0)
         {
-            var model_company = new ListPage<Company>(db.Companys.Where(i => i.Status == CompanyStatus.ToApprove), page, pageSize);
-            identityType = IdentityType.Company;
-            return View("CompanyIdentityRecords", model_company);
+            var company = new ListPage<Company>(db.Companys.Where(i => i.Status == CompanyStatus.ToApprove), page, pageSize);
+            Type = IdentityType.Company;
+            return View("CompanyIdentityRecords", company);
             
         }
 
@@ -462,23 +462,23 @@ namespace Web.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            switch (identityType)
+            switch (Type)
             {
                 case IdentityType.User:
-                    IdentityRecord model_user = db.IdentityRecords.Find(id);
-                    if (model_user == null)
+                    IdentityRecord user = db.IdentityRecords.Find(id);
+                    if (user == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    return View("IdentityRecordDetails", model_user.Id);
+                    return View("IdentityRecordDetails", user.Id);
                 case IdentityType.Project:
-                    Project model_project = db.Projects.Find(id);
-                    if (model_project == null)
+                    Project project = db.Projects.Find(id);
+                    if (project == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    return View("TeamIdentityRecordDetails", model_project.Id);
+                    return View("TeamIdentityRecordDetails", project.Id);
                 case IdentityType.Company:
-                    Company model_company = db.Companys.Find(id);
-                    if (model_company == null)
+                    Company company = db.Companys.Find(id);
+                    if (company == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    return View("TeamIdentityRecordDetails", model_company.Id);
+                    return View("TeamIdentityRecordDetails", company.Id);
                 default:
                     break;
             }
@@ -489,66 +489,66 @@ namespace Web.Controllers
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            switch (identityType)
+            switch (Type)
             {
                 case IdentityType.User:
-                    IdentityRecord model_user = db.IdentityRecords.Find(id);
-                    if (model_user == null)
+                    IdentityRecord user = db.IdentityRecords.Find(id);
+                    if (user == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    if (model_user.Status != IdentityStatus.ToApprove)
+                    if (user.Status != IdentityStatus.ToApprove)
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     if (isApprove)
                     {
-                        model_user.Status = IdentityStatus.Done;
-                        model_user.User.Identitied = true;
-                        db.Messages.Add(new Message(model_user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, db));
+                        user.Status = IdentityStatus.Done;
+                        user.User.Identitied = true;
+                        db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, db));
                     }
                     else
                     {
-                        model_user.Status = IdentityStatus.Denied;
-                        model_user.User.Identitied = false;
-                        db.Messages.Add(new Message(model_user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, db));
+                        user.Status = IdentityStatus.Denied;
+                        user.User.Identitied = false;
+                        db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, db));
                     }
                     break;
                 case IdentityType.Project:
-                    Project model_project = db.Projects.Find(id);
-                    if (model_project == null)
+                    Project project = db.Projects.Find(id);
+                    if (project == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    if (model_project.Status != ProjectStatus.ToApprove)
+                    if (project.Status != ProjectStatus.ToApprove)
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     if (isApprove)
                     {
-                        model_project.Status = ProjectStatus.Done;
-                        db.Messages.Add(new Message(model_project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, db));
+                        project.Status = ProjectStatus.Done;
+                        db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, db));
                     }
                     else
                     {
-                        model_project.Status = ProjectStatus.Denied;
-                        db.Messages.Add(new Message(model_project.Admin.Id, MessageType.System, MessageTemplate.ProjectFailure, db));
+                        project.Status = ProjectStatus.Denied;
+                        db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectFailure, db));
                     }
                     break;
                 case IdentityType.Company:
-                    Company model_company = db.Companys.Find(id);
-                    if (model_company == null)
+                    Company company = db.Companys.Find(id);
+                    if (company == null)
                         return new HttpStatusCodeResult(HttpStatusCode.NotFound);
-                    if (model_company.Status != CompanyStatus.ToApprove)
+                    if (company.Status != CompanyStatus.ToApprove)
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                     if (isApprove)
                     {
-                        model_company.Status = CompanyStatus.Done;
-                        db.Messages.Add(new Message(model_company.Admin.Id, MessageType.System, MessageTemplate.CompanySuccess, db));
+                        company.Status = CompanyStatus.Done;
+                        db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanySuccess, db));
                     }
                     else
                     {
-                        model_company.Status = CompanyStatus.Denied;
-                        db.Messages.Add(new Message(model_company.Admin.Id, MessageType.System, MessageTemplate.CompanyFailure, db));
+                        company.Status = CompanyStatus.Denied;
+                        db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanyFailure, db));
                     }
                     break;
                 default:
                     return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
             db.SaveChanges();
-            return RedirectToAction("IdentityRecords", identityType);
+            return RedirectToAction("IdentityRecords", Type);
         }
         #endregion
 
