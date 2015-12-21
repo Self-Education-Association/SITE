@@ -8,7 +8,7 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">管理员 | 管理中心 </b>
+        <b class="secheader">用户 |  添加教育经历 </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -27,7 +27,7 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>管理中心</h4>
+                    <h4>添加教育经历</h4>
                     <hr />  
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
@@ -70,7 +70,7 @@
 
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Create" class="btn btn-default" />
+                            <input type="submit" value="确认添加" class="btn btn-default" />
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,8 @@
             <br />
             <br />
             <div>
-                @Html.ActionLink("Back to List", "Index")
+                @Html.ActionLink("返回显示履历", "RecordList")
+               
             </div>
 
 

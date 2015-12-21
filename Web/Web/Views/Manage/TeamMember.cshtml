@@ -3,70 +3,77 @@
 @{
     ViewBag.Title = "TeamMember";
 }
-<style>
-    body {
-        background: url(/img/HeaderGreyDenim.jpg);
-        background-repeat: repeat;
-    }
 
-    .nav-list > li > a {
-        padding: 5px 8px;
-    }
-</style>
-<div class="col-md-12" style="display:block;height:300px;padding-left:0;padding-right:0;background-image:url(../../img/sushe1.JPG);background-position:center;background-size:cover;">
 
-</div>
-<div class="col-md-12 col-xs-12">
-    <div class="col-md-2 col-xs-2">
-        @Html.Partial("_ManageMenuPartial")
+
+<section class="sec2">
+    <div class="cover">
     </div>
-    <div class="col-md-10 col-xs-10">
-
-        <p>
-            @Html.ActionLink("Quit", "TeamMemberQuit")
+    <div class="row animated pulse">
+        <b class="secheader">用户 |  成员列表</b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver.DisplayName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Receiver.UserName)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
-                    </td>
-
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Delete", "TeamMemberDelete", new { id = item.Id ,@class="btn btn-default"})
-                    </td>
-                </tr>
-            }
-
-        </table>
-
     </div>
-</div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        @ViewBag.StatusMessage
+        <div class="col-xs-2">
+            @Html.Partial("_ManageMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <!--以下为模板内容-->
+            <h4>成员列表</h4>
+            <hr />
+
+            <p>
+                @Html.ActionLink("Quit", "TeamMemberQuit")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Receiver.DisplayName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Status)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Receiver.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Receiver.UserName)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "TeamMemberDelete", new { id = item.Id, @class = "btn btn-default" })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+            <!--以上为模板内容-->
+        </div>
+    </div>
+</section>
+
 
 
