@@ -235,6 +235,8 @@ namespace Web.Models
 
         public virtual DbSet<IdentityRecord> IdentityRecords { get; set; }
         
-        public System.Data.Entity.DbSet<Web.Models.TeamProfileViewModel> TeamProfileViewModels { get; set; }
+        public virtual DbSet<TeamProfileViewModel> TeamProfileViewModels { get; set; }
+
+        public virtual DbSet<TutorInformation> TutorInformations { get; set; }
     }
 }

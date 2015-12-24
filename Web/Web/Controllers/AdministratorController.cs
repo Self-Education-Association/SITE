@@ -272,16 +272,7 @@ namespace Web.Controllers
                 if (Request.Files.Count != 1)//如果文件列表为空则返回
                     return View();
                 var file = Request.Files[0];//只上传第一个文件
-                //根据日期生成服务器端文件名
-                string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
-                //生成服务器端绝对路径
-                string absolutFileName = Server.MapPath("~/") + "UserUpload/Administrator/" + uploadFileName;
-                //执行上传
-                file.SaveAs(absolutFileName);
-                //添加Material记录
-                db.Materials.Add(new Material(uploadFileName, material.Description, material.Type));
-                //保存更改
-                db.SaveChanges();
+                Material.Create(material.Description, material.Type, file, db);
                 return RedirectToAction("Materials");
             }
 
@@ -357,10 +348,14 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async System.Threading.Tasks.Task<ActionResult> TutorCreate(RegisterViewModel model)
+        public async System.Threading.Tasks.Task<ActionResult> TutorCreate(CreateTutorViewModel model)
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count != 1)//如果文件列表为空则返回
+                    return View();
+                var file = Request.Files[0];//只上传第一个文件
+
                 var user = new User { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = model.Email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
@@ -384,17 +379,44 @@ namespace Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+                    var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db), Position = model.Position, Introduction = model.Introduction };
+                    db.TutorInformations.Add(tutor);
+                    db.SaveChanges();
+
+                    return RedirectToAction("TutorInformation", new { id=user.Id });
                 }
             }
             return View();
         }
 
-        public ActionResult UserEdit(string Id)
+        public ActionResult TutorInformation(Guid? id)
         {
-            if (Id == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            User model = db.Users.Find(Id);
+            var tutor = db.Users.Find(id);
+            if (tutor == null)
+                return HttpNotFound();
+
+            return View(new TutorInformation { Id = Guid.NewGuid(), Tutor = tutor, Avatar = new Material("", "", MaterialType.Avatar) });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TutorInformation(TutorInformation model)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+
+            return View();
+        }
+
+        public ActionResult UserEdit(string id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            User model = db.Users.Find(id);
             if (model == null)
                 return HttpNotFound();
 

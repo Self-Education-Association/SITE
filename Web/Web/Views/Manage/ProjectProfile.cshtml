@@ -21,7 +21,8 @@
     <div class="col-md-2 col-xs-2">
         @Html.Partial("_ManageMenuPartial")
     </div>
-    <div class="col-md-10 col-xs-10">        
+    <div class="col-md-10 col-xs-10">
+        <div style="text-align:center"><img src="@Url.Content(Model.Avatar.GetUrl())" height="120" width="120" class="img-circle"/>  </div>      
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Status)
