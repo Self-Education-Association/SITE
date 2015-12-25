@@ -264,9 +264,17 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count != 1)//如果文件列表为空则返回
+                    return View();
+                var file = Request.Files[0];//只上传第一个文件
+
                 if (model.Avatar == null)
                 {
-                    model.Avatar = new Material("", "", MaterialType.Avatar);
+                    model.Avatar = Material.Create("", MaterialType.Avatar, file, db);
+                }
+                else
+                {
+                    model.Avatar = Material.ChangeFile(model.Avatar.Id, file, db);
                 }
                 if (Extensions.GetContextUser(db).Project != null)
                     db.Entry(model).State = System.Data.Entity.EntityState.Modified;
@@ -276,8 +284,7 @@ namespace Web.Controllers
                     db.Projects.Add(model);
                 }
                 db.SaveChanges();
-                if (model.Avatar.Name == "")
-                    return RedirectToAction("Avatar", new { id = model.Avatar.Id });
+
                 return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
@@ -518,8 +525,9 @@ namespace Web.Controllers
                 if (System.IO.File.Exists(absolutFileName))
                 {
                     System.IO.File.Delete(absolutFileName);
-                    file.SaveAs(absolutFileName);
                 }
+                file.SaveAs(absolutFileName);
+                model.Name = uploadFileName;
                 //添加Material记录
                 db.Materials.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;

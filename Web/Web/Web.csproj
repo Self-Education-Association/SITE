@@ -211,6 +211,7 @@
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\ProjectModels.cs" />
     <Compile Include="Models\RoomModels.cs" />
+    <Compile Include="Models\TutorInformation.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseListByCreatorViewModel.cs" />

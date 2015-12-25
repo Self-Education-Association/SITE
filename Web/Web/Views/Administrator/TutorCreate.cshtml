@@ -1,4 +1,4 @@
-﻿@model Web.Models.RegisterViewModel
+﻿@model Web.Models.CreateTutorViewModel
 
 @{
     ViewBag.Title = "注册";
@@ -27,17 +27,20 @@
                 @Html.AntiForgeryToken()
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
                 @Html.LabelFor(model => model.Email, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
                 <div class="form-group">
                     <label class="col-xs-2" for="Email"></label>
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control login-filed col-xs-10", @placeholder = "请输入邮箱", @id = "Email" })
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                 </div>
+
                 @Html.LabelFor(model => model.DisplayName, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
                 <div class="form-group">
                     <label class="col-xs-2" for="DisplayName"></label>
                     @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control login-filed col-xs-10", @placeholder = "请输入名字", @id = "DisplayName" })
                 </div>
+
                 @Html.LabelFor(model => model.Password, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
                 <div class="form-group">
                     <div>
@@ -46,6 +49,7 @@
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
                 @Html.LabelFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
                 <div class="form-group">
                     <div>
@@ -54,6 +58,24 @@
                         @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                @Html.LabelFor(model => model.Introduction, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
+                <div class="form-group">
+                    <label class="col-xs-2" for="Introduction"></label>
+                    @Html.TextBoxFor(m => m.Introduction, new { @class = "form-control login-filed col-xs-10", @placeholder = "导师简介", @id = "Introduction" })
+                </div>
+
+                @Html.LabelFor(model => model.Position, new { htmlAttributes = new { @class = "control-label col-xs-2" } })
+                <div class="form-group">
+                    <label class="col-xs-2" for="Position"></label>
+                    @Html.TextBoxFor(m => m.Position, new { @class = "form-control login-filed col-xs-10", @placeholder = "导师职位", @id = "Position" })
+                </div>
+
+                <div class="form-group">
+                    <label class="col-xs-2">上传头像</label>
+                    <input name="file" type="file" />
+                </div>
+
                 <div class="form-group">
                     <button type="submit" value="确定" class="btn btn-primary btn-lg">注册</button>
                 </div>
