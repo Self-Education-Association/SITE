@@ -27,57 +27,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Admin.DisplayName)
                     </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Admin.Identitied)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Admin.UserName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
-                    </th>
-                    <th>
+                    <td>
                         @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SourcesOfFunds)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Corporation)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RegisterSite)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CodeOfBusinessLicense)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.MembersCount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.AmountOfMoney)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.RecentTurnover)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CompanyValuation)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FinancingAmount)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.SharesSold)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FinancingTime)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Investment)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Note)
-                    </th>
+                    </td>
                     <th>
                         @Html.DisplayNameFor(model => model.Time)
                     </th>
@@ -91,58 +43,10 @@
             {
                     <tr>
                         <td>
-                            @Html.DisplayNameFor(model => model.Admin.DisplayName)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Admin.Identitied)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Admin.UserName)
-                        </td>
-                        <td>
-                            @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
+                            @Html.DisplayFor(modelItem => item.Admin.DisplayName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SourcesOfFunds)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Corporation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RegisterSite)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CodeOfBusinessLicense)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MembersCount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AmountOfMoney)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RecentTurnover)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CompanyValuation)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FinancingAmount)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SharesSold)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FinancingTime)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Investment)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Note)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Time)
@@ -151,7 +55,7 @@
                             @Html.DisplayFor(modelItem => item.Status)
                         </td>
                         <td>
-                            @Html.ActionLink("Details", "IdentityRecordDetails", new { id = item.Id })
+                            @Html.ActionLink("Details", "CompanyIdentityRecordDetails", new { id = item.Id })
                         </td>
                     </tr>
                 }
