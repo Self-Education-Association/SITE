@@ -109,17 +109,21 @@ namespace Web.Models
     {
         public Guid Id { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "入学时间")]
         public DateTime StartYear { get; set; }//开始年份
 
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "毕业时间")]
         public DateTime EndYear { get; set; }//结束年份
 
+        [Required]
         [Display(Name = "学校名称")]
         public string School { get; set; }//学校名称
 
+        [Required]
         [Display(Name = "学历类别")]
         public int DegreeType { get; set; }//学历类别
     }
@@ -131,14 +135,17 @@ namespace Web.Models
     {
         public Guid Id { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name ="入职时间")]
         public DateTime StartYear { get; set; }//开始年份
 
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "离职时间")]
         public DateTime EndYear { get; set; }//结束年份
 
+        [Required]
         [Display(Name = "公司名称")]
         public string Company { get; set; }//公司名称
     }
