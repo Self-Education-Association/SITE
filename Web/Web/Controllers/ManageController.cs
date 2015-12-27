@@ -251,8 +251,11 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.Project == null)
                 return View(new Project());
-            if (user.Project.Status != ProjectStatus.Done && user.Project.Status != ProjectStatus.ToApprove)
+            if (user.Project.Status == ProjectStatus.Denied)
+            {
+                TempData["DeniedInfo"] = "项目未通过";
                 return View(user.Project);
+            }
 
             return RedirectToAction("ProjectProfile");
         }
@@ -260,8 +263,11 @@ namespace Web.Controllers
         public ActionResult ProjectProfile()
         {
             User user = db.Users.Find(Extensions.GetUserId());
-            if (user.Project.Status != ProjectStatus.Done && user.Project.Status != ProjectStatus.ToApprove)
-                return RedirectToAction("Project");
+            if (user.Project.Status == ProjectStatus.Denied)
+            {
+                TempData["DeniedInfo"] = "项目未通过,请重新申请。";
+                return RedirectToAction("Project",user.Project);
+            }
 
             return View(user.Project);
         }
@@ -291,8 +297,6 @@ namespace Web.Controllers
                     model.NewProject(db);
                     db.Projects.Add(model);
                     db.SaveChanges();
-                    Team Team = new Team();
-                    Team.NewTeam(ref model);
                 }
                 db.SaveChanges();
 

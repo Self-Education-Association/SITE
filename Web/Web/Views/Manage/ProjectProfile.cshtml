@@ -24,6 +24,7 @@
     <div class="col-md-10 col-xs-10">
         <div style="text-align:center"><img src="@Url.Content(Model.Avatar.GetUrl())" height="120" width="120" class="img-circle"/>  </div>      
     <dl class="dl-horizontal">
+        @TempData["DeniedInfo"]
         <dt>
             @Html.DisplayNameFor(model => model.Status)
         </dt>

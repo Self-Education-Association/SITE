@@ -466,28 +466,32 @@ namespace Web.Controllers
             IdentityRecord user = db.IdentityRecords.Find(id);
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
             return View("IdentityRecordDetails", user);
         }
+
         public ActionResult ProjectIdentityRecordDetails(Guid? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
             Project project = db.Projects.Find(id);
             if (project == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
             return View("ProjectIdentityRecordDetails", project);
         }
+
         public ActionResult CompanyIdentityRecordDetails(Guid? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-
             Company company = db.Companys.Find(id);
             if (company == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
+
             return View("CompanyIdentityRecordDetails", company);
         }
+
         public ActionResult ProjectIdentityRecordApprove(Guid? id, bool isApprove)
         {
             if (id == null)
@@ -502,6 +506,8 @@ namespace Web.Controllers
             {
                 project.Status = ProjectStatus.Done;
                 db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, db));
+                Team Team = new Team();
+                Team.NewTeam(ref project);
             }
             else
             {
@@ -511,6 +517,7 @@ namespace Web.Controllers
             db.SaveChanges();
             return RedirectToAction("ProjectIdentityRecords");
         }
+
         public ActionResult IdentityRecordApprove(Guid? id, bool isApprove)
         {
             if (id == null)
