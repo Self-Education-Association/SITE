@@ -137,6 +137,10 @@ namespace Web.Models
             Introduction = "此处的信息将作为团队的对外介绍。";
             Announcement = "此处的信息将作为团队的内部公告";
             project.Team = this;
+            using (BaseDbContext db = new BaseDbContext())
+            {
+                var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin,Extensions.GetContextUser(db));
+            }
         }
     }
 
