@@ -52,6 +52,11 @@ namespace Web.Models
 
         [Display(Name = "禁用")]
         public bool IsDisabled { get; set; } //是否被禁用
+
+        public static User Create(string email,string displayName)
+        {
+            return new User { UserName = email, Email = email, DisplayName = displayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
+        }
     }
 
     /// <summary>

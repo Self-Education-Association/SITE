@@ -62,13 +62,26 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult Download(int page = 0)
+        public ActionResult Download(MaterialType type = MaterialType.Download, int page = 0)
         {
-            int pageSize = 5;
+            int pageSize = 20;
+            switch (type)
+            {
+                case MaterialType.Download:
+                    ViewBag.Title = "模板文件";
+                    break;
+                case MaterialType.Activity:
+                    ViewBag.Title = "活动资料";
+                    break;
+                default:
+                    ViewBag.Title = "模板文件";
+                    type = MaterialType.Download;
+                    break;
+            }
 
-            var paginatedNews = new ListPage<Material>(db.Materials.Where(m => m.Type == MaterialType.Download), page, pageSize);
+            var materials = new ListPage<Material>(db.Materials.Where(m => m.Type == type), page, pageSize);
 
-            return View(paginatedNews);
+            return View(materials);
         }
 
         public ActionResult Constructing()
@@ -76,9 +89,12 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult VoiceNews()
+        public ActionResult VoiceNews(int page=0)
         {
-            return View();
+            int pageSize = 20;
+            var articles = new ListPage<Article>(db.Articles, page, pageSize);
+
+            return View(articles);
         }
 
         public ActionResult VoicePoints()

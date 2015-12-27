@@ -90,17 +90,17 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ShortContent)
+                            @Html.Raw(item.ShortContent)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
                             @Html.ActionLink("Edit", "ArticleEdit", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "ArticleDeleteConfirm", new { id = item.ID })
+                            @Html.ActionLink("Delete", "ArticleDelete", new { id = item.ID })
                         </td>
                     </tr>
                 }

@@ -208,20 +208,8 @@ namespace Web.Controllers
                     if (!allowExtensions.Contains(Path.GetExtension(Request.Files.Get(f).FileName)))
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }*/
-                //根据日期生成服务器端文件名
-                string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(Request.Files[0].FileName);
-                //生成服务器端绝对路径
-                string absolutFileName = Server.MapPath("~/") + "UserUpload/Identity/" + uploadFileName;
-                //执行上传
-                Request.Files[0].SaveAs(absolutFileName);
-                model.FrontIdCard = new Material(uploadFileName, "", MaterialType.Identity);
-                //根据日期生成服务器端文件名
-                uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(Request.Files[1].FileName);
-                //生成服务器端绝对路径
-                absolutFileName = Server.MapPath("~/") + "UserUpload/Identity/" + uploadFileName;
-                //执行上传
-                Request.Files[1].SaveAs(absolutFileName);
-                model.BackIdCard = new Material(uploadFileName, "", MaterialType.Identity);
+                model.FrontIdCard = Material.Create("", MaterialType.Identity, Request.Files[0], db);
+                model.BackIdCard = Material.Create("", MaterialType.Identity, Request.Files[1], db);
                 model.Status = IdentityStatus.ToApprove;
                 model.Time = DateTime.Now;
                 model.Id = Guid.NewGuid();

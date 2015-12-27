@@ -24,7 +24,7 @@ namespace Web.Models
         [Display(Name = "用途分类")]
         public MaterialType Type { get; set; }
 
-        public Material(string name, string description, MaterialType type)
+        private Material(string name, string description, MaterialType type)
         {
             Id = Guid.NewGuid();
             Name = name;
@@ -66,6 +66,8 @@ namespace Web.Models
 
         public static Material Create(string description, MaterialType type, HttpPostedFileBase file, BaseDbContext db)
         {
+            if (!type.Match(file))
+                return null;
             string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
             string absolutFileName;
             switch (type)
@@ -97,6 +99,8 @@ namespace Web.Models
         public static Material ChangeFile(Guid id,HttpPostedFileBase file, BaseDbContext db)
         {
             Material material = db.Materials.Find(id);
+            if (!material.Type.Match(file))
+                return null;
             string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
             string absolutFileName;
             switch (material.Type)
@@ -112,10 +116,6 @@ namespace Web.Models
                     break;
             }
             //执行上传
-            if (File.Exists(material.GetPath()))
-            {
-                File.Delete(material.GetPath());
-            }
             file.SaveAs(absolutFileName);
             material.Name = uploadFileName;
 
@@ -129,7 +129,7 @@ namespace Web.Models
 
     public enum MaterialType
     {
-        [EnumDisplayName("下载文件")]
+        [EnumDisplayName("模板文件")]
         Download,
         [EnumDisplayName("活动资料")]
         Activity,

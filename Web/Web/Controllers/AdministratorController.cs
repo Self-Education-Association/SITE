@@ -77,14 +77,25 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (Request.Files.Count != 1)
+                {
+                    ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+                    ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
+                    return View();
+                }
+                var file = Request.Files[0];
+
                 var s = new HtmlSanitizer();
-                model.Content = s.Sanitize(Request.Params["ck"]);
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
+                model.Image = Material.Create("", MaterialType.Avatar, file, db);
                 model.NewArticle();
                 db.Articles.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
 
+            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
             return View();
         }
 
@@ -109,13 +120,15 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 var s = new HtmlSanitizer();
-                model.Content = s.Sanitize(Request.Params["ck"]);
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 db.Articles.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
 
+            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
             return View();
         }
 
@@ -169,7 +182,7 @@ namespace Web.Controllers
                     return View();
                 }
                 var s = new HtmlSanitizer();
-                model.Content = s.Sanitize(Request.Params["ck"]);
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 model.NewActivity(db);
                 db.ActivityOperations.Add(model);
                 db.SaveChanges();
@@ -197,7 +210,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 var s = new HtmlSanitizer();
-                model.Content = s.Sanitize(Request.Params["ck"]);
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 db.ActivityOperations.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -353,16 +366,21 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 if (Request.Files.Count != 1)//如果文件列表为空则返回
+                {
+                    ViewBag.Status = "请检查上传文件！";
+
                     return View();
+                }
+
                 var file = Request.Files[0];//只上传第一个文件
 
-                var user = new User { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = model.Email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
+                var user = Models.User.Create(model.Email, model.DisplayName);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     //为账户添加角色
                     var roleName = "tutor";
-                    ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(new BaseDbContext()));
+                    ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(db));
 
                     //判断角色是否存在
                     if (!roleManager.RoleExists(roleName))
@@ -382,32 +400,12 @@ namespace Web.Controllers
                     var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db), Position = model.Position, Introduction = model.Introduction };
                     db.TutorInformations.Add(tutor);
                     db.SaveChanges();
+                    ViewBag.Status = "操作成功！";
 
-                    return RedirectToAction("TutorInformation", new { id=user.Id });
+                    return View();
                 }
             }
-            return View();
-        }
-
-        public ActionResult TutorInformation(Guid? id)
-        {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var tutor = db.Users.Find(id);
-            if (tutor == null)
-                return HttpNotFound();
-
-            return View(new TutorInformation { Id = Guid.NewGuid(), Tutor = tutor, Avatar = new Material("", "", MaterialType.Avatar) });
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult TutorInformation(TutorInformation model)
-        {
-            if (ModelState.IsValid)
-            {
-
-            }
+            ViewBag.Status = "操作失败！";
 
             return View();
         }

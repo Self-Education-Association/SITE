@@ -18,7 +18,7 @@ namespace Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult List(ArticleClass articleClass=ArticleClass.a,int pageSize=10,int page=0)
+        public ActionResult List(ArticleClass articleClass=ArticleClass.News,int pageSize=10,int page=0)
         {
             var model = new ListPage<Article>(db.Articles.Where(a => a.Class == articleClass), page, pageSize);
 
@@ -35,9 +35,9 @@ namespace Web.Controllers
 
             switch(model.Class)
             {
-                case ArticleClass.a:
+                case ArticleClass.News:
                     return View("a", model);
-                case ArticleClass.b:
+                case ArticleClass.Points:
                     return View("b", model);
                 default:
                     return RedirectToAction("List");

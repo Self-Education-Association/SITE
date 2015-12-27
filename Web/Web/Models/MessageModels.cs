@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 
@@ -13,16 +14,21 @@ namespace Web.Models
         [Display(Name = "文章标题")]
         public string Title { get; set; }
 
+        public virtual Material Image { get; set; }
+
         [Display(Name = "文章内容")]
+        [NotMapped]
         public string Content
         {
-            get { return Content; }
+            get { return ContentStored; }
             set
             {
-                Content = value;
+                ContentStored = value;
                 ShortContent = Extensions.ReplaceHtmlTag(value, 50);
             }
         }
+
+        public string ContentStored { get; set; }
 
         [Display(Name = "文章摘要")]
         public string ShortContent { get; set; }
@@ -41,6 +47,11 @@ namespace Web.Models
             ID = Guid.NewGuid();
             Time = DateTime.Now;
             Status = ArticleStatus.Enabled;
+        }
+
+        public string GetUrl()
+        {
+            return "~/Article/Show/" + ID;
         }
     }
 
@@ -212,8 +223,9 @@ namespace Web.Models
 
     public enum ArticleClass
     {
-        //随意加了用的，删除即可
-        a,
-        b
+        [EnumDisplayName("近期新闻")]
+        News,
+        [EnumDisplayName("新锐观点")]
+        Points,
     }
 }

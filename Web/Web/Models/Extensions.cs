@@ -53,12 +53,31 @@ namespace Web.Models
         public static string ReplaceHtmlTag(string html, int length = 0)
         {
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
-            strText = System.Text.RegularExpressions.Regex.Replace(strText, "&[^;]+;", "");
 
             if (length > 0 && strText.Length > length)
                 return strText.Substring(0, length);
 
             return strText;
+        }
+
+        public static bool Match(this MaterialType type,HttpPostedFileBase file)
+        {
+            string extensions = Path.GetExtension(file.FileName);
+            List<string> allowList;
+            switch(type)
+            {
+                case MaterialType.Avatar:
+                case MaterialType.Identity:
+                case MaterialType.Slider:
+                    allowList = new List<string>() { ".jpg", ".jpeg", ".png" };
+                    break;
+                default:
+                    return true;
+            }
+            if (allowList.Contains(extensions))
+                return true;
+            else
+                return false;
         }
     }
 

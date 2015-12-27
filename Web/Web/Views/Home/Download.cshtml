@@ -1,9 +1,4 @@
-﻿@model IEnumerable<Web.Models.Material>
-
-@{
-    ViewBag.Title = "Download";
-}
-
+﻿@model Web.Models.ListPage<Web.Models.Material>
 
 <style>
     h2 {
@@ -45,7 +40,7 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">资料 | 资料下载 </b>
+        <b class="secheader">@ViewBag.Title | 资料下载 </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -56,13 +51,13 @@
         <table class="table table-striped">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Description)
+                    文件描述
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Time)
+                    上传时间
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Type)
+                    文件类型
                 </th>
             </tr>
 

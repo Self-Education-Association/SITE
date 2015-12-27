@@ -30,27 +30,21 @@
                 </li>
                 <li class="active">近期新闻</li>
             </ul>
-            <div class="btn-group col-xs-3 col-md-offset-6 col-xs-offset-3" style="font-family: Arial,'Microsoft YaHei UI';">
-                <button type="button" class="btn btn-inverse dropdown-toggle" data-toggle="dropdown">分类新闻<span class="caret"></span></button>
-                <ul class="dropdown-menu dropdown-menu-inverse" role="menu" style="min-width:0px;position:relative">
-                    <li><a href="#">新闻类别一</a></li>
-                    <li><a href="#">新闻类别二</a></li>
-                    <li><a href="#">新闻类别三</a></li>
-                    <li><a href="#">新闻类别四</a></li>
-                </ul>
-            </div>
         </div>
         <div class="row">
-            <div class="col-md-3 col-xs-6">
-                <div class="feature">
-                    <img src="/img/timelane1.jpg" alt="Compas">
-                    <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">110</h3>
-                    <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">
-                        12345678900066666
-                    </p>
-                    <a class="btn btn-primary btn-large btn-block imgbtn" href="#" style="background-color:rgb(0,161,196)">阅读详细</a>
+            @foreach (Web.Models.Article item in Model)
+            {
+                <div class="col-md-3 col-xs-6">
+                    <div class="feature">
+                        <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
+                        <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@item.Title</h3>
+                        <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">
+                            @item.ShortContent
+                        </p>
+                        <a class="btn btn-primary btn-large btn-block imgbtn" href="@Url.Content(item.GetUrl())" style="background-color:rgb(0,161,196)">阅读详细</a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </section>
