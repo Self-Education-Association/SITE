@@ -126,11 +126,12 @@ namespace Web.Controllers
         {
             return View();
         }
-        public ActionResult NewsPage()
+
+        public ActionResult VoiceRace()
         {
             return View();
         }
-        public ActionResult VoiceRace()
+        public ActionResult NewsPage1()
         {
             return View();
         }

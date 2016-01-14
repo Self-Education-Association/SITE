@@ -605,8 +605,13 @@
     <Content Include="img\overlay.png" />
     <Content Include="img\qiusuo1.jpg" />
     <Content Include="img\sea.jpg" />
+    <Content Include="img\story1.jpg" />
     <Content Include="img\story1.png" />
+    <Content Include="img\story2.jpg" />
+    <Content Include="img\story3.jpg" />
     <Content Include="img\story3.png" />
+    <Content Include="img\story4.jpg" />
+    <Content Include="img\story5.jpg" />
     <Content Include="img\subtle-grunge-texture-02.jpg" />
     <Content Include="img\sushe1.JPG" />
     <Content Include="img\timelane1.jpg" />
@@ -755,7 +760,7 @@
     <Content Include="Views\Manage\TeamAccess.cshtml" />
     <Content Include="Views\Administrator\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Tutor\_TutorMenuPartial.cshtml" />
-    <Content Include="Views\Home\NewsPage.cshtml" />
+    <Content Include="Views\Home\NewsPage1.cshtml" />
     <Content Include="Views\Home\VoiceRace.cshtml" />
     <Content Include="Views\Manage\UserDetails.cshtml" />
     <Content Include="Views\Administrator\ProjectIdentityRecords.cshtml" />
