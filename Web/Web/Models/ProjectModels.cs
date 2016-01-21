@@ -15,7 +15,7 @@ namespace Web.Models
         [Display(Name = "管理员")]
         public virtual User Admin { get; set; }
 
-        [Display(Name="项目头像")]
+        [Display(Name="项目图标")]
         public virtual Material Avatar { get; set; }
 
         [Required]

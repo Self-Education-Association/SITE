@@ -202,6 +202,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201601210547442_InitialCreate.cs" />
+    <Compile Include="Migrations\201601210547442_InitialCreate.Designer.cs">
+      <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\BaseClass.cs" />
     <Compile Include="Models\CourseModels.cs" />
@@ -679,6 +684,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UserUpload\Avatar\DefaultAvatar.png" />
+    <Content Include="UserUpload\Avatar\DefaultNews.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -760,7 +767,6 @@
     <Content Include="Views\Manage\TeamAccess.cshtml" />
     <Content Include="Views\Administrator\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Tutor\_TutorMenuPartial.cshtml" />
-    <Content Include="Views\Home\NewsPage1.cshtml" />
     <Content Include="Views\Home\VoiceRace.cshtml" />
     <Content Include="Views\Manage\UserDetails.cshtml" />
     <Content Include="Views\Administrator\ProjectIdentityRecords.cshtml" />
@@ -769,20 +775,25 @@
     <Content Include="Views\Administrator\CompanyIdentityRecordDetails.cshtml" />
     <Content Include="Views\Manage\Company.cshtml" />
     <Content Include="Views\Manage\Avatar.cshtml" />
+    <Content Include="Views\Article\News.cshtml" />
+    <Content Include="Views\Article\Points.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UserUpload\Administrator\" />
-    <Folder Include="UserUpload\Avatar\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
-    <Folder Include="Views\Article\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
       <SubType>Designer</SubType>
     </Content>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201601210547442_InitialCreate.resx">
+      <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

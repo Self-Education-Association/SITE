@@ -16,7 +16,6 @@ namespace Web.Models
 
         public virtual Material Image { get; set; }
 
-        [Display(Name = "文章内容")]
         [NotMapped]
         public string Content
         {
@@ -24,10 +23,11 @@ namespace Web.Models
             set
             {
                 ContentStored = value;
-                ShortContent = Extensions.ReplaceHtmlTag(value, 50);
+                ShortContent = Extensions.ReplaceHtmlTag(value, 30);
             }
         }
 
+        [Display(Name = "文章内容")]
         public string ContentStored { get; set; }
 
         [Display(Name = "文章摘要")]

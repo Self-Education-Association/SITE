@@ -54,17 +54,17 @@ namespace Web.Models
         {
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
 
-            if (length > 0 && strText.Length > length)
-                return strText.Substring(0, length);
+            if (length > 2 && strText.Length > length)
+                return strText.Substring(0, length - 2) + "……";
 
             return strText;
         }
 
-        public static bool Match(this MaterialType type,HttpPostedFileBase file)
+        public static bool Match(this MaterialType type, HttpPostedFileBase file)
         {
             string extensions = Path.GetExtension(file.FileName);
             List<string> allowList;
-            switch(type)
+            switch (type)
             {
                 case MaterialType.Avatar:
                 case MaterialType.Identity:
@@ -78,6 +78,19 @@ namespace Web.Models
                 return true;
             else
                 return false;
+        }
+
+        public static Guid DefaultMaterial(this Guid id, DefaultMaterial type)
+        {
+            switch (type)
+            {
+                case Models.DefaultMaterial.News:
+                    return Guid.Parse("658ca8fe-7981-4f10-9949-8d922cef6c60");
+                case Models.DefaultMaterial.Avatar:
+                    return Guid.Parse("7e24e1a3-d562-4a01-b7ee-4845051b9227");
+                default:
+                    return id;
+            }
         }
     }
 

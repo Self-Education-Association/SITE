@@ -226,10 +226,10 @@ namespace Web.Controllers
         public bool IllegalIdentity()
         {
             if (Extensions.GetContextUser(db).TeamRecord == null | Extensions.GetContextUser(db).Project == null)
-                return false;
+                return true;
             if (Extensions.GetContextUser(db).Project.Status != ProjectStatus.Done | Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
-                return false;
-            return true;
+                return true;
+            return false;
         }
         public ActionResult Project()
         {

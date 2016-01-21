@@ -36,9 +36,9 @@ namespace Web.Controllers
             switch(model.Class)
             {
                 case ArticleClass.News:
-                    return View("a", model);
+                    return View("News", model);
                 case ArticleClass.Points:
-                    return View("b", model);
+                    return View("Points", model);
                 default:
                     return RedirectToAction("List");
             }

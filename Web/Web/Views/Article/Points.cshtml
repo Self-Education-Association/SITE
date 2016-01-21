@@ -1,0 +1,31 @@
+﻿@model Web.Models.Article
+
+@{
+    ViewBag.Title = "News";
+}
+
+<h2>News</h2>
+
+<div>
+    <h4>@Model.Title</h4>
+    <h4><small>@Model.Time</small></h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentStored)
+        </dt>
+
+        <dd>
+            @Html.Raw(Model.ContentStored)
+        </dd>
+
+    </dl>
+</div>

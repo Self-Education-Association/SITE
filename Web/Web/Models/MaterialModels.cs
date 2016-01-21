@@ -125,6 +125,8 @@ namespace Web.Models
             db.SaveChanges();
             return db.Materials.Find(material.Id);
         }
+
+
     }
 
     public enum MaterialType
@@ -139,5 +141,12 @@ namespace Web.Models
         Slider,
         [EnumDisplayName("头像图片")]
         Avatar
+    }
+
+    public enum DefaultMaterial
+    {
+        News,
+        Avatar,
+        Points
     }
 }

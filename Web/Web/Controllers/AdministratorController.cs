@@ -77,17 +77,22 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Request.Files.Count != 1)
-                {
-                    ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
-                    ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
-                    return View();
-                }
-                var file = Request.Files[0];
-
                 var s = new HtmlSanitizer();
                 model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
-                model.Image = Material.Create("", MaterialType.Avatar, file, db);
+                if (Request.Files.Count >= 1 && Request.Files[0].FileName != "")
+                {
+                    model.Image = Material.Create("", MaterialType.Avatar, Request.Files[0], db);
+                    if (model.Image == null)
+                    {
+                        ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+                        ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
+                        return View();
+                    }
+                }
+                else
+                {
+                    model.Image = db.Materials.Find(Guid.Empty.DefaultMaterial(DefaultMaterial.News));
+                }
                 model.NewArticle();
                 db.Articles.Add(model);
                 db.SaveChanges();
