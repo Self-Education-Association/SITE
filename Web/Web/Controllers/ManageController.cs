@@ -9,6 +9,8 @@ using Microsoft.Owin.Security;
 using Web.Models;
 using System.IO;
 using System.Net;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity.Migrations;
 
 namespace Web.Controllers
 {
@@ -254,7 +256,7 @@ namespace Web.Controllers
             if (user.Project.Status == ProjectStatus.Denied)
             {
                 TempData["DeniedInfo"] = "项目未通过,请重新申请。";
-                return RedirectToAction("Project",user.Project);
+                return RedirectToAction("Project", user.Project);
             }
 
             return View(user.Project);
@@ -278,14 +280,14 @@ namespace Web.Controllers
                 {
                     model.Avatar = Material.ChangeFile(model.Avatar.Id, file, db);
                 }
-                if (Extensions.GetContextUser(db).Project != null)
-                    db.Entry(model).State = System.Data.Entity.EntityState.Modified;
-                else
+                Project old = Extensions.GetContextUser(db).Project;
+                if (old != null)
                 {
-                    model.NewProject(db);
-                    db.Projects.Add(model);
+                    db.Entry(db.Projects.Find(old.Id)).State = System.Data.Entity.EntityState.Deleted;
                     db.SaveChanges();
                 }
+                model.NewProject(db);
+                db.Projects.Add(model);
                 db.SaveChanges();
 
                 return RedirectToAction("Index", new { Message = ManageMessageId.ProjectSuccess });
@@ -321,7 +323,7 @@ namespace Web.Controllers
 
         public ActionResult TeamRecruit(int page = 0)
         {
-            if(IllegalIdentity())
+            if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
             var list = new ListPage<User>(db.Users.Where(u => u.Profile.Searchable == true), page, pageSize);
@@ -372,7 +374,7 @@ namespace Web.Controllers
         {
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            User applicant = db.Users.Find(userId); 
+            User applicant = db.Users.Find(userId);
             Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(db).Id);
             if (applicant == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -414,7 +416,7 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User member = db.Users.Find(userId);
-            if (member.TeamRecord.Status == TeamMemberStatus.Admin | Extensions.GetContextUser(db).TeamRecord.Status!= TeamMemberStatus.Admin)
+            if (member.TeamRecord.Status == TeamMemberStatus.Admin | Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             member.Project = null;
             db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
@@ -427,7 +429,7 @@ namespace Web.Controllers
         {
             if (Extensions.GetContextUser(db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            if(!IllegalIdentity())
+            if (!IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             User member = db.Users.Find(Extensions.GetUserId());
             member.Project = null;

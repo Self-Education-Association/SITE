@@ -29,33 +29,34 @@
                         @Html.DisplayNameFor(model => model.Admin.DisplayName)
                     </dt>
 
-                    <dt>
+                    <dd>
                         @Html.DisplayFor(model => model.Admin.DisplayName)
-                    </dt>
+                    </dd>
 
                     <dt>
                         @Html.DisplayNameFor(model => model.Admin.Identitied)
                     </dt>
 
-                    <dt>
-                        @Html.DisplayFor(model => model.Admin.Identitied)
-                    </dt>
+                    <dd>
+                        @Model.Admin.Identitied
+                    </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Admin.UserName)
+                        @Html.DisplayNameFor(model => model.Admin.Profile.Email)
                     </dt>
 
-                    <dt>
-                        @Html.DisplayFor(model => model.Admin.UserName)
-                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Admin.Profile.Email)
+                    </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
+                        @Html.DisplayNameFor(model => model.Admin.Profile.Phone)
                     </dt>
 
-                    <dt>
-                        @Html.DisplayFor(model => model.Admin.PhoneNumber)
-                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Admin.Profile.Phone)
+                    </dd>
+                    <hr />
 
                     <dt>
                         @Html.DisplayNameFor(model => model.Name)
@@ -110,7 +111,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Progress)
+                        @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Progress)
                     </dd>
 
                     <dt>
@@ -158,9 +159,9 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Privacy)
+                        @Model.Privacy
                     </dd>
-
+                    <hr />
                     <dt>
                         @Html.DisplayNameFor(model => model.Time)
                     </dt>
@@ -174,7 +175,7 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Status)
+                        @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Status)
                     </dd>
                 </dl>
             </div>

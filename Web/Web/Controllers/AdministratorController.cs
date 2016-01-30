@@ -481,6 +481,7 @@ namespace Web.Controllers
             if (project == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
+            ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
             return View("ProjectIdentityRecordDetails", project);
         }
 

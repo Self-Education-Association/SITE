@@ -208,6 +208,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
+    <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\BaseClass.cs" />
     <Compile Include="Models\CourseModels.cs" />
     <Compile Include="Models\Extensions.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Models\ViewModels\CourseListByStatusViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseViewModel.cs" />
     <Compile Include="Models\ViewModels\HomeViewModels.cs" />
+    <Compile Include="Models\ViewModels\InstallViewModels.cs" />
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\RoomViewModel.cs" />
     <Compile Include="Models\ViewModels\TutorViewModel.cs" />
