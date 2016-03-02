@@ -30,8 +30,14 @@ namespace Web.Models
         [Display(Name = "文章内容")]
         public string ContentStored { get; set; }
 
+        public string ShortContent
+        {
+            get { return ShortContentStored; }
+            set { ShortContentStored = value; }
+        }
+
         [Display(Name = "文章摘要")]
-        public string ShortContent { get; set; }
+        public string ShortContentStored { get; set; }
 
         [Display(Name = "文章状态")]
         public ArticleStatus Status { get; set; }
