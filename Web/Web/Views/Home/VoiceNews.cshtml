@@ -31,6 +31,28 @@
                 <li class="active">近期新闻</li>
             </ul>
         </div>
+        @{
+            int index = Model.PageIndex + 1;
+            <ul class="pager">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="previous ">@Html.ActionLink("前一页", "VoiceNews", new { page = Model.PageIndex - 1 })</li>
+                }
+                else
+                {
+                    <li class="previous disabled"><a>前一页</a></li>
+                }
+                <li><a>@index</a></li>
+                @if (Model.HasNextPage)
+                {
+                    <li class="previous ">@Html.ActionLink("后一页", "VoiceNews", new { page = Model.PageIndex + 1 })</li>
+                }
+                else
+                {
+                    <li class="previous disabled"><a>后一页</a></li>
+                }
+            </ul>
+        }
         <div class="row">
             @foreach (Web.Models.Article item in Model)
             {
@@ -48,5 +70,3 @@
         </div>
     </div>
 </section>
-
-
