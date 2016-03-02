@@ -21,15 +21,12 @@ namespace Web.Models
         [Display(Name = "上限人数")]
         public int Limit { get; set; }
 
-        [Display(Name = "状态")]
-        public string Status { get; set; }
-
-        [Display(Name = "创建时间")]
-        public DateTime Time { get; set; }
+        [Display(Name = "启用")]
+        public bool Status { get; set; }
 
         public virtual List<User> Students { get; set; }
 
-        [Display(Name = "上限人数")]
+        [Display(Name = "位置")]
         public string Location { get; set; }
 
         public bool Create()

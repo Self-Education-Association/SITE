@@ -26,6 +26,15 @@ namespace Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new StyleBundle("~/bundles/timepickerscripts").Include(
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/jquery-ui-timepicker-addon.min.js",
+                "~/Scripts/jquery-ui-timepicker-zh-CN.js"));
+
+            bundles.Add(new StyleBundle("~/bundles/timepickerstyles").Include(
+                "~/Content/jquery-ui-timepicker-addon.min.css",
+                "~/Content/jquery-ui-1.8.17.custom.css"));
         }
     }
 }
