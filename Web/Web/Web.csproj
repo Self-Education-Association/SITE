@@ -206,6 +206,10 @@
     <Compile Include="Migrations\201601210547442_InitialCreate.Designer.cs">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603021553261_AddEmployee.cs" />
+    <Compile Include="Migrations\201603021553261_AddEmployee.Designer.cs">
+      <DependentUpon>201603021553261_AddEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -795,6 +799,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601210547442_InitialCreate.resx">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603021553261_AddEmployee.resx">
+      <DependentUpon>201603021553261_AddEmployee.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

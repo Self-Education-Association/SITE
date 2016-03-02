@@ -24,6 +24,9 @@ namespace Web.Models
         [Display(Name = "状态")]
         public string Status { get; set; }
 
+        [Display(Name = "创建时间")]
+        public DateTime Time { get; set; }
+
         public virtual List<User> Students { get; set; }
 
         [Display(Name = "上限人数")]
