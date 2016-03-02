@@ -3,7 +3,7 @@ namespace Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddEmployee : DbMigration
+    public partial class UpdateCourseModel : DbMigration
     {
         public override void Up()
         {
@@ -14,6 +14,7 @@ namespace Web.Migrations
             AddColumn("dbo.RoomOperations", "ContentStored", c => c.String());
             AddColumn("dbo.RoomOperations", "ShortContentStored", c => c.String(maxLength: 50));
             AddColumn("dbo.Articles", "ShortContentStored", c => c.String());
+            AlterColumn("dbo.CourseOperations", "Status", c => c.Boolean(nullable: false));
             DropColumn("dbo.ActivityOperations", "Content");
             DropColumn("dbo.ActivityOperations", "ShortContent");
             DropColumn("dbo.CourseOperations", "Content");
@@ -30,6 +31,7 @@ namespace Web.Migrations
             AddColumn("dbo.CourseOperations", "Content", c => c.String());
             AddColumn("dbo.ActivityOperations", "ShortContent", c => c.String(maxLength: 50));
             AddColumn("dbo.ActivityOperations", "Content", c => c.String());
+            AlterColumn("dbo.CourseOperations", "Status", c => c.String());
             DropColumn("dbo.Articles", "ShortContentStored");
             DropColumn("dbo.RoomOperations", "ShortContentStored");
             DropColumn("dbo.RoomOperations", "ContentStored");

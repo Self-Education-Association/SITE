@@ -206,13 +206,9 @@
     <Compile Include="Migrations\201601210547442_InitialCreate.Designer.cs">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603021553560_Test.cs" />
-    <Compile Include="Migrations\201603021553560_Test.Designer.cs">
-      <DependentUpon>201603021553560_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603021553261_AddEmployee.cs" />
-    <Compile Include="Migrations\201603021553261_AddEmployee.Designer.cs">
-      <DependentUpon>201603021553261_AddEmployee.cs</DependentUpon>
+    <Compile Include="Migrations\201603021651002_UpdateCourseModel.cs" />
+    <Compile Include="Migrations\201603021651002_UpdateCourseModel.Designer.cs">
+      <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
@@ -860,6 +856,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601210547442_InitialCreate.resx">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603021651002_UpdateCourseModel.resx">
+      <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
