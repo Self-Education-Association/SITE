@@ -85,16 +85,16 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && courseOperation != null)
             {
-                if(courseOperation.StartTime <= courseOperation.EndTime)
+                if(courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    ViewData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
+                    ViewBag.StatusMessage = "无法创建课程，开始时间晚于结束时间。";
                     return View();
-                }
+                } 
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
-            ViewData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
+            ViewBag.StatusMessage = "错误：无法创建课程，对象不存在或无效。";
             return View(courseOperation);
         }
 
@@ -118,11 +118,11 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && courseOperation !=null)
             {
-                if (courseOperation.Content.Length<=50)
+                if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    courseOperation.ShortContent = courseOperation.Content;
+                    ViewBag.StatusMessage = "无法完成修改，开始时间晚于结束时间。";
+                    return View();
                 }
-                courseOperation.ShortContent = courseOperation.Content.Substring(0, 50);
                 if (courseOperation.Students != null)
                 {
                     if (courseOperation.Students.Count > courseOperation.Limit)

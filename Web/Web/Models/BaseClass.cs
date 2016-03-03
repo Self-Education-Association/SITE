@@ -68,7 +68,18 @@ namespace Web.Models
             set
             {
                 ContentStored = value;
-                ShortContent = Extensions.ReplaceHtmlTag(value, 50);
+                //将content和shortcontent从模型上挂钩，并把null值的判定放在模型层，减少出错的可能
+                if (value != null)
+                {
+                    if (value.Length <= 50)
+                    {
+                        this.ShortContent = this.Content;
+                    }
+                    else
+                        ShortContent = value.Substring(0, 50);
+                }
+                else
+                    ShortContent = null;
             }
         }
 

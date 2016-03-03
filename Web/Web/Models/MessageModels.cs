@@ -20,10 +20,14 @@ namespace Web.Models
         public string Content
         {
             get { return ContentStored; }
+            //将content和shortcontent从模型上挂钩，并把null值的判定放在模型层，减少出错的可能
             set
             {
                 ContentStored = value;
-                ShortContent = Extensions.ReplaceHtmlTag(value, 30);
+                if (value != null)
+                    ShortContent = Extensions.ReplaceHtmlTag(value, 30);
+                else
+                    ShortContent = null;
             }
         }
 
