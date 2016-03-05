@@ -32,6 +32,9 @@
                         @Html.DisplayNameFor(model => model.Receiver.DisplayName)
                     </th>
                     <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.Name)
+                    </th>
+                    <th>
                         @Html.DisplayNameFor(model => model.RemarkContent)
                     </th>
                     <th>
@@ -48,6 +51,9 @@
                     <tr>
                         <td>
                             @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.Name)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.RemarkContent)

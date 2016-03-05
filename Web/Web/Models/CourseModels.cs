@@ -82,11 +82,9 @@ namespace Web.Models
                 try
                 {
                     Enabled = false;
-                    db.Entry(this).State = EntityState.Modified;
+                    db.Entry(this).State = EntityState.Deleted;
                     db.SaveChanges();
-                    if (this.Enabled == false)
-                        return true;
-                    return false;
+                    return true;
                 }
                 catch
                 {
@@ -207,7 +205,7 @@ namespace Web.Models
                         if (CourseOperation.Students.Contains(Receiver))
                             CourseOperation.Students.Remove(Receiver);
                     }
-                    db.CourseRecords.Remove(this);
+                    //db.CourseRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }
