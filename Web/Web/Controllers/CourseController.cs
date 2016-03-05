@@ -55,7 +55,8 @@ namespace Web.Controllers
                 }
                 var courseRecord = new CourseRecord();
                 if (courseRecord.Apply(Id))
-                    return RedirectToAction("Index"); ;
+                    TempData["ErrorInfo"] = "选课成功！";
+                    return RedirectToAction("Index");
                 TempData["ErrorInfo"] = "你不符合预约要求！";
             }
             return RedirectToAction("Index");
@@ -88,7 +89,14 @@ namespace Web.Controllers
                     TempData["ErrorInfo"] = "现在不是可退选的时间！";
                     return RedirectToAction("Index");
                 }
-                var courseRecord = (from a in db.CourseRecords where a.CourseOperation == CourseOperation && a.Receiver.Id == User.Identity.GetUserId() select a).FirstOrDefault();
+
+                string UserId = User.Identity.GetUserId();
+                var courseRecord = (from a 
+                                        in db.CourseRecords 
+                                    where a.CourseOperation.Id == CourseOperation.Id
+                                    && a.Receiver.Id == UserId
+                                    select a).FirstOrDefault();
+
                 if (courseRecord != default(CourseRecord))
                     if (courseRecord.Quit(Id))
                         return RedirectToAction("Index");

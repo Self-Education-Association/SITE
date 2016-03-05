@@ -127,7 +127,7 @@ namespace Web.Controllers
                 {
                     if (courseOperation.Students.Count > courseOperation.Limit)
                     {
-                        ViewData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
+                        TempData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
                         return View();
                     }
                 }
@@ -142,17 +142,17 @@ namespace Web.Controllers
                             Message message = new Message(title, content, user.Id, 0,db);
                             if (!message.Publish())
                             {
-                                ViewData["ErrorInfo"] = "无法给学生发布修改信息";
+                                TempData["ErrorInfo"] = "无法给学生发布修改信息";
                                 return View();
                             }
                         }
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改！无法连接到服务器.";
+                TempData["ErrorInfo"] = "无法修改！无法连接到服务器.";
                 return View();
             }
-            ViewData["ErrorInfo"] = "无法修改！对象不存在或无效。";
+            TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
             return View();
         }
         
@@ -172,11 +172,11 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DoDelete(CourseOperation courseOperation)
+        public ActionResult DoDelete([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
             if (!courseOperation.Delete())
             {
-                ViewData["ErrorInfo"] = "无法删除";
+                TempData["ErrorInfo"] = "无法删除";
                 return View();
             }
             return RedirectToAction("Index");
@@ -189,6 +189,8 @@ namespace Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CourseRecord courseRecord = db.CourseRecords.Find(id);
+
+            //这句话有问题，为什么找不到course呢。。。
             CourseOperation course = courseRecord.CourseOperation;
             if (courseRecord == null)
             {
@@ -205,14 +207,13 @@ namespace Web.Controllers
                     if (course.Students != null)
                         return RedirectToAction("StudentList", course.Id);
                 }
-                TempData["ErrorInfo"] = "还未到允许评论的时间！";
+                    TempData["ErrorInfo"] = "还未到允许评论的时间！";
             }
             else
             {
                 TempData["ErrorInfo"] = "该课程没有成员！";
             }
-            return RedirectToAction("Index");
-            //return RedirectToAction("StudentList");
+            return RedirectToAction("StudentList");
         }
 
         [HttpPost]
@@ -223,7 +224,7 @@ namespace Web.Controllers
             {
                 if (courseRecord.Remark())
                 return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
-                ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
+                TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
         }
@@ -232,7 +233,7 @@ namespace Web.Controllers
         {
             var user = Extensions.GetContextUser(db);
             if(Id==null)
-                return View(db.CourseRecords.ToList());
+                return View(db.CourseRecords.Where(c => c.CourseOperation.Creator.Id == user.Id).ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
             if (course == null)
             {
@@ -250,7 +251,7 @@ namespace Web.Controllers
             return View(studentList);
         }
 
-        public ActionResult Calendar()
+        /* public ActionResult Calendar()
         {
             var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
             int Monthdays = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
@@ -276,6 +277,7 @@ namespace Web.Controllers
         {
             return RedirectToAction("StudentList");
         }
+         */
 
         protected override void Dispose(bool disposing)
         {

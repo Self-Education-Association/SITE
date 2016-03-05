@@ -16,7 +16,7 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        @TempData["ErrorInfo"]
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
@@ -28,9 +28,6 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                <div>
-                    @ViewData["ErrorInfo"]
-                </div>
                 <div class="form-horizontal">
                     <h4>课程操作</h4>
                     <hr />
