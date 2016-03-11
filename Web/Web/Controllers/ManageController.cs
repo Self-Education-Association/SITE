@@ -227,9 +227,9 @@ namespace Web.Controllers
         #region 项目、团队与公司模块
         public bool IllegalIdentity()
         {
-            if (Extensions.GetContextUser(db).TeamRecord == null | Extensions.GetContextUser(db).Project == null)
+            if (Extensions.GetContextUser(ref db).TeamRecord == null | Extensions.GetContextUser(ref db).Project == null)
                 return true;
-            if (Extensions.GetContextUser(db).Project.Status != ProjectStatus.Done | Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
+            if (Extensions.GetContextUser(ref db).Project.Status != ProjectStatus.Done | Extensions.GetContextUser(ref db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return true;
             return false;
         }
@@ -280,7 +280,7 @@ namespace Web.Controllers
                 {
                     model.Avatar = Material.ChangeFile(model.Avatar.Id, file, db);
                 }
-                Project old = Extensions.GetContextUser(db).Project;
+                Project old = Extensions.GetContextUser(ref db).Project;
                 if (old != null)
                 {
                     db.Entry(db.Projects.Find(old.Id)).State = System.Data.Entity.EntityState.Deleted;
@@ -298,7 +298,7 @@ namespace Web.Controllers
 
         public ActionResult TeamApply(int page = 0)
         {
-            if (Extensions.GetContextUser(db).TeamRecord != null)
+            if (Extensions.GetContextUser(ref db).TeamRecord != null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
             var list = new ListPage<Team>(db.Teams.Where(u => u.Searchable == true), page, pageSize);
@@ -309,13 +309,13 @@ namespace Web.Controllers
         [ActionName("DoTeamApply")]
         public ActionResult TeamApply(Guid teamId)
         {
-            if (Extensions.GetContextUser(db).TeamRecord != null)
+            if (Extensions.GetContextUser(ref db).TeamRecord != null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = db.Teams.Find(teamId);
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply));
-            db.Messages.Add(new Message(team.Admin.Id, MessageType.System, MessageTemplate.TeamApply, db));
+            db.Messages.Add(new Message(team.Admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
@@ -337,11 +337,11 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
-            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(db).Id);
+            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(ref db).Id);
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Recruit, user));
-            db.Messages.Add(new Message(user.Id, MessageType.System, MessageTemplate.TeamRecruit, db));
+            db.Messages.Add(new Message(user.Id, MessageType.System, MessageTemplate.TeamRecruit, ref db));
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });
@@ -362,7 +362,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
             var list = new ListPage<User>((from u in db.TeamRecords
-                                           where u.Team.Admin.Id == Extensions.GetContextUser(db).Id &&   //团队管理为该用户的团队
+                                           where u.Team.Admin.Id == Extensions.GetContextUser(ref db).Id &&   //团队管理为该用户的团队
                                            u.Status == TeamMemberStatus.Apply                             //状态为申请
                                            select u.Receiver), page, pageSize);
 
@@ -375,7 +375,7 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User applicant = db.Users.Find(userId);
-            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(db).Id);
+            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(ref db).Id);
             if (applicant == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var ApplyRecord = db.TeamRecords.First(t => t.Team.Id == team.Id && t.Receiver.Id == applicant.Id && t.Status == TeamMemberStatus.Apply);
@@ -384,14 +384,14 @@ namespace Web.Controllers
             if (IsApprove)
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
-                applicant.Project = Extensions.GetContextUser(db).Project;
+                applicant.Project = Extensions.GetContextUser(ref db).Project;
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
-                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, db));
+                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, ref db));
             }
             else
             {
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Deleted;
-                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.ProjectFailure, db));
+                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.ProjectFailure, ref db));
             }
             db.SaveChanges();
 
@@ -400,7 +400,7 @@ namespace Web.Controllers
 
         public ActionResult TeamMember(int page = 0)
         {
-            if (Extensions.GetContextUser(db).TeamRecord == null)
+            if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = db.Users.Find(Extensions.GetUserId()).TeamRecord.Team;
             if (team == null)
@@ -416,7 +416,7 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User member = db.Users.Find(userId);
-            if (member.TeamRecord.Status == TeamMemberStatus.Admin | Extensions.GetContextUser(db).TeamRecord.Status != TeamMemberStatus.Admin)
+            if (member.TeamRecord.Status == TeamMemberStatus.Admin | Extensions.GetContextUser(ref db).TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             member.Project = null;
             db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
@@ -427,7 +427,7 @@ namespace Web.Controllers
 
         public ActionResult TeamMemberQuit()
         {
-            if (Extensions.GetContextUser(db).TeamRecord == null)
+            if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (!IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
@@ -443,7 +443,7 @@ namespace Web.Controllers
         {
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            Team team = Extensions.GetContextUser(db).TeamRecord.Team;
+            Team team = Extensions.GetContextUser(ref db).TeamRecord.Team;
             TeamProfileViewModel model = new TeamProfileViewModel
             {
                 Id = team.Id,
@@ -465,7 +465,7 @@ namespace Web.Controllers
             {
                 if (IllegalIdentity())
                     return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-                Team team = db.Teams.First(t => t.Id == Extensions.GetContextUser(db).TeamRecord.Team.Id);
+                Team team = db.Teams.First(t => t.Id == Extensions.GetContextUser(ref db).TeamRecord.Team.Id);
                 team.Announcement = model.Announcement;
                 team.Introduction = model.Introduction;
                 team.Searchable = model.Searchable;
@@ -480,10 +480,10 @@ namespace Web.Controllers
         {
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            if (Extensions.GetContextUser(db).TeamRecord.Team.Company != null)
+            if (Extensions.GetContextUser(ref db).TeamRecord.Team.Company != null)
             {
-                ViewBag.Status = Extensions.GetContextUser(db).TeamRecord.Team.Company.Status;
-                return View(Extensions.GetContextUser(db).TeamRecord.Team.Company);
+                ViewBag.Status = Extensions.GetContextUser(ref db).TeamRecord.Team.Company.Status;
+                return View(Extensions.GetContextUser(ref db).TeamRecord.Team.Company);
             }
 
             ViewBag.Status = CompanyStatus.None;
@@ -498,7 +498,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (ModelState.IsValid)
             {
-                db.Teams.Find(Extensions.GetContextUser(db).TeamRecord.Team.Id).Company = model;
+                db.Teams.Find(Extensions.GetContextUser(ref db).TeamRecord.Team.Id).Company = model;
                 db.SaveChanges();
                 return View();
             }

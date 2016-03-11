@@ -94,7 +94,7 @@ namespace Web.Models
         public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Title = title;
             Content = content;
@@ -103,10 +103,10 @@ namespace Web.Models
             Time = DateTime.Now;
         }
 
-        public Message(string userId, MessageType type, MessageTemplate template, BaseDbContext db)
+        public Message(string userId, MessageType type, MessageTemplate template, ref BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;
@@ -127,7 +127,7 @@ namespace Web.Models
         public Message(string userId, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;

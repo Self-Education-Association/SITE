@@ -42,7 +42,7 @@ namespace Web.Models
                     Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.CourseOperations.Add(this);
                     db.SaveChanges();
-                    var course = db.CourseOperations.Find(this.Id);
+                    var course = db.CourseOperations.Find(Id);
                     if (course != null)
                         return true;
                     return false;
@@ -147,7 +147,7 @@ namespace Web.Models
 
     public class CourseRecord : Remark
     {
-        public CourseOperation CourseOperation { get; set; }
+        public virtual CourseOperation CourseOperation { get; set; }
         public bool Remark()
         {
             using (BaseDbContext db = new BaseDbContext())

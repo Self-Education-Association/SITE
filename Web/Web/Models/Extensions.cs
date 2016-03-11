@@ -31,7 +31,7 @@ namespace Web.Models
         /// 返回当前用户的User类型数据的方法.
         /// </summary>
         /// <returns>当前用户的User类型数据</returns>
-        public static User GetContextUser(BaseDbContext db)
+        public static User GetContextUser(ref BaseDbContext db)
         {
             return db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
 
@@ -50,7 +50,7 @@ namespace Web.Models
             return HttpContext.Current.User.Identity.GetUserId();
         }
 
-        public static string ReplaceHtmlTag(string html, int length = 0)
+        public static string ReplaceHtmlTag(string html="", int length = 0)
         {
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
 
