@@ -618,8 +618,12 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\flat-ui.css.map" />
+    <Content Include="img\a.jpg" />
+    <Content Include="img\calenderbg.jpg" />
     <Content Include="img\chengxin1.jpg" />
     <Content Include="img\clouds-texture01.jpg" />
+    <Content Include="img\divider6.jpg" />
+    <Content Include="img\e.jpg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\featuresbg.jpg" />
     <Content Include="img\fuqin.jpg" />

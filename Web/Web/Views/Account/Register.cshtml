@@ -23,31 +23,31 @@
                 @Html.AntiForgeryToken()
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label class="login-field-icon fui-mail pull-left" for="Email">邮箱</label>
-                    @Html.TextBoxFor(m => m.Email, new { @class = "login-filed col-xs-10", @placeholder = "请输入邮箱", @id = "Email" })
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <a class="login-field-icon fui-mail col-xs-12" for="Email">邮箱</a>
+                    @Html.TextBoxFor(m => m.Email, new { @class = " form-control login-filed", @placeholder = "请输入邮箱", @id = "Email" })
                     <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })</div>
                 </div>
-                <div class="form-group">
-                    <label class="login-field-icon fui-user pull-left" for="DisplayName">昵称</label>                   
-                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "login-filed col-xs-10", @placeholder = "请输入昵称", @id = "DisplayName" })
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <a class="login-field-icon fui-user col-xs-12" for="DisplayName">昵称</a>                   
+                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control login-filed", @placeholder = "请输入昵称", @id = "DisplayName" })
                     <div class="col-xs-12"></div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin:auto;width:70%;">
                     <div>
-                        <label class="login-field-icon fui-lock pull-left" for="Password">密码</label>
-                        @Html.PasswordFor(m => m.Password, new { @class = "login-field  col-xs-10", @placeholder = "请输入密码", @id = "Password" })
+                        <a class="login-field-icon fui-lock col-xs-12" for="Password">密码</a>
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control login-field", @placeholder = "请输入密码", @id = "Password" })
                         <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div> 
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" style="margin:auto;width:70%;">
                     <div>
-                        <label class="login-field-icon fui-lock pull-left" for="ConfirmPassword">确认</label>
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "login-field col-xs-10", @placeholder = "请确认密码", @id = "ConfirmPassword" })
+                        <a class="login-field-icon fui-lock col-xs-12" for="ConfirmPassword">确认密码</a>
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control login-field", @placeholder = "请确认密码", @id = "ConfirmPassword" })
                         <div class="col-xs-12">@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
                     </div>
                 </div>
-                <div class="form-group">  
+                <div class="form-group" style="margin:auto;width:70%;padding-top:20px;padding-bottom:20px;">  
                     <button type="submit" value="注册" class="btn btn-primary btn-lg btn-block">注册</button>
                 </div>
             }

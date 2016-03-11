@@ -349,7 +349,7 @@
 }
 body {
   font-family: "Lato", Helvetica, Arial, sans-serif;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 1.72222;
   color: #34495e;
   background-color: #ffffff;
@@ -2482,10 +2482,9 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   right: 3px;
 }
 .pager {
-  background-color: #34495e;
+  background-color: #1abc9c;
   border-radius: 6px;
   color: #ffffff;
-  font-size: 16px;
   font-weight: 700;
   display: inline-block;
 }
@@ -2498,7 +2497,6 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .pager li > span {
   background: none;
   border: none;
-  border-left: 2px solid #2c3e50;
   color: #ffffff;
   padding: 9px 15px 10px;
   text-decoration: none;
@@ -5845,7 +5843,6 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 }
 .login-icon {
   left: 200px;
-  position: absolute;
   top: 160px;
   width: 96px;
 }
@@ -5890,7 +5887,6 @@ fieldset[disabled] .navbar-inverse .navbar-btn.active {
 .login-form .login-field-icon {
   color: #bfc9ca;
   font-size: 16px;
-  position: absolute;
   right: 15px;
   top: 3px;
   -webkit-transition: all .25s;

@@ -4832,11 +4832,11 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
 }
 .pager .next > a,
 .pager .next > span {
-  float: right;
+  float:none;
 }
 .pager .previous > a,
 .pager .previous > span {
-  float: left;
+  float:none;
 }
 .pager .disabled > a,
 .pager .disabled > a:hover,
