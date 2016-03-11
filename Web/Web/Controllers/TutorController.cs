@@ -69,7 +69,7 @@ namespace Web.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new {  });
+                return RedirectToAction("Index", new { });
             }
             return View(model);
         }
@@ -85,11 +85,11 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && courseOperation != null)
             {
-                if(courseOperation.StartTime >= courseOperation.EndTime)
+                if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
                     ViewBag.StatusMessage = "无法创建课程，开始时间晚于结束时间。";
                     return View();
-                } 
+                }
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
@@ -116,7 +116,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid && courseOperation !=null)
+            if (ModelState.IsValid && courseOperation != null)
             {
                 if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
@@ -139,7 +139,7 @@ namespace Web.Controllers
                         {
                             string title = "课程修改通知";
                             string content = "您好，你选择的课程[" + courseOperation.Name + "]已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
-                            Message message = new Message(title, content, user.Id, 0,db);
+                            Message message = new Message(title, content, user.Id, MessageType.System, db);
                             if (!message.Publish())
                             {
                                 TempData["ErrorInfo"] = "无法给学生发布修改信息";
@@ -155,7 +155,7 @@ namespace Web.Controllers
             TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
             return View();
         }
-        
+
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -207,7 +207,7 @@ namespace Web.Controllers
                     if (course.Students != null)
                         return RedirectToAction("StudentList", course.Id);
                 }
-                    TempData["ErrorInfo"] = "还未到允许评论的时间！";
+                TempData["ErrorInfo"] = "还未到允许评论的时间！";
             }
             else
             {
@@ -223,7 +223,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 if (courseRecord.Remark())
-                return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
+                    return RedirectToAction("StudentList", courseRecord.CourseOperation.Id);
                 TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
@@ -231,8 +231,8 @@ namespace Web.Controllers
 
         public ActionResult StudentList(Guid? Id)
         {
-            var user = Extensions.GetContextUser(db);
-            if(Id==null)
+            var user = Extensions.GetContextUser(ref db);
+            if (Id == null)
                 return View(db.CourseRecords.Where(c => c.CourseOperation.Creator.Id == user.Id).ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
             if (course == null)
@@ -245,7 +245,7 @@ namespace Web.Controllers
                 TempData["ErrorInfo"] = "你没有权限对该课程进行评价！";
                 return View("Index");
             }
-            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id==course.Id select a ).Distinct();
+            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id == course.Id select a).Distinct();
             if (studentList.FirstOrDefault() == null)
                 return View(db.CourseRecords.ToList());
             return View(studentList);

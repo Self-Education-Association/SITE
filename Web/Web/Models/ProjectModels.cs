@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Web.Models
 {
-    public class Project:IListPage
+    public class Project : IListPage
     {
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
@@ -15,7 +15,7 @@ namespace Web.Models
         [Display(Name = "管理员")]
         public virtual User Admin { get; set; }
 
-        [Display(Name="项目图标")]
+        [Display(Name = "项目图标")]
         public virtual Material Avatar { get; set; }
 
         [Required]
@@ -99,7 +99,7 @@ namespace Web.Models
         }
     }
 
-    public class Team:IListPage
+    public class Team : IListPage
     {
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
@@ -136,11 +136,10 @@ namespace Web.Models
             Time = DateTime.Now;
             Introduction = "此处的信息将作为团队的对外介绍。";
             Announcement = "此处的信息将作为团队的内部公告";
+            Searchable = project.Privacy;
             project.Team = this;
-            using (BaseDbContext db = new BaseDbContext())
-            {
-                var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin,Extensions.GetContextUser(db));
-            }
+            BaseDbContext db = new BaseDbContext();
+            var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin, Extensions.GetContextUser(ref db));
         }
     }
 
@@ -152,19 +151,19 @@ namespace Web.Models
         [Display(Name = "状态")]
         public TeamMemberStatus Status { get; set; }
 
-        public TeamRecord(Team team):base()
+        public TeamRecord(Team team) : base()
         {
             Team = team;
             Status = TeamMemberStatus.Normal;
         }
 
-        public TeamRecord(Team team,TeamMemberStatus status) : base()
+        public TeamRecord(Team team, TeamMemberStatus status) : base()
         {
             Team = team;
             Status = status;
         }
 
-        public TeamRecord(Team team, TeamMemberStatus status,User user) : base()
+        public TeamRecord(Team team, TeamMemberStatus status, User user) : base()
         {
             Team = team;
             Status = status;
@@ -172,9 +171,9 @@ namespace Web.Models
         }
     }
 
-    public class Company:IListPage
+    public class Company : IListPage
     {
-        [Display(Name ="公司申请编号")]
+        [Display(Name = "公司申请编号")]
         public Guid Id { get; set; }
 
         [Display(Name = "公司创始人")]
@@ -261,7 +260,7 @@ namespace Web.Models
         Done
     }
 
-    public enum TeamMemberStatus:int
+    public enum TeamMemberStatus : int
     {
         [EnumDisplayName("成员")]
         Normal,

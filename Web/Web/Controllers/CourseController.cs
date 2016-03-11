@@ -55,9 +55,11 @@ namespace Web.Controllers
                 }
                 var courseRecord = new CourseRecord();
                 if (courseRecord.Apply(Id))
+                {
                     TempData["ErrorInfo"] = "选课成功！";
                     return RedirectToAction("Index");
-                TempData["ErrorInfo"] = "你不符合预约要求！";
+                }
+                TempData["ErrorInfo"] = "你不符合选课要求";
             }
             return RedirectToAction("Index");
         }
@@ -65,42 +67,33 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var CourseOperation = db.CourseOperations.Find(Id);
-                if (CourseOperation.Students == null)
+                var courseOperation = db.CourseOperations.Find(Id);
+                var user = Extensions.GetContextUser(ref db);
+                if (courseOperation == null)
+                    return new HttpStatusCodeResult(404);
+                else
                 {
-                    TempData["ErrorInfo"] = "该课程不存在！";
-                    return RedirectToAction("Index");
-                }
-                if (CourseOperation.Students == null)
-                {
-                    TempData["ErrorInfo"] = "您未选过该课程！";
-                    return RedirectToAction("Index");
-                }
-                if (CourseOperation.Students != null)
-                {
-                    if (!CourseOperation.Students.Contains(db.Users.Find(HttpContext.User.Identity.GetUserId())))
+                    if (DateTime.Now > courseOperation.StartTime)
                     {
-                        TempData["ErrorInfo"] = "您未选过该课程！";
-                        return RedirectToAction("Index");
+                        TempData["ErrorInfo"] = "现在不是可退选的时间！";
+                    }
+                    if (courseOperation.Students != null)
+                    {
+                        if (!courseOperation.Students.Contains(user))
+                        {
+                            TempData["ErrorInfo"] = "您未选过该课程！";
+                        }
+                        else
+                        {
+                            courseOperation.Students.Remove(user);
+                            db.SaveChanges();
+                            if (courseOperation.Students.Contains(user))
+                                TempData["ErrorInfo"] = "退课失败";
+                            else
+                                TempData["ErrorInfo"] = "退课成功";
+                        }
                     }
                 }
-                if (DateTime.Now > CourseOperation.StartTime)
-                {
-                    TempData["ErrorInfo"] = "现在不是可退选的时间！";
-                    return RedirectToAction("Index");
-                }
-
-                string UserId = User.Identity.GetUserId();
-                var courseRecord = (from a 
-                                        in db.CourseRecords 
-                                    where a.CourseOperation.Id == CourseOperation.Id
-                                    && a.Receiver.Id == UserId
-                                    select a).FirstOrDefault();
-
-                if (courseRecord != default(CourseRecord))
-                    if (courseRecord.Quit(Id))
-                        return RedirectToAction("Index");
-                TempData["ErrorInfo"] = "无法退选！";
             }
             return RedirectToAction("Index");
         }

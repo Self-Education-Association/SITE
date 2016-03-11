@@ -509,14 +509,14 @@ namespace Web.Controllers
             if (isApprove)
             {
                 project.Status = ProjectStatus.Done;
-                db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, db));
+                db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, ref db));
                 Team Team = new Team();
                 Team.NewTeam(ref project);
             }
             else
             {
                 project.Status = ProjectStatus.Denied;
-                db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectFailure, db));
+                db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectFailure, ref db));
             }
             db.SaveChanges();
             return RedirectToAction("ProjectIdentityRecords");
@@ -535,13 +535,13 @@ namespace Web.Controllers
             {
                 user.Status = IdentityStatus.Done;
                 user.User.Identitied = true;
-                db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, db));
+                db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, ref db));
             }
             else
             {
                 user.Status = IdentityStatus.Denied;
                 user.User.Identitied = false;
-                db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, db));
+                db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, ref db));
             }
             db.SaveChanges();
             return RedirectToAction("IdentityRecords");
@@ -559,12 +559,12 @@ namespace Web.Controllers
             if (isApprove)
             {
                 company.Status = CompanyStatus.Done;
-                db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanySuccess, db));
+                db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanySuccess, ref db));
             }
             else
             {
                 company.Status = CompanyStatus.Denied;
-                db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanyFailure, db));
+                db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanyFailure, ref db));
             }
             db.SaveChanges();
             return RedirectToAction("CompanyIdentityRecords");
