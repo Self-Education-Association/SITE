@@ -190,30 +190,5 @@ namespace Web.Models
                 }
             }
         }
-        public bool Quit(Guid Id)
-        {
-            using (BaseDbContext db = new BaseDbContext())
-            {
-                try
-                {
-                    var courseOperation = db.CourseOperations.Find(Id);
-                    if (courseOperation != CourseOperation)
-                        return false;
-                    CourseOperation.Count--;
-                    if (CourseOperation.Students != null)
-                    {
-                        if (CourseOperation.Students.Contains(Receiver))
-                            CourseOperation.Students.Remove(Receiver);
-                    }
-                    //db.CourseRecords.Remove(this);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
     }
 }

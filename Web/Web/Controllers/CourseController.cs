@@ -86,6 +86,7 @@ namespace Web.Controllers
                         else
                         {
                             courseOperation.Students.Remove(user);
+                            courseOperation.Count--;
                             db.SaveChanges();
                             if (courseOperation.Students.Contains(user))
                                 TempData["ErrorInfo"] = "退课失败";
