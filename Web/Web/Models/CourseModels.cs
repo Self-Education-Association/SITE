@@ -64,8 +64,8 @@ namespace Web.Models
                     db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     if (db.CourseOperations.Find(Id) != null)
-                        if(db.CourseOperations.Find(Id) == this)
-                        return true;
+                        if (db.CourseOperations.Find(Id) == this)
+                            return true;
                     return false;
                 }
                 catch
@@ -75,22 +75,29 @@ namespace Web.Models
             }
         }
 
-        public bool Delete()
+        public bool Delete(ref BaseDbContext db)
         {
-            using (BaseDbContext db = new BaseDbContext())
+            //try
+            //{
+            Enabled = false;
+            if (!db.CourseOperations.Local.Contains(this))
             {
-                try
-                {
-                    Enabled = false;
-                    db.Entry(this).State = EntityState.Deleted;
-                    db.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                db.CourseOperations.Attach(this);
             }
+            var listRecord = (db.CourseRecords.Where(c => c.CourseOperation.Id == Id));
+            foreach (CourseRecord courseRecord in listRecord.ToList())
+            {
+                db.Messages.Add(new Message(courseRecord.Receiver, courseRecord.CourseOperation.Name, MessageType.System, MessageTemplate.CourseDelete, ref db));
+                db.CourseRecords.Remove(courseRecord);
+            }
+            db.CourseOperations.Remove(this);
+            db.SaveChanges();
+            return true;
+            //}
+            //catch
+            //{
+            //    return false;
+            //}
         }
 
         public static List<CourseOperation> List(string select, bool IsTeacher)

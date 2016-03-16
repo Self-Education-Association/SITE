@@ -172,9 +172,12 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DoDelete([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
+        public ActionResult DoDelete(Guid? Id)
         {
-            if (!courseOperation.Delete())
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            CourseOperation courseOperation = db.CourseOperations.Find(Id);
+            if (!courseOperation.Delete(ref db))
             {
                 TempData["ErrorInfo"] = "无法删除";
                 return View();
@@ -198,14 +201,16 @@ namespace Web.Controllers
             }
             if (courseRecord.RemarkRate > 0)
             {
+
                 return View(courseRecord);
             }
             if (course != null)
             {
-                if (DateTime.Now < course.EndTime)
+                if (DateTime.Now > course.EndTime)
                 {
                     if (course.Students != null)
-                        return RedirectToAction("StudentList", course.Id);
+
+                        return View(courseRecord);
                 }
                     TempData["ErrorInfo"] = "还未到允许评论的时间！";
             }
@@ -223,7 +228,7 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 if (courseRecord.Remark())
-                    return RedirectToAction("StudentList", courseRecord.CourseOperation.Id);
+                    return RedirectToAction("StudentList");
                 TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();

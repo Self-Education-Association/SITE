@@ -124,6 +124,27 @@ namespace Web.Models
             }
         }
 
+        public Message(User user,string varName, MessageType type, MessageTemplate template,ref BaseDbContext db)
+        {
+            ID = Guid.NewGuid();
+            Publisher = Extensions.GetContextUser(ref db);
+            Receiver = user;
+            Type = type;
+            HaveRead = false;
+            Time = DateTime.Now;
+            switch (template)
+            {
+                case MessageTemplate.CourseDelete:
+                    Title = "你选择的课程"+varName+"被Tutor删除了";
+                    Content = "blablablabla。。。。。。";
+                    break;
+                default:
+                    Title = "";
+                    Content = "";
+                    break;
+            }
+        }
+
         public Message(string userId, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
         {
             ID = Guid.NewGuid();
@@ -221,6 +242,7 @@ namespace Web.Models
         CompanySuccess,
         IdentityRecordFailure,
         IdentityRecordSuccess,
+        CourseDelete,
     }
 
     public enum ArticleStatus

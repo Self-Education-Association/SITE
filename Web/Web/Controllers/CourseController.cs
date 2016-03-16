@@ -86,6 +86,7 @@ namespace Web.Controllers
                         else
                         {
                             courseOperation.Students.Remove(user);
+                            db.CourseRecords.Remove(db.CourseRecords.Where(c => c.CourseOperation.Id == courseOperation.Id && c.Receiver.Id == user.Id).First());
                             courseOperation.Count--;
                             db.SaveChanges();
                             if (courseOperation.Students.Contains(user))
