@@ -77,8 +77,8 @@ namespace Web.Models
 
         public bool Delete(ref BaseDbContext db)
         {
-            //try
-            //{
+            try
+            {
             Enabled = false;
             if (!db.CourseOperations.Local.Contains(this))
             {
@@ -93,11 +93,11 @@ namespace Web.Models
             db.CourseOperations.Remove(this);
             db.SaveChanges();
             return true;
-            //}
-            //catch
-            //{
-            //    return false;
-            //}
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static List<CourseOperation> List(string select, bool IsTeacher)

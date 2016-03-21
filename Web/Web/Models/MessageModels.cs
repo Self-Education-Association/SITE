@@ -138,6 +138,10 @@ namespace Web.Models
                     Title = "你选择的课程"+varName+"被Tutor删除了";
                     Content = "blablablabla。。。。。。";
                     break;
+                case MessageTemplate.RoomDelete:
+                    Title = "你已预约的场地" + varName + "被Tutor删除了";
+                    Content = "";
+                    break;
                 default:
                     Title = "";
                     Content = "";
@@ -243,6 +247,7 @@ namespace Web.Models
         IdentityRecordFailure,
         IdentityRecordSuccess,
         CourseDelete,
+        RoomDelete,
     }
 
     public enum ArticleStatus

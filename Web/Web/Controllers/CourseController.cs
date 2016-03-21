@@ -35,6 +35,10 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 var CourseOperation = db.CourseOperations.Find(Id);
+                if (CourseOperation == null)
+                {
+                    return new HttpStatusCodeResult(404);
+                }
                 if (CourseOperation.Students != null)
                 {
                     if (CourseOperation.Students.Contains(db.Users.Find(HttpContext.User.Identity.GetUserId())))
@@ -54,7 +58,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
                 var courseRecord = new CourseRecord();
-                if (courseRecord.Apply(Id))
+                if (courseRecord.Apply(CourseOperation))
                 {
                     TempData["ErrorInfo"] = "选课成功！";
                     return RedirectToAction("Index");
