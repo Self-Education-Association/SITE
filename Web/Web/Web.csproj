@@ -214,10 +214,23 @@
     <Compile Include="Migrations\201603021651002_UpdateCourseModel.Designer.cs">
       <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603241138585_AddIndustryModel.cs" />
+    <Compile Include="Migrations\201603241138585_AddIndustryModel.Designer.cs">
+      <DependentUpon>201603241138585_AddIndustryModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603241231460_ChangeTimeColumnType.cs" />
+    <Compile Include="Migrations\201603241231460_ChangeTimeColumnType.Designer.cs">
+      <DependentUpon>201603241231460_ChangeTimeColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.cs" />
+    <Compile Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.Designer.cs">
+      <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\BaseClass.cs" />
+    <Compile Include="Models\ContextModel.cs" />
     <Compile Include="Models\CourseModels.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -735,6 +748,7 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\部署.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -854,6 +868,7 @@
     <Folder Include="UserUpload\Administrator\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
+    <Folder Include="UserUpload\Management\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -867,6 +882,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603021651002_UpdateCourseModel.resx">
       <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241138585_AddIndustryModel.resx">
+      <DependentUpon>201603241138585_AddIndustryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241231460_ChangeTimeColumnType.resx">
+      <DependentUpon>201603241231460_ChangeTimeColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.resx">
+      <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

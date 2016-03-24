@@ -46,6 +46,8 @@ namespace Web.Models
                     return "~/UserUpload/Identity/" + Name;
                 case MaterialType.Avatar:
                     return "~/UserUpload/Avatar/" + Name;
+                case MaterialType.Management:
+                    return "~/UserUpload/Management/" + Name;
                 default:
                     return "~/UserUpload/Administrator/" + Name; ;
             }
@@ -59,6 +61,8 @@ namespace Web.Models
                     return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Identity/" + Name;
                 case MaterialType.Avatar:
                     return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Avatar/" + Name;
+                case MaterialType.Management:
+                    return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Management/" + Name;
                 default:
                     return HttpContext.Current.Server.MapPath("~/") + "UserUpload/Administrator/" + Name;
             }
@@ -77,6 +81,9 @@ namespace Web.Models
                     break;
                 case MaterialType.Avatar:
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Avatar/" + uploadFileName;
+                    break;
+                case MaterialType.Management:
+                    absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Management/" + uploadFileName;
                     break;
                 default:
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Administrator/" + uploadFileName;
@@ -111,6 +118,9 @@ namespace Web.Models
                 case MaterialType.Avatar:
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Avatar/" + uploadFileName;
                     break;
+                case MaterialType.Management:
+                    absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Management/" + uploadFileName;
+                    break;
                 default:
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Administrator/" + uploadFileName;
                     break;
@@ -140,7 +150,9 @@ namespace Web.Models
         [EnumDisplayName("海报图片")]
         Slider,
         [EnumDisplayName("头像图片")]
-        Avatar
+        Avatar,
+        [EnumDisplayName("管理用文件")]
+        Management
     }
 
     public enum DefaultMaterial

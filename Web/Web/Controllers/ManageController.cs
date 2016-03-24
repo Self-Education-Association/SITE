@@ -225,14 +225,6 @@ namespace Web.Controllers
         #endregion
 
         #region 项目、团队与公司模块
-        public bool IllegalIdentity()
-        {
-            if (Extensions.GetContextUser(ref db).TeamRecord == null | Extensions.GetContextUser(ref db).Project == null)
-                return true;
-            if (Extensions.GetContextUser(ref db).Project.Status != ProjectStatus.Done | Extensions.GetContextUser(ref db).TeamRecord.Status != TeamMemberStatus.Admin)
-                return true;
-            return false;
-        }
         public ActionResult Project()
         {
             User user = db.Users.Find(Extensions.GetUserId());
@@ -405,11 +397,9 @@ namespace Web.Controllers
             Team team = db.Users.Find(Extensions.GetUserId()).TeamRecord.Team;
             if (team == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            int pageSize = 10;
-            var teamMember = team.Member.Where(m => m.Status == TeamMemberStatus.Normal | m.Status == TeamMemberStatus.Admin);
-            var list = new ListPage<TeamRecord>(teamMember, page, pageSize);
+            var teamMember = team.Member.Where(m => m.Status == TeamMemberStatus.Normal || m.Status == TeamMemberStatus.Admin);
 
-            return View(list);
+            return View(teamMember);
         }
         public ActionResult TeamMemberDelete(string userId)
         {
@@ -431,7 +421,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (!IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
-            User member = db.Users.Find(Extensions.GetUserId());
+            User member = Extensions.GetContextUser(ref db);
             member.Project = null;
             db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();
@@ -444,15 +434,13 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = Extensions.GetContextUser(ref db).TeamRecord.Team;
-            TeamProfileViewModel model = new TeamProfileViewModel
-            {
+            TeamProfileViewModel model = new TeamProfileViewModel{
                 Id = team.Id,
                 Name = team.Name,
                 Administrator = team.Admin.DisplayName,
                 Time = team.Time,
                 Introduction = team.Introduction,
-                Announcement = team.Announcement
-            };
+                Announcement = team.Announcement};
 
             return View(model);
         }
@@ -498,7 +486,16 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (ModelState.IsValid)
             {
-                db.Teams.Find(Extensions.GetContextUser(ref db).TeamRecord.Team.Id).Company = model;
+                if (Request.Files.Count != 1)//如果文件列表为空则返回
+                {
+                    ViewBag.Alert = "请检查上传文件！";
+                    return View();
+                }
+                var file = Request.Files[0];//只上传第一个文件
+                var user= Extensions.GetContextUser(ref db);
+                model.Plan = Material.Create("商业计划书", MaterialType.Management, file, db);
+                model.Admin = user;
+                user.TeamRecord.Team.Company = model;
                 db.SaveChanges();
                 return View();
             }
@@ -557,6 +554,11 @@ namespace Web.Controllers
                 _userManager.Dispose();
                 _userManager = null;
             }
+            if (db!=null)
+            {
+                db.Dispose();
+                db = null;
+            }
 
             base.Dispose(disposing);
         }
@@ -577,6 +579,18 @@ namespace Web.Controllers
             {
                 return db.Users.Find(User.Identity.GetUserId()).Identitied;
             }
+        }
+
+        public bool IllegalIdentity()
+        {
+            var user = Extensions.GetContextUser(ref db);
+            var teamRecord = user.TeamRecord;
+            var project = user.Project;
+            if (teamRecord == null || project == null)
+                return true;
+            if (project.Status != ProjectStatus.Done || teamRecord.Status != TeamMemberStatus.Admin)
+                return true;
+            return false;
         }
 
         public enum ManageMessageId

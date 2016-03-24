@@ -58,7 +58,7 @@ namespace Web.Controllers
                     return RedirectToAction("Index");
                 }
                 var courseRecord = new CourseRecord();
-                if (courseRecord.Apply(CourseOperation))
+                if (courseRecord.Apply(CourseOperation.Id))
                 {
                     TempData["ErrorInfo"] = "选课成功！";
                     return RedirectToAction("Index");

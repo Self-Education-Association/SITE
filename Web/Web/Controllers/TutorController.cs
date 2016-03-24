@@ -11,7 +11,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Tutor")]
     public class TutorController : Controller
     {
         private ApplicationSignInManager _signInManager;

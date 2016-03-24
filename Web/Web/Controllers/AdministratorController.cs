@@ -13,6 +13,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
+    //[Authorize(Users ="admin@uibe.edu.cn")]
     public class AdministratorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
@@ -48,7 +49,7 @@ namespace Web.Controllers
         // GET: Administrator
         public ActionResult Index(AdminOperationStatus? status)
         {
-            ViewBag.StatusMessage =
+            ViewBag.Alert =
                 status == AdminOperationStatus.Error ? "操作失败。"
                 : status == AdminOperationStatus.Success ? "操作成功。" : "";
 
@@ -554,7 +555,7 @@ namespace Web.Controllers
             {
                 if (Request.Files.Count != 1)//如果文件列表为空则返回
                 {
-                    ViewBag.Status = "请检查上传文件！";
+                    ViewBag.Alert = "请检查上传文件！";
 
                     return View();
                 }
@@ -587,12 +588,12 @@ namespace Web.Controllers
                     var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db), Position = model.Position, Introduction = model.Introduction };
                     db.TutorInformations.Add(tutor);
                     db.SaveChanges();
-                    ViewBag.Status = "操作成功！";
+                    ViewBag.Alert = "操作成功！";
 
                     return View();
                 }
             }
-            ViewBag.Status = "操作失败！";
+            ViewBag.Alert = "操作失败！";
 
             return View();
         }
@@ -692,8 +693,9 @@ namespace Web.Controllers
             {
                 project.Status = ProjectStatus.Done;
                 db.Messages.Add(new Message(project.Admin.Id, MessageType.System, MessageTemplate.ProjectSuccess, ref db));
-                Team Team = new Team();
-                Team.NewTeam(ref project);
+                Team team = new Team();
+                team.NewTeam(ref project);
+                db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Admin, project.Admin));
             }
             else
             {

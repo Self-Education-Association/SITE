@@ -2,6 +2,7 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Web;
 using System;
@@ -10,10 +11,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
+
 namespace Web.Models
 {
     // 可以通过向 ApplicationUser 类添加更多属性来为用户添加配置文件数据。若要了解详细信息，请访问 http://go.microsoft.com/fwlink/?LinkID=317594。
-    public class User : IdentityUser,IListPage
+    public class User : IdentityUser, IListPage
     {
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
@@ -23,12 +25,12 @@ namespace Web.Models
             return userIdentity;
         }
 
-        [Display(Name ="昵称")]
+        [Display(Name = "昵称")]
         public string DisplayName { get; set; }//用户昵称
 
         public Profile Profile { get; set; }
 
-        public virtual  IdentityRecord IdentityRecord { get; set; }//认证记录
+        public virtual IdentityRecord IdentityRecord { get; set; }//认证记录
 
         public virtual List<EducationRecord> Education { get; set; }//教育经历
 
@@ -53,9 +55,62 @@ namespace Web.Models
         [Display(Name = "禁用")]
         public bool IsDisabled { get; set; } //是否被禁用
 
-        public static User Create(string email,string displayName)
+        public static User Create(string email, string displayName)
         {
             return new User { UserName = email, Email = email, DisplayName = displayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
+        }
+    }
+
+    public class UserRoleHelper
+    {
+        // Swap ApplicationRole for IdentityRole:
+        RoleManager<IdentityRole> _roleManager = new RoleManager<IdentityRole>(
+            new RoleStore<IdentityRole>(new BaseDbContext()));
+
+        UserManager<User> _userManager = new UserManager<User>(
+            new UserStore<User>(new BaseDbContext()));
+
+        BaseDbContext _db = new BaseDbContext();
+
+
+        public bool RoleExists(string name)
+        {
+            return _roleManager.RoleExists(name);
+        }
+
+
+        public bool CreateRole(string name)
+        {
+            // Swap ApplicationRole for IdentityRole:
+            var idResult = _roleManager.Create(new IdentityRole(name));
+            return idResult.Succeeded;
+        }
+
+
+        public bool CreateUser(User user, string password)
+        {
+            var idResult = _userManager.Create(user, password);
+            return idResult.Succeeded;
+        }
+
+
+        public bool AddUserToRole(string userId, string roleName)
+        {
+            var idResult = _userManager.AddToRole(userId, roleName);
+            return idResult.Succeeded;
+        }
+
+
+        public void ClearUserRoles(string userId)
+        {
+            var user = _userManager.FindById(userId);
+            var currentRoles = new List<IdentityUserRole>();
+
+            currentRoles.AddRange(user.Roles);
+            foreach (var role in currentRoles)
+            {
+                _userManager.RemoveFromRole(userId, _roleManager.FindById(role.RoleId).Name);
+            }
         }
     }
 
@@ -63,9 +118,9 @@ namespace Web.Models
     /// 认证记录
     /// </summary>
     #region 个人认证记录
-    public class IdentityRecord:IListPage
+    public class IdentityRecord : IListPage
     {
-        [Display(Name ="唯一编号")]
+        [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
 
         [Display(Name = "身份证号或学号")]
@@ -142,7 +197,7 @@ namespace Web.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [Display(Name ="入职时间")]
+        [Display(Name = "入职时间")]
         public DateTime StartYear { get; set; }//开始年份
 
         [Required]
@@ -158,7 +213,7 @@ namespace Web.Models
     [ComplexType]
     public class Profile
     {
-        [Display(Name ="电子邮箱")]
+        [Display(Name = "电子邮箱")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -188,67 +243,5 @@ namespace Web.Models
         Done
     }
 
-    public class BaseDbContext : IdentityDbContext<User>
-    {
-        public BaseDbContext()
-            : base("DefaultConnection")
-        {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<BaseDbContext>());
-        }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
-            modelBuilder.Entity<User>().HasOptional(u => u.IdentityRecord).WithRequired(i => i.User);
-            modelBuilder.Entity<User>().HasOptional(u => u.Project).WithRequired(p => p.Admin);
-            modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
-            modelBuilder.Entity<Team>().HasOptional(t => t.Company);
-            modelBuilder.Entity<WorkRecord>().Property(w => w.StartYear).HasColumnType("Date");
-            modelBuilder.Entity<WorkRecord>().Property(w => w.EndYear).HasColumnType("Date");
-            modelBuilder.Entity<EducationRecord>().Property(w => w.StartYear).HasColumnType("Date");
-            modelBuilder.Entity<EducationRecord>().Property(w => w.EndYear).HasColumnType("Date");
-            base.OnModelCreating(modelBuilder);
-        }
-
-        public static BaseDbContext Create()
-        {
-            return new BaseDbContext();
-        }
-
-        public virtual DbSet<EducationRecord> EducationRecords { get; set; }
-
-        public virtual DbSet<WorkRecord> WorkRecords { get; set; }
-
-        public virtual DbSet<ActivityOperation> ActivityOperations { get; set; }
-
-        public virtual DbSet<ActivityRecord> ActivityRecords { get; set; }
-
-        public virtual DbSet<CourseOperation> CourseOperations { get; set; }
-
-        public virtual DbSet<CourseRecord> CourseRecords { get; set; }
-
-        public virtual DbSet<RoomOperation> RoomOperations { get; set; }
-
-        public virtual DbSet<RoomRecord> RoomRecords { get; set; }
-
-        public virtual DbSet<Material> Materials { get; set; }
-
-        public virtual DbSet<Article> Articles { get; set; }
-
-        public virtual DbSet<Message> Messages { get; set; }
-
-        public virtual DbSet<Project> Projects { get; set; }
-
-        public virtual DbSet<Team> Teams { get; set; }
-
-        public virtual DbSet<TeamRecord> TeamRecords { get; set; }
-
-        public virtual DbSet<Company> Companys { get; set; }
-
-        public virtual DbSet<IdentityRecord> IdentityRecords { get; set; }
-        
-        public virtual DbSet<TeamProfileViewModel> TeamProfileViewModels { get; set; }
-
-        public virtual DbSet<TutorInformation> TutorInformations { get; set; }
-    }
 }
