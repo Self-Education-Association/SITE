@@ -3,29 +3,77 @@
 @{
     ViewBag.Title = "News";
 }
+<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
 
-<h2>News</h2>
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
 
-<div>
-    <h4>@Model.Title</h4>
-    <h4><small>@Model.Time</small></h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortContent)
-        </dt>
+    .table > tbody > tr > th {
+        text-align: center;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.ShortContent)
-        </dd>
+    .table > tbody > tr > td {
+        text-align: center;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ContentStored)
-        </dt>
+    dl {
+        text-align: center;
+    }
 
-        <dd>
-            @Html.Raw(Model.ContentStored)
-        </dd>
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
 
-    </dl>
-</div>
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+</style>
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">新闻 | 新闻详情</b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section class="pagesec" style="display:block">
+    <div class="container-fluid pagecontainer">
+        <div class="row" style="padding:20px 15%;">
+            <h5 align="center" style="color:black;font-family:STSong">@Model.Title</h5>
+            <div class="col-xs-12">
+                <p style="line-height:250%;">
+                    <p style="font-weight:bold;text-align:center;">@Model.Time<br /></p>
+
+                <p style="font-family:'Microsoft YaHei';">
+                 &nbsp; 摘要： @Html.DisplayFor(model => model.ShortContent)
+                </p>
+
+                <p>
+                    &nbsp; @Html.Raw(Model.ContentStored)
+                </p>
+                <!--dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ShortContent)
+                </dt-->
+                <!--dt>
+                    @Html.DisplayNameFor(model => model.ContentStored)
+                </dt>
+
+                                </dl-->
+            </div>
+        </div>
+    </div>
+</section>

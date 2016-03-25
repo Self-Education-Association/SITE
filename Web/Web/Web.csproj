@@ -81,7 +81,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -125,7 +127,9 @@
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
@@ -197,7 +201,9 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\TeamEventsController.cs" />
     <Compile Include="Controllers\TutorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,10 +212,31 @@
     <Compile Include="Migrations\201601210547442_InitialCreate.Designer.cs">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603021651002_UpdateCourseModel.cs" />
+    <Compile Include="Migrations\201603021651002_UpdateCourseModel.Designer.cs">
+      <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603241138585_AddIndustryModel.cs" />
+    <Compile Include="Migrations\201603241138585_AddIndustryModel.Designer.cs">
+      <DependentUpon>201603241138585_AddIndustryModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603241231460_ChangeTimeColumnType.cs" />
+    <Compile Include="Migrations\201603241231460_ChangeTimeColumnType.Designer.cs">
+      <DependentUpon>201603241231460_ChangeTimeColumnType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.cs" />
+    <Compile Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.Designer.cs">
+      <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603251207473_UpdateTeamModel.cs" />
+    <Compile Include="Migrations\201603251207473_UpdateTeamModel.Designer.cs">
+      <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
     <Compile Include="Models\BaseClass.cs" />
+    <Compile Include="Models\ContextModel.cs" />
     <Compile Include="Models\CourseModels.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -217,6 +244,7 @@
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\ProjectModels.cs" />
     <Compile Include="Models\RoomModels.cs" />
+    <Compile Include="Models\TeamEvent.cs" />
     <Compile Include="Models\TutorInformation.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
@@ -538,6 +566,57 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\flat-ui.css" />
     <Content Include="Content\flat-ui.min.css" />
+    <Content Include="Content\images\icon_calendar.gif" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui-1.8.17.custom.css" />
+    <Content Include="Content\jquery-ui-timepicker-addon.css" />
+    <Content Include="Content\jquery-ui-timepicker-addon.min.css" />
+    <Content Include="Content\themes\base\accordion.css" />
+    <Content Include="Content\themes\base\all.css" />
+    <Content Include="Content\themes\base\autocomplete.css" />
+    <Content Include="Content\themes\base\base.css" />
+    <Content Include="Content\themes\base\button.css" />
+    <Content Include="Content\themes\base\core.css" />
+    <Content Include="Content\themes\base\datepicker.css" />
+    <Content Include="Content\themes\base\dialog.css" />
+    <Content Include="Content\themes\base\draggable.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\menu.css" />
+    <Content Include="Content\themes\base\progressbar.css" />
+    <Content Include="Content\themes\base\resizable.css" />
+    <Content Include="Content\themes\base\selectable.css" />
+    <Content Include="Content\themes\base\selectmenu.css" />
+    <Content Include="Content\themes\base\slider.css" />
+    <Content Include="Content\themes\base\sortable.css" />
+    <Content Include="Content\themes\base\spinner.css" />
+    <Content Include="Content\themes\base\tabs.css" />
+    <Content Include="Content\themes\base\theme.css" />
+    <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons\flat-ui-icons-regular.svg" />
@@ -558,8 +637,12 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\flat-ui.css.map" />
+    <Content Include="img\a.jpg" />
+    <Content Include="img\calenderbg.jpg" />
     <Content Include="img\chengxin1.jpg" />
     <Content Include="img\clouds-texture01.jpg" />
+    <Content Include="img\divider6.jpg" />
+    <Content Include="img\e.jpg" />
     <Content Include="img\favicon.ico" />
     <Content Include="img\featuresbg.jpg" />
     <Content Include="img\fuqin.jpg" />
@@ -651,6 +734,9 @@
     <Content Include="fonts\lato\lato-regular.eot" />
     <Content Include="fonts\lato\lato-regular.ttf" />
     <Content Include="fonts\lato\lato-regular.woff" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-zh-CN.js" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="ckeditor\CHANGES.md" />
     <Content Include="ckeditor\LICENSE.md" />
@@ -668,11 +754,15 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\部署.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery-ui-sliderAccess.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
+    <Content Include="Scripts\jquery-ui-timepicker-addon.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -778,12 +868,23 @@
     <Content Include="Views\Manage\Avatar.cshtml" />
     <Content Include="Views\Article\News.cshtml" />
     <Content Include="Views\Article\Points.cshtml" />
+    <Content Include="Views\TeamEvents\Create.cshtml" />
+    <Content Include="Views\TeamEvents\Delete.cshtml" />
+    <Content Include="Views\TeamEvents\Details.cshtml" />
+    <Content Include="Views\TeamEvents\Edit.cshtml" />
+    <Content Include="Views\TeamEvents\Index.cshtml" />
+    <Content Include="Views\Reports\Create.cshtml" />
+    <Content Include="Views\Reports\Delete.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="UserUpload\Administrator\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
+    <Folder Include="UserUpload\Management\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -794,6 +895,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201601210547442_InitialCreate.resx">
       <DependentUpon>201601210547442_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603021651002_UpdateCourseModel.resx">
+      <DependentUpon>201603021651002_UpdateCourseModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241138585_AddIndustryModel.resx">
+      <DependentUpon>201603241138585_AddIndustryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241231460_ChangeTimeColumnType.resx">
+      <DependentUpon>201603241231460_ChangeTimeColumnType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.resx">
+      <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603251207473_UpdateTeamModel.resx">
+      <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -810,7 +926,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>9095</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

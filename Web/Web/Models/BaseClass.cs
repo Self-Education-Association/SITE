@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web.Models
 {
@@ -60,20 +61,41 @@ namespace Web.Models
         [DayRange(0, 60)]
         public DateTime EndTime { get; set; }
 
-        [Display(Name = "描述")]
+        [NotMapped]
         public string Content
         {
-            get { return Content; }
+            get { return ContentStored; }
             set
             {
-                Content = value;
-                ShortContent = Extensions.ReplaceHtmlTag(value, 50);
+                ContentStored = value;
+                //将content和shortcontent从模型上挂钩，并把null值的判定放在模型层，减少出错的可能
+                if (value != null)
+                {
+                    if (value.Length <= 50)
+                    {
+                        this.ShortContent = this.Content;
+                    }
+                    else
+                        ShortContent = value.Substring(0, 50);
+                }
+                else
+                    ShortContent = null;
             }
+        }
+
+        [Display(Name = "描述")]
+        public string ContentStored{get;set;}
+
+        [NotMapped]
+        public string ShortContent
+        {
+            get{ return ShortContentStored; }
+            set{ ShortContentStored = value; }
         }
 
         [Display(Name = "摘要")]
         [MaxLength(50)]
-        public string ShortContent { get; set; }
+        public string ShortContentStored{get;set;}
 
         [Display(Name = "启用中")]
         public bool Enabled { get; set; }

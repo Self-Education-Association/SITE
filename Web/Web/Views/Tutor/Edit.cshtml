@@ -4,6 +4,23 @@
     ViewBag.Title = "Update";
 }
 
+@Scripts.Render("~/bundles/timepickerscripts")
+@Styles.Render("~/bundles/timepickerstyles")
+<script type="text/javascript">
+    $(function () {
+        $(".ui_timepicker").datetimepicker({
+            //showOn: "button",
+            //buttonImage: "./css/images/icon_calendar.gif",
+            //buttonImageOnly: true,
+            showSecond: true,
+            timeFormat: 'HH:mm:ss',
+            dateFormat: 'yy/mm/dd',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        })
+    })
+</script>
 <section class="sec2">
     <div class="cover">
     </div>
@@ -16,7 +33,7 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        @TempData["ErrorInfo"]
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
@@ -28,9 +45,6 @@
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-                <div>
-                    @ViewData["ErrorInfo"]
-                </div>
                 <div class="form-horizontal">
                     <h4>课程操作</h4>
                     <hr />
@@ -75,7 +89,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
                             @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -83,7 +97,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
                             @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
                         </div>
                     </div>

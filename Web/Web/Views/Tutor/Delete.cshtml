@@ -18,7 +18,7 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        @TempData["ErrorInfo"]
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>

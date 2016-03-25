@@ -21,12 +21,12 @@ namespace Web.Models
         [Display(Name = "上限人数")]
         public int Limit { get; set; }
 
-        [Display(Name = "状态")]
-        public string Status { get; set; }
+        [Display(Name = "启用")]
+        public bool Status { get; set; }
 
         public virtual List<User> Students { get; set; }
 
-        [Display(Name = "上限人数")]
+        [Display(Name = "位置")]
         public string Location { get; set; }
 
         public bool Create()
@@ -42,7 +42,7 @@ namespace Web.Models
                     Creator = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
                     db.CourseOperations.Add(this);
                     db.SaveChanges();
-                    var course = db.CourseOperations.Find(this.Id);
+                    var course = db.CourseOperations.Find(Id);
                     if (course != null)
                         return true;
                     return false;
@@ -64,8 +64,8 @@ namespace Web.Models
                     db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     if (db.CourseOperations.Find(Id) != null)
-                        if(db.CourseOperations.Find(Id) == this)
-                        return true;
+                        if (db.CourseOperations.Find(Id) == this)
+                            return true;
                     return false;
                 }
                 catch
@@ -75,23 +75,28 @@ namespace Web.Models
             }
         }
 
-        public bool Delete()
+        public bool Delete(ref BaseDbContext db)
         {
-            using (BaseDbContext db = new BaseDbContext())
+            try
             {
-                try
-                {
-                    Enabled = false;
-                    db.Entry(this).State = EntityState.Modified;
-                    db.SaveChanges();
-                    if (this.Enabled == false)
-                        return true;
-                    return false;
-                }
-                catch
-                {
-                    return false;
-                }
+            Enabled = false;
+            if (!db.CourseOperations.Local.Contains(this))
+            {
+                db.CourseOperations.Attach(this);
+            }
+            var listRecord = (db.CourseRecords.Where(c => c.CourseOperation.Id == Id));
+            foreach (CourseRecord courseRecord in listRecord.ToList())
+            {
+                db.Messages.Add(new Message(courseRecord.Receiver, courseRecord.CourseOperation.Name, MessageType.System, MessageTemplate.CourseDelete, ref db));
+                db.CourseRecords.Remove(courseRecord);
+            }
+            db.CourseOperations.Remove(this);
+            db.SaveChanges();
+            return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -149,7 +154,7 @@ namespace Web.Models
 
     public class CourseRecord : Remark
     {
-        public CourseOperation CourseOperation { get; set; }
+        public virtual CourseOperation CourseOperation { get; set; }
         public bool Remark()
         {
             using (BaseDbContext db = new BaseDbContext())
@@ -183,31 +188,6 @@ namespace Web.Models
                     CourseOperation.Count++;
                     CourseOperation.Students.Add(Receiver);
                     db.CourseRecords.Add(this);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-        public bool Quit(Guid Id)
-        {
-            using (BaseDbContext db = new BaseDbContext())
-            {
-                try
-                {
-                    var courseOperation = db.CourseOperations.Find(Id);
-                    if (courseOperation != CourseOperation)
-                        return false;
-                    CourseOperation.Count--;
-                    if (CourseOperation.Students != null)
-                    {
-                        if (CourseOperation.Students.Contains(Receiver))
-                            CourseOperation.Students.Remove(Receiver);
-                    }
-                    db.CourseRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }

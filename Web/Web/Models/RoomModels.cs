@@ -42,16 +42,16 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Update([Bind(Include = "Id,Usable,Location,Name,StartTime,EndTime,Content,State")] RoomOperation RoomOperation)
+        public bool Edit()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    RoomOperation.Time = DateTime.Now;
-                    db.Entry(RoomOperation).State = EntityState.Modified;
+                    Time = DateTime.Now;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
-                    if (db.RoomOperations.Find(RoomOperation.Id) != null)
+                    if (db.RoomOperations.Find(Id) != null)
                         return true;
                     return false;
                 }
@@ -61,24 +61,28 @@ namespace Web.Models
                 }
             }
         }
-        public static bool Delete(Guid id)
+        public bool Delete(ref BaseDbContext db)
         {
-            using (BaseDbContext db = new BaseDbContext())
+            try
             {
-                try
+                Enabled = false;
+                if (!db.RoomOperations.Local.Contains(this))
                 {
-                    RoomOperation RoomOperation = db.RoomOperations.Find(id);
-                    RoomOperation.Enabled = false;
-                    db.Entry(RoomOperation).State = EntityState.Modified;
-                    db.SaveChanges();
-                    if (RoomOperation.Enabled == false)
-                        return true;
-                    return false;
+                    db.RoomOperations.Attach(this);
                 }
-                catch
+                var listRecord = (db.RoomRecords.Where(r => r.RoomOperation.Id == Id));
+                foreach (RoomRecord roomRecord in listRecord.ToList())
                 {
-                    return false;
+                    db.Messages.Add(new Message(roomRecord.Receiver, roomRecord.RoomOperation.Name, MessageType.System, MessageTemplate.RoomDelete, ref db));
+                    db.RoomRecords.Remove(roomRecord);
                 }
+                db.RoomOperations.Remove(this);
+                db.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
         public static List<RoomOperation> List(string select, bool IsTeacher)
@@ -147,16 +151,16 @@ namespace Web.Models
     {
         public RoomOperation RoomOperation { get; set; }
 
-        public static bool Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] RoomRecord RoomRecord)
+        public bool Remark()
         {
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
                     User user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    RoomRecord.RoomOperation = db.RoomOperations.First(t => t.Creator == user);
-                    RoomRecord.Time = DateTime.Now;
-                    db.Entry(RoomRecord).State = EntityState.Modified;
+                    RoomOperation = db.RoomOperations.First(t => t.Creator == user);
+                    Time = DateTime.Now;
+                    db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     return true;
                 }
@@ -185,33 +189,6 @@ namespace Web.Models
                     Time = new DateTime(2000, 1, 1, 0, 0, 0);
                     RoomOperation.Usable = false;
                     db.RoomRecords.Add(this);
-                    db.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }
-
-        public bool Quit(Guid Id)
-        {
-            using (BaseDbContext db = new BaseDbContext())
-            {
-                try
-                {
-                    var roomOperation = db.RoomOperations.Find(Id);
-                    if (RoomOperation != roomOperation)
-                        return false;
-                    var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    RoomOperation.Usable = true;
-                    if (RoomOperation.RoomRecords != null)
-                    {
-                        if (RoomOperation.RoomRecords.Contains(this))
-                            RoomOperation.RoomRecords.Remove(this);
-                    }
-                    db.RoomRecords.Remove(this);
                     db.SaveChanges();
                     return true;
                 }

@@ -60,27 +60,39 @@ namespace Web.Controllers
             }
             return RedirectToAction("Index");
         }
+
         public ActionResult Quit(Guid Id)
         {
             if (ModelState.IsValid)
             {
-                var RoomOperation = db.RoomOperations.Find(Id);
-                var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var roomRecord = (from a in db.RoomRecords where a.RoomOperation.Id == RoomOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (roomRecord == default(RoomRecord) | roomRecord == null)
-                {
-                    TempData["ErrorInfo"] = "您未选该场地！";
-                    return RedirectToAction("Index");
-                }
-                if (DateTime.Now > RoomOperation.StartTime)
+                var roomOperation = db.RoomOperations.Find(Id);
+                var user = Extensions.GetContextUser(ref db);
+                if (roomOperation == null)
+                    return new HttpStatusCodeResult(404);
+                if (DateTime.Now > roomOperation.StartTime)
                 {
                     TempData["ErrorInfo"] = "现在不是可退选的时间！";
-                    return RedirectToAction("Index");
                 }
-                if (roomRecord.Quit(Id))
-                    return RedirectToAction("Index");
-                TempData["ErrorInfo"] = "无法退选！";
+                if (roomOperation.Usable == false)
+                {
+                    var RoomRecords = roomOperation.RoomRecords.Where(c => c.Receiver.Id == user.Id);
+                    var lastRecord = RoomRecords.Where(r => r.ActionTime.AddDays(7.0) > r.RoomOperation.StartTime);
+                    if (RoomRecords != null && lastRecord != null && lastRecord.First().Receiver == user)
+                    {
+                        db.RoomRecords.Remove(lastRecord.First());
+                        roomOperation.Usable = true;
+                        db.SaveChanges();
+                        if (roomOperation.Usable != false)
+                        {
+                            TempData["ErrorInfo"] = "退选成功";
+
+                            return RedirectToAction("Index");
+                        }
+                    }
+                }
             }
+            TempData["ErrorInfo"] = "退选失败";
+
             return RedirectToAction("Index");
         }
 

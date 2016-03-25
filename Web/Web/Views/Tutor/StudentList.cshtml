@@ -17,7 +17,7 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        @TempData["ErrorInfo"]
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
@@ -30,6 +30,9 @@
                 <tr>
                     <th>
                         @Html.DisplayNameFor(model => model.Receiver.DisplayName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.Name)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.RemarkContent)
@@ -50,6 +53,9 @@
                             @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
                         </td>
                         <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.Name)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.RemarkContent)
                         </td>
                         <td>
@@ -59,7 +65,7 @@
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
-                            @Html.ActionLink("Remark", "Remark", new { id = item.Id })
+                            @Html.ActionLink("Remark", "Remark", new { id = item.Id})
                         </td>
                     </tr>
                 }

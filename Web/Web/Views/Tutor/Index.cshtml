@@ -16,7 +16,7 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        @TempData["ErrorInfo"]
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
@@ -26,9 +26,8 @@
             <h4>首页</h4>
             <hr />
             <p>
-                @Html.ActionLink("CreatE", "Create")
+                @Html.ActionLink("创建课程", "Create")
             </p>
-            <div>@ViewData["ErrorInfo"]</div>
             <table class="table">
                 <tr>
                     <th>
@@ -80,7 +79,7 @@
                             @Html.DisplayFor(modelItem => item.Content)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Update", new { id = item.Id }) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                             @Html.ActionLink("Details", "StudentList", new { id = item.Id }) |
                             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         </td>

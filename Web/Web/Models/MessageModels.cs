@@ -20,18 +20,28 @@ namespace Web.Models
         public string Content
         {
             get { return ContentStored; }
+            //将content和shortcontent从模型上挂钩，并把null值的判定放在模型层，减少出错的可能
             set
             {
                 ContentStored = value;
-                ShortContent = Extensions.ReplaceHtmlTag(value, 30);
+                if (value != null)
+                    ShortContent = Extensions.ReplaceHtmlTag(value, 30);
+                else
+                    ShortContent = null;
             }
         }
 
         [Display(Name = "文章内容")]
         public string ContentStored { get; set; }
 
+        public string ShortContent
+        {
+            get { return ShortContentStored; }
+            set { ShortContentStored = value; }
+        }
+
         [Display(Name = "文章摘要")]
-        public string ShortContent { get; set; }
+        public string ShortContentStored { get; set; }
 
         [Display(Name = "文章状态")]
         public ArticleStatus Status { get; set; }
@@ -84,7 +94,7 @@ namespace Web.Models
         public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Title = title;
             Content = content;
@@ -93,10 +103,10 @@ namespace Web.Models
             Time = DateTime.Now;
         }
 
-        public Message(string userId, MessageType type, MessageTemplate template, BaseDbContext db)
+        public Message(string userId, MessageType type, MessageTemplate template, ref BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;
@@ -114,10 +124,35 @@ namespace Web.Models
             }
         }
 
+        public Message(User user,string varName, MessageType type, MessageTemplate template,ref BaseDbContext db)
+        {
+            ID = Guid.NewGuid();
+            Publisher = Extensions.GetContextUser(ref db);
+            Receiver = user;
+            Type = type;
+            HaveRead = false;
+            Time = DateTime.Now;
+            switch (template)
+            {
+                case MessageTemplate.CourseDelete:
+                    Title = "你选择的课程"+varName+"被Tutor删除了";
+                    Content = "blablablabla。。。。。。";
+                    break;
+                case MessageTemplate.RoomDelete:
+                    Title = "你已预约的场地" + varName + "被Tutor删除了";
+                    Content = "";
+                    break;
+                default:
+                    Title = "";
+                    Content = "";
+                    break;
+            }
+        }
+
         public Message(string userId, MessageType type, MessageTemplate template, string personal, BaseDbContext db)
         {
             ID = Guid.NewGuid();
-            Publisher = Extensions.GetContextUser(db);
+            Publisher = Extensions.GetContextUser(ref db);
             Receiver = db.Users.Find(userId);
             Type = type;
             HaveRead = false;
@@ -211,6 +246,8 @@ namespace Web.Models
         CompanySuccess,
         IdentityRecordFailure,
         IdentityRecordSuccess,
+        CourseDelete,
+        RoomDelete,
     }
 
     public enum ArticleStatus

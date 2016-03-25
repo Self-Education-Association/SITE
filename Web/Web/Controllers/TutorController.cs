@@ -11,7 +11,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles ="Tutor")]
     public class TutorController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -69,7 +69,7 @@ namespace Web.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new {  });
+                return RedirectToAction("Index", new { });
             }
             return View(model);
         }
@@ -85,16 +85,16 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid && courseOperation != null)
             {
-                if(courseOperation.StartTime <= courseOperation.EndTime)
+                if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    ViewData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
+                    TempData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
                     return View();
-                }
+                } 
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
-            ViewData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
+            TempData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
             return View(courseOperation);
         }
 
@@ -116,18 +116,18 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] CourseOperation courseOperation)
         {
-            if (ModelState.IsValid && courseOperation !=null)
+            if (ModelState.IsValid && courseOperation != null)
             {
-                if (courseOperation.Content.Length<=50)
+                if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    courseOperation.ShortContent = courseOperation.Content;
+                    TempData["ErrorInfo"] = "无法完成修改，开始时间晚于结束时间。";
+                    return View();
                 }
-                courseOperation.ShortContent = courseOperation.Content.Substring(0, 50);
                 if (courseOperation.Students != null)
                 {
                     if (courseOperation.Students.Count > courseOperation.Limit)
                     {
-                        ViewData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
+                        TempData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
                         return View();
                     }
                 }
@@ -139,20 +139,20 @@ namespace Web.Controllers
                         {
                             string title = "课程修改通知";
                             string content = "您好，你选择的课程[" + courseOperation.Name + "]已被修改，请及时查看相关信息，并根据新的课程信息安排你的日程";
-                            Message message = new Message(title, content, user.Id, 0,db);
+                            Message message = new Message(title, content, user.Id, MessageType.System, db);
                             if (!message.Publish())
                             {
-                                ViewData["ErrorInfo"] = "无法给学生发布修改信息";
+                                TempData["ErrorInfo"] = "无法给学生发布修改信息";
                                 return View();
                             }
                         }
                     }
                     return RedirectToAction("Index");
                 }
-                ViewData["ErrorInfo"] = "无法修改！无法连接到服务器.";
+                TempData["ErrorInfo"] = "无法修改！无法连接到服务器.";
                 return View();
             }
-            ViewData["ErrorInfo"] = "无法修改！对象不存在或无效。";
+            TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
             return View();
         }
         
@@ -172,11 +172,14 @@ namespace Web.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DoDelete(CourseOperation courseOperation)
+        public ActionResult DoDelete(Guid? Id)
         {
-            if (!courseOperation.Delete())
+            if (Id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            CourseOperation courseOperation = db.CourseOperations.Find(Id);
+            if (!courseOperation.Delete(ref db))
             {
-                ViewData["ErrorInfo"] = "无法删除";
+                TempData["ErrorInfo"] = "无法删除";
                 return View();
             }
             return RedirectToAction("Index");
@@ -189,6 +192,8 @@ namespace Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CourseRecord courseRecord = db.CourseRecords.Find(id);
+
+            //这句话有问题，为什么找不到course呢。。。
             CourseOperation course = courseRecord.CourseOperation;
             if (courseRecord == null)
             {
@@ -196,23 +201,24 @@ namespace Web.Controllers
             }
             if (courseRecord.RemarkRate > 0)
             {
+
                 return View(courseRecord);
             }
             if (course != null)
             {
-                if (DateTime.Now < course.EndTime)
+                if (DateTime.Now > course.EndTime)
                 {
                     if (course.Students != null)
-                        return RedirectToAction("StudentList", course.Id);
+
+                        return View(courseRecord);
                 }
-                TempData["ErrorInfo"] = "还未到允许评论的时间！";
+                    TempData["ErrorInfo"] = "还未到允许评论的时间！";
             }
             else
             {
                 TempData["ErrorInfo"] = "该课程没有成员！";
             }
-            return RedirectToAction("Index");
-            //return RedirectToAction("StudentList");
+            return RedirectToAction("StudentList");
         }
 
         [HttpPost]
@@ -222,17 +228,17 @@ namespace Web.Controllers
             if (ModelState.IsValid)
             {
                 if (courseRecord.Remark())
-                return RedirectToAction("StudentList",courseRecord.CourseOperation.Id);
-                ViewData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
+                    return RedirectToAction("StudentList");
+                TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
         }
 
         public ActionResult StudentList(Guid? Id)
         {
-            var user = Extensions.GetContextUser(db);
-            if(Id==null)
-                return View(db.CourseRecords.ToList());
+            var user = Extensions.GetContextUser(ref db);
+            if (Id == null)
+                return View(db.CourseRecords.Where(c => c.CourseOperation.Creator.Id == user.Id).ToList());
             CourseOperation course = db.CourseOperations.Find(Id);
             if (course == null)
             {
@@ -244,13 +250,13 @@ namespace Web.Controllers
                 TempData["ErrorInfo"] = "你没有权限对该课程进行评价！";
                 return View("Index");
             }
-            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id==course.Id select a ).Distinct();
+            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id == course.Id select a).Distinct();
             if (studentList.FirstOrDefault() == null)
                 return View(db.CourseRecords.ToList());
             return View(studentList);
         }
 
-        public ActionResult Calendar()
+        /* public ActionResult Calendar()
         {
             var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
             int Monthdays = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
@@ -276,6 +282,7 @@ namespace Web.Controllers
         {
             return RedirectToAction("StudentList");
         }
+         */
 
         protected override void Dispose(bool disposing)
         {

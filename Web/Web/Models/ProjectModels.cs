@@ -126,7 +126,13 @@ namespace Web.Models
         public virtual Company Company { get; set; }
 
         [Display(Name = "团队成员")]
-        public virtual IQueryable<TeamRecord> Member { get; set; }
+        public virtual List<TeamRecord> Member { get; set; }
+
+        [Display(Name="团队记录")]
+        public virtual List<TeamEvent> Events { get; set; }
+
+        [Display(Name="团队报告")]
+        public virtual List<TeamReport> Reports { get; set; }
 
         public void NewTeam(ref Project project)
         {
@@ -135,7 +141,8 @@ namespace Web.Models
             Admin = project.Admin;
             Time = DateTime.Now;
             Introduction = "此处的信息将作为团队的对外介绍。";
-            Announcement = "此处的信息将作为团队的内部公告。";
+            Announcement = "此处的信息将作为团队的内部公告";
+            Searchable = project.Privacy;
             project.Team = this;
             using (BaseDbContext db = new BaseDbContext())
             {
@@ -151,6 +158,8 @@ namespace Web.Models
 
         [Display(Name = "状态")]
         public TeamMemberStatus Status { get; set; }
+
+        public TeamRecord() : base() { }
 
         public TeamRecord(Team team) : base()
         {
@@ -180,44 +189,11 @@ namespace Web.Models
         [Display(Name = "公司创始人")]
         public User Admin { get; set; }
 
-        [Display(Name = "公司名称")]
-        public string Name { get; set; }
+        [Display(Name = "目标行业")]
+        public string Industry { get; set; }
 
-        [Display(Name = "资金来源")]
-        public string SourcesOfFunds { get; set; }
-
-        [Display(Name = "公司法人代表")]
-        public string Corporation { get; set; }
-
-        [Display(Name = "注册网站")]
-        public string RegisterSite { get; set; }
-
-        [Display(Name = "营业执照编号")]
-        public string CodeOfBusinessLicense { get; set; }
-
-        [Display(Name = "公司人数")]
-        public int MembersCount { get; set; }
-
-        [Display(Name = "注册资本")]
-        public int AmountOfMoney { get; set; }
-
-        [Display(Name = "近期营业额")]
-        public int RecentTurnover { get; set; }
-
-        [Display(Name = "公司资产")]
-        public int CompanyValuation { get; set; }
-
-        [Display(Name = "融资金额")]
-        public int FinancingAmount { get; set; }
-
-        [Display(Name = "已售出股份")]
-        public double SharesSold { get; set; }
-
-        [Display(Name = "融资时机")]
-        public string FinancingTime { get; set; }
-
-        [Display(Name = "投资计划")]
-        public string Investment { get; set; }
+        [Display(Name = "商业计划书")]
+        public virtual Material Plan { get; set; }
 
         [Display(Name = "管理员批复")]
         public string Note { get; set; }
@@ -261,7 +237,7 @@ namespace Web.Models
         Done
     }
 
-    public enum TeamMemberStatus : int
+    public enum TeamMemberStatus
     {
         [EnumDisplayName("成员")]
         Normal,
@@ -283,5 +259,12 @@ namespace Web.Models
         Done,
         [EnumDisplayName("创业后期，已经注册公司")]
         HaveCompany
+    }
+
+    public class IndustryList
+    {
+        public Guid ID { get; set; }
+
+        public string IndustryName { get; set; }
     }
 }
