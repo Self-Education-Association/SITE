@@ -89,10 +89,11 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult VoiceNews(int page=0)
+        public ActionResult VoiceNews(int page = 0)
         {
             int pageSize = 20;
-            var articles = new ListPage<Article>(db.Articles, page, pageSize);
+            var news = from a in db.Articles where a.Class == ArticleClass.News select a;
+            var articles = new ListPage<Article>(news, page, pageSize);
 
             return View(articles);
         }

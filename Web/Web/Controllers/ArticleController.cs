@@ -18,7 +18,7 @@ namespace Web.Controllers
             return RedirectToAction("List");
         }
 
-        public ActionResult List(ArticleClass articleClass=ArticleClass.News,int pageSize=10,int page=0)
+        public ActionResult List(ArticleClass articleClass=ArticleClass.News,int pageSize=20,int page=0)
         {
             var model = new ListPage<Article>(db.Articles.Where(a => a.Class == articleClass), page, pageSize);
 
