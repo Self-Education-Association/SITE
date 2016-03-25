@@ -434,13 +434,15 @@ namespace Web.Controllers
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = Extensions.GetContextUser(ref db).TeamRecord.Team;
-            TeamProfileViewModel model = new TeamProfileViewModel{
+            TeamProfileViewModel model = new TeamProfileViewModel
+            {
                 Id = team.Id,
                 Name = team.Name,
                 Administrator = team.Admin.DisplayName,
                 Time = team.Time,
                 Introduction = team.Introduction,
-                Announcement = team.Announcement};
+                Announcement = team.Announcement
+            };
 
             return View(model);
         }
@@ -492,7 +494,7 @@ namespace Web.Controllers
                     return View();
                 }
                 var file = Request.Files[0];//只上传第一个文件
-                var user= Extensions.GetContextUser(ref db);
+                var user = Extensions.GetContextUser(ref db);
                 model.Plan = Material.Create("商业计划书", MaterialType.Management, file, db);
                 model.Admin = user;
                 user.TeamRecord.Team.Company = model;
@@ -554,7 +556,7 @@ namespace Web.Controllers
                 _userManager.Dispose();
                 _userManager = null;
             }
-            if (db!=null)
+            if (db != null)
             {
                 db.Dispose();
                 db = null;

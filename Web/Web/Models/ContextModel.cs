@@ -24,6 +24,7 @@ namespace Web.Models
             modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Receiver).WithOptional(u => u.TeamRecord);
             modelBuilder.Entity<TeamRecord>().HasRequired(t => t.Team).WithMany(t => t.Member);
             modelBuilder.Entity<Team>().HasOptional(t => t.Company);
+            modelBuilder.Entity<Team>().HasMany(t => t.Reports);
             modelBuilder.Entity<WorkRecord>().Property(w => w.StartYear).HasColumnType("Date");
             modelBuilder.Entity<WorkRecord>().Property(w => w.EndYear).HasColumnType("Date");
             modelBuilder.Entity<EducationRecord>().Property(w => w.StartYear).HasColumnType("Date");
@@ -36,6 +37,11 @@ namespace Web.Models
             modelBuilder.Entity<ActivityRecord>().Property(t => t.ActionTime).HasColumnType("Datetime2");
             modelBuilder.Entity<CourseRecord>().Property(t => t.Time).HasColumnType("Datetime2");
             modelBuilder.Entity<CourseRecord>().Property(t => t.ActionTime).HasColumnType("Datetime2");
+            modelBuilder.Entity<TeamEvent>().Property(t => t.AddTime).HasColumnType("Datetime2");
+            modelBuilder.Entity<TeamEvent>().Property(t => t.EventTime).HasColumnType("Date");
+            modelBuilder.Entity<TeamEvent>().HasRequired(t => t.Team).WithMany(t => t.Events);
+            modelBuilder.Entity<TeamReport>().HasRequired(t => t.Team).WithMany(t => t.Reports);
+            modelBuilder.Entity<TeamReport>().HasRequired(t => t.ReportFile);
         }
 
         public static BaseDbContext Create()
@@ -79,6 +85,10 @@ namespace Web.Models
 
         public virtual DbSet<TutorInformation> TutorInformations { get; set; }
 
+        public virtual DbSet<TeamEvent> TeamEvents { get; set; }
+
         public virtual DbSet<IndustryList> IndustryList { get; set; }
+
+        public System.Data.Entity.DbSet<Web.Models.TeamReport> TeamReports { get; set; }
     }
 }

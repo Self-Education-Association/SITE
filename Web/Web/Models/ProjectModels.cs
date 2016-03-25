@@ -128,6 +128,12 @@ namespace Web.Models
         [Display(Name = "团队成员")]
         public virtual List<TeamRecord> Member { get; set; }
 
+        [Display(Name="团队记录")]
+        public virtual List<TeamEvent> Events { get; set; }
+
+        [Display(Name="团队报告")]
+        public virtual List<TeamReport> Reports { get; set; }
+
         public void NewTeam(ref Project project)
         {
             Id = Guid.NewGuid();

@@ -201,7 +201,9 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\TeamEventsController.cs" />
     <Compile Include="Controllers\TutorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -226,6 +228,10 @@
     <Compile Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.Designer.cs">
       <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603251207473_UpdateTeamModel.cs" />
+    <Compile Include="Migrations\201603251207473_UpdateTeamModel.Designer.cs">
+      <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -238,6 +244,7 @@
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\ProjectModels.cs" />
     <Compile Include="Models\RoomModels.cs" />
+    <Compile Include="Models\TeamEvent.cs" />
     <Compile Include="Models\TutorInformation.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
@@ -862,6 +869,16 @@
     <Content Include="Views\Manage\Avatar.cshtml" />
     <Content Include="Views\Article\News.cshtml" />
     <Content Include="Views\Article\Points.cshtml" />
+    <Content Include="Views\TeamEvents\Create.cshtml" />
+    <Content Include="Views\TeamEvents\Delete.cshtml" />
+    <Content Include="Views\TeamEvents\Details.cshtml" />
+    <Content Include="Views\TeamEvents\Edit.cshtml" />
+    <Content Include="Views\TeamEvents\Index.cshtml" />
+    <Content Include="Views\Reports\Create.cshtml" />
+    <Content Include="Views\Reports\Delete.cshtml" />
+    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Reports\Edit.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -891,6 +908,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603241313378_AddForeignKeyinTeamRecord.resx">
       <DependentUpon>201603241313378_AddForeignKeyinTeamRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603251207473_UpdateTeamModel.resx">
+      <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
