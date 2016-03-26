@@ -203,6 +203,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\RoomManageController.cs" />
     <Compile Include="Controllers\TeamEventsController.cs" />
     <Compile Include="Controllers\TutorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -885,6 +886,7 @@
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
     <Folder Include="UserUpload\Management\" />
+    <Folder Include="Views\RoomManage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">

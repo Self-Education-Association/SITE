@@ -143,10 +143,16 @@
     <div>
         <span style="color:white;font-family:Microsoft YaHei;text-align:center;position:fixed;bottom:0;font-size:8px;z-index:1000;">&copy; @DateTime.Now.Year - 对外经济贸易大学SEA团队</span>
     </div>
-    @if (!string.IsNullOrWhiteSpace(ViewBag.Aleret))
+    @if (!string.IsNullOrWhiteSpace(ViewBag.Alert))
     {
         <script>
             alert("@ViewBag.Alert");
+        </script>
+    }
+    @if (TempData["Alert"] != null && !string.IsNullOrWhiteSpace(TempData["Alert"].ToString()))
+    {
+        <script>
+            alert("@TempData["Alert"].ToString()");
         </script>
     }
 </body>

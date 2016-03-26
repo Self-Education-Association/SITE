@@ -128,10 +128,10 @@ namespace Web.Models
         [Display(Name = "团队成员")]
         public virtual List<TeamRecord> Member { get; set; }
 
-        [Display(Name="团队记录")]
+        [Display(Name = "团队记录")]
         public virtual List<TeamEvent> Events { get; set; }
 
-        [Display(Name="团队报告")]
+        [Display(Name = "团队报告")]
         public virtual List<TeamReport> Reports { get; set; }
 
         public void NewTeam(ref Project project)
@@ -144,10 +144,8 @@ namespace Web.Models
             Announcement = "此处的信息将作为团队的内部公告";
             Searchable = project.Privacy;
             project.Team = this;
-            using (BaseDbContext db = new BaseDbContext())
-            {
-                var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin, Extensions.GetContextUser(db));
-            }
+            var db = new BaseDbContext();
+            var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin, Extensions.GetContextUser(ref db));
         }
     }
 
