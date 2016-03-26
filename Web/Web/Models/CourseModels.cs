@@ -150,6 +150,57 @@ namespace Web.Models
                 }
             }
         }
+
+        public static List<CourseOperation> List(string select, bool IsTeacher,User user)
+        {
+            using (BaseDbContext db = new BaseDbContext())
+            {
+                try
+                {
+                    int pageSize = 5;
+                    int page = 0;
+                    IQueryable<CourseOperation> Course = db.CourseOperations.Where(a => a.Enabled != false);
+                    if (IsTeacher)
+                    {
+                        user = db.Users.Find(user.Id);
+                        if (select == null | select == "")
+                        {
+                            Course = (from a in db.CourseOperations where a.Creator.Id == user.Id orderby a.Name select a).AsQueryable();
+                        }
+                        else
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.Creator.Id == user.Id && a.Name == @select
+                                      orderby a.Name
+                                      select a).AsQueryable();
+                        }
+                    }
+                    else
+                    {
+                        if (select == null)
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.StartTime > DateTime.Now
+                                      orderby a.Time
+                                      select a).AsQueryable();
+                        }
+                        else
+                        {
+                            Course = (from a in db.CourseOperations
+                                      where a.Name == @select && a.StartTime > DateTime.Now
+                                      orderby a.Time
+                                      select a).AsQueryable();
+                        }
+                    }
+                    var paginatedNews = new ListPage<CourseOperation>(Course, page, pageSize);
+                    return paginatedNews;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 
     public class CourseRecord : Remark

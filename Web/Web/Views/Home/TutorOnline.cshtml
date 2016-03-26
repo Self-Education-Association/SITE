@@ -1,4 +1,4 @@
-﻿
+﻿@model List<Web.Models.HomeTutorOnlineViewModel>
 @{
     ViewBag.Title = "TutorOnline";
 }
@@ -33,28 +33,26 @@
         </div>
         <div style="padding:20px 15%">
             <h5 align="center" style="color:black;font-family:SimHei">导师在线</h5>
-            <p style="line-height:250%;">
-                Lorem ipsum dolor sit amet
-                Consectetur adipiscing elit
-                Integer molestie lorem at massa
-                Facilisis in pretium nisl aliquet
-                Nulla volutpat aliquam velit
-                Faucibus porta lacus fringilla vel
-                Aenean sit amet erat nunc
-                Eget porttitor lorem
-                Lorem ipsum dolor sit amet
-                Consectetur adipiscing elit
-                Integer molestie lorem at massa
-                Facilisis in pretium nisl aliquet
-                Nulla volutpat aliquam velit
-                Phasellus iaculis neque
-                Purus sodales ultricies
-                Vestibulum laoreet porttitor sem
-                Ac tristique libero volutpat at
-                Faucibus porta lacus fringilla vel
-                Aenean sit amet erat nunc
-                Eget porttitor lorem
-            </p>
+            @if (Model == null)
+            {
+                <a>啥也没有</a>
+            }
+            else
+            {
+                foreach (var item in Model)
+                {
+                    <div>
+                        <p>@item.Name</p>
+                        <p>@item.Position</p>
+                        <p>@item.Introduction</p>
+                        <img src="@Url.Content(item.Avatar.GetUrl())" />
+                        @foreach (var c in item.Courses)
+                        {
+                            Html.ActionLink(c.Name, "Details", new { id = c.Id }, new { @class = "btn btn-success" });
+                        }
+                    </div>
+                }
+            }
         </div>
     </div>
 </section>

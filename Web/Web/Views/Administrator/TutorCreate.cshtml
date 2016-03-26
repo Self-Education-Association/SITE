@@ -22,7 +22,7 @@
         <div class="col-xs-10 board">
             <h4>创建导师</h4>
             <hr />
-            @using (Html.BeginForm("TutorCreate", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            @using (Html.BeginForm("TutorCreate", "Administrator", FormMethod.Post, new { @class = "form-horizontal", role = "form", @enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 <hr />

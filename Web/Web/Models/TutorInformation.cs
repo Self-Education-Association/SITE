@@ -11,9 +11,9 @@ namespace Web.Models
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public User Tutor { get; set; }
+        public virtual User Tutor { get; set; }
 
-        public Material Avatar { get; set; }
+        public virtual Material Avatar { get; set; }
 
         [Display(Name = "导师简介")]
         [DataType(DataType.MultilineText)]

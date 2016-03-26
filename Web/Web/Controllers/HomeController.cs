@@ -110,7 +110,21 @@ namespace Web.Controllers
 
         public ActionResult TutorOnline()
         {
-            return View();
+            var select = db.TutorInformations.ToList();
+            var model = new List<HomeTutorOnlineViewModel>();
+            foreach (var item in select)
+            {
+                model.Add(new HomeTutorOnlineViewModel
+                {
+                    Name = item.Tutor.DisplayName,
+                    Position = item.Position,
+                    Introduction = item.Introduction,
+                    Avatar = item.Avatar,
+                    Courses = CourseOperation.List("", true, item.Tutor)
+                });
+            }
+
+            return View(model);
         }
 
         public ActionResult TutorJoin()
