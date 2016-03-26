@@ -82,7 +82,7 @@
                         @Html.DisplayFor(modelItem => item.EndTime)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Content)
+                        @Html.Raw(item.ShortContent)
                     </td>
                     <td>
                         @Html.ActionLink("Apply", "Apply", new { id = item.Id }) |

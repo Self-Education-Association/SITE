@@ -71,12 +71,12 @@ namespace Web.Models
                 //将content和shortcontent从模型上挂钩，并把null值的判定放在模型层，减少出错的可能
                 if (value != null)
                 {
-                    if (value.Length <= 50)
+                    if (Extensions.ReplaceHtmlTag(value).Length <= 50)
                     {
-                        this.ShortContent = this.Content;
+                        this.ShortContent = Extensions.ReplaceHtmlTag(value);
                     }
                     else
-                        ShortContent = value.Substring(0, 50);
+                        ShortContent = Extensions.ReplaceHtmlTag(value).Substring(0, 50);
                 }
                 else
                     ShortContent = null;
