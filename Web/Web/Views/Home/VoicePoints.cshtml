@@ -1,6 +1,7 @@
-﻿
+﻿@model Web.Models.ListPage<Web.Models.Article>
 @{
     ViewBag.Title = "Voi_Points";
+    int index = Model.PageIndex + 1;
 }
 <style>
     body {
@@ -31,11 +32,41 @@
                 <li class="active">新锐观点</li>
             </ul>
         </div>
+        @{
+            <ul class="pager">
+                @if (Model.HasPreviousPage)
+                {
+                    <li class="previous ">@Html.ActionLink("前一页", "VoiceNews", new { page = Model.PageIndex - 1 })</li>
+                }
+                else
+                {
+                    <li class="previous disabled"><a>前一页</a></li>
+                }
+                <li><a>@index</a></li>
+                @if (Model.HasNextPage)
+                {
+                    <li class="previous ">@Html.ActionLink("后一页", "VoiceNews", new { page = Model.PageIndex + 1 })</li>
+                }
+                else
+                {
+                    <li class="previous disabled"><a>后一页</a></li>
+                }
+            </ul>
+        }
         <div class="row">
-            <div class="col-md-3 col-xs-6">
-
-            </div>
+                @foreach (Web.Models.Article item in Model)
+                {
+                    <div class="col-md-3 col-xs-6">
+                        <div class="feature">
+                            <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
+                            <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@item.Title</h3>
+                            <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">
+                                @item.ShortContent
+                            </p>
+                            <a class="btn btn-primary btn-large btn-block imgbtn" href="@Url.Content(item.GetUrl())" style="background-color:rgb(0,161,196)">阅读详细</a>
+                        </div>
+                    </div>
+                }
         </div>
     </div>
 </section>
-

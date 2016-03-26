@@ -32,7 +32,6 @@
                 <li class="active">近期新闻</li>
             </ul>
         </div>
-        <!--
         @{
             <ul class="pager">
                 @if (Model.HasPreviousPage)
@@ -54,10 +53,9 @@
                 }
             </ul>
         }
-            -->
         <div class="row">
             <!--分页-->
-            <ul class="pager">
+            <!--  <ul class="pager">
                 @if (Model.HasPreviousPage)
                 {
                     <li class="previous"><a href="@Url.Action("VoiceNews", new { page = Model.PageIndex - 1 })">上一页</a></li>
@@ -75,7 +73,7 @@
                 {
                     <li class="next disabled"><a href="#">下一页</a></li>
                 }
-            </ul>
+            </ul>             -->
             <!--文章项目-->
             @foreach (Web.Models.Article item in Model)
             {

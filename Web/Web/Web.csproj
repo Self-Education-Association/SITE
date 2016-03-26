@@ -690,6 +690,7 @@
     <Content Include="img\icons\svg\ribbon.svg" />
     <Content Include="img\icons\svg\toilet-paper.svg" />
     <Content Include="img\mate1.jpg" />
+    <Content Include="img\moocintro.jpg" />
     <Content Include="img\old-brick-wall-texture-02.jpg" />
     <Content Include="img\old-brick-wall-texture-05.jpg" />
     <Content Include="img\overlay.png" />

@@ -53,28 +53,35 @@
 <section class="pagesec" style="display:block">
     <div class="container-fluid pagecontainer">
         <div class="row" style="padding:20px 15%;">
-            <h5 align="center" style="color:black;font-family:STSong">@Model.Title</h5>
+            <ol class="breadcrumb">
+                <li><a href="/Home/Index">首页</a></li>
+                <li><a href="/Home/VoicePoints">新锐观点</a></li>
+                <li class="active">观点详情</li>
+            </ol>
+            <p align="center" style="color:black;font-family:'Microsoft YaHei';font-size:20px;font-weight:bolder;margin-bottom:0;">@Model.Title</p>
             <div class="col-xs-12">
-                <p style="line-height:250%;">
-                <p style="font-weight:bold;text-align:center;">@Model.Time<br /></p>
+                <div class="col-xs-2">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="/Home/VoiceNews" style="font-size:16px;text-align:center;">返回 <hr /></a></li>
+                    </ul>
+                </div>
+                <div class="col-xs-10">
+                    <p style="line-height:250%;">
+                    <p style="font-weight:bold;">@Model.Time<br /></p>
+                    <style>
+                        p {
+                            font-size: 14px;
+                            font-family: STSong;
+                        }
+                    </style>
+                    <p>
+                        &nbsp; 摘要： @Html.DisplayFor(model => model.ShortContent)
+                    </p>
 
-                <p style="font-family:'Microsoft YaHei';">
-                    &nbsp; 摘要： @Html.DisplayFor(model => model.ShortContent)
-                </p>
-
-                <p>
-                    &nbsp; @Html.Raw(Model.ContentStored)
-                </p>
-                <!--dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.ShortContent)
-                </dt-->
-                <!--dt>
-                    @Html.DisplayNameFor(model => model.ContentStored)
-                </dt>
-
-                                </dl-->
-                </p>
+                    <p>
+                        &nbsp; @Html.Raw(Model.ContentStored)
+                    </p>
+                </div>
             </div>
         </div>
     </div>
