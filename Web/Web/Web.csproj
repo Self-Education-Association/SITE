@@ -879,6 +879,10 @@
     <Content Include="Views\Reports\Details.cshtml" />
     <Content Include="Views\Reports\Edit.cshtml" />
     <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\RoomManage\Edit.cshtml" />
+    <Content Include="Views\RoomManage\Index.cshtml" />
+    <Content Include="Views\RoomManage\Create.cshtml" />
+    <Content Include="Views\RoomManage\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -886,7 +890,6 @@
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
     <Folder Include="UserUpload\Management\" />
-    <Folder Include="Views\RoomManage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
