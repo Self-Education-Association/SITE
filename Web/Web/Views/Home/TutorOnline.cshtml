@@ -33,6 +33,8 @@
         </div>
         <div style="padding:20px 15%">
             <h5 align="center" style="color:black;font-family:SimHei">导师在线</h5>
+        </div>
+        <div>
             @if (Model == null)
             {
                 <a>啥也没有</a>
@@ -45,7 +47,7 @@
                         <p>@item.Name</p>
                         <p>@item.Position</p>
                         <p>@item.Introduction</p>
-                        <img src="@Url.Content(item.Avatar.GetUrl())" />
+                        <img src="@Url.Content(item.Avatar.GetUrl())" height=200 width=100 />
                         @foreach (var c in item.Courses)
                         {
                             Html.ActionLink(c.Name, "Details", new { id = c.Id }, new { @class = "btn btn-success" });
