@@ -92,17 +92,6 @@ namespace Web.Models
             {
                 try
                 {
-                    //模拟触发器
-                    foreach (RoomOperation roomOperation in db.RoomOperations)
-                    {
-                        if (DateTime.Now > roomOperation.EndTime)
-                        {
-                            roomOperation.StartTime.AddDays(7.0);
-                            roomOperation.EndTime.AddDays(7.0);
-                            roomOperation.Usable = true;
-                        }
-                    }
-                    db.SaveChanges();
                     int pageSize = 5;
                     int page = 0;
                     IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.Enabled != false);
