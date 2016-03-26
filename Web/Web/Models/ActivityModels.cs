@@ -105,14 +105,20 @@ namespace Web.Models
                 }
             }
         }
-        public bool Apply(Guid Id)
+        public bool Apply(Guid? id)
         {
+            if (id == null)
+                return false;
+
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var activityOperation = db.ActivityOperations.Find(Id);
-                    Id = Guid.NewGuid();
+                    var activityOperation = db.ActivityOperations.Find(id);
+                    if (activityOperation == null)
+                        return false;
+
+                    id = Guid.NewGuid();
                     ActivityOperation = activityOperation;
                     ActionTime = DateTime.Now;
                     Receiver = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
@@ -130,27 +136,30 @@ namespace Web.Models
                 }
             }
         }
-        public bool Quit(Guid Id)
+        public bool Quit(Guid? id)
         {
+            if (id == null)
+                return false;
+
             using (BaseDbContext db = new BaseDbContext())
             {
                 try
                 {
-                    var activityOperation = db.ActivityOperations.Find(Id);
-                    if (ActivityOperation != activityOperation)
+                    if (ActivityOperation.Id != id)
                         return false;
+                    var activityOperation = db.ActivityOperations.Find(id);
+                    var contextRecord = db.ActivityRecords.Find(Id);
                     var user = db.Users.Find(HttpContext.Current.User.Identity.GetUserId());
-                    ActivityOperation.Count--;
-                    if (ActivityOperation.Records != null)
+                    activityOperation.Count--;
+                    if (activityOperation.Records != null)
                     {
-                        if (ActivityOperation.Records.Contains(this))
-                            ActivityOperation.Records.Remove(this);
+                        activityOperation.Records.Remove(contextRecord);
                     }
-                    db.ActivityRecords.Remove(this);
+                    db.ActivityRecords.Remove(contextRecord);
                     db.SaveChanges();
                     return true;
                 }
-                catch
+                catch(Exception)
                 {
                     return false;
                 }

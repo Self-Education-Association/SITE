@@ -32,55 +32,79 @@ namespace Web.Controllers
             return View(ActivityOperation);
         }
 
-        public ActionResult Apply(Guid Id)
+        public ActionResult Apply(Guid? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
             {
-                var ActivityOperation = db.ActivityOperations.Find(Id);
-                var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var activityRecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (activityRecord != null)
-                {
-                        TempData["ErrorInfo"] = "您已选过该活动！";
-                        return RedirectToAction("Index");
-                }
-                if (ActivityOperation.Count >= ActivityOperation.Limit)
-                {
-                    TempData["ErrorInfo"] = "该活动已满！";
-                    return RedirectToAction("Index");
-                }
-                if (DateTime.Now > ActivityOperation.StartTime)
-                {
-                    TempData["ErrorInfo"] = "该活动现在不可预约！";
-                    return RedirectToAction("Index");
-                }
-                if (activityRecord.Apply(Id))
-                    return RedirectToAction("Index"); ;
-                TempData["ErrorInfo"] = "你不符合预约要求！";
+                return new HttpStatusCodeResult(400);
             }
-            return RedirectToAction("Index");
+            var activityOperation = db.ActivityOperations.Find(id);
+            if (activityOperation == null)
+            {
+                return HttpNotFound();
+            }
+
+            var user = Extensions.GetContextUser(ref db);
+            var activityRecord = user.Activity.Find(a => a.ActivityOperation == activityOperation);
+
+            if (activityRecord == null)            //User has no record for this operation
+            {
+                //Operation status check
+                if (activityOperation.Count >= activityOperation.Limit)
+                {
+                    TempData["Alert"] = "该活动已满！";
+                    return RedirectToAction("Details", new { @id = id });
+                }
+                if (DateTime.Now > activityOperation.StartTime)
+                {
+                    TempData["Alert"] = "该活动现在不可预约！";
+                    return RedirectToAction("Details", new { @id = id });
+                }
+
+                //Try to apply for this operation
+                activityRecord = new ActivityRecord();
+                if (activityRecord.Apply(id))
+                {
+                    TempData["Alert"] = "活动预约成功！";
+                    return RedirectToAction("Index");
+                }
+                TempData["Alert"] = "你不符合预约要求！";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["Alert"] = "您已选过该活动！";
+                return RedirectToAction("Details", new { @id = id });
+            }
         }
-        public ActionResult Quit(Guid Id)
+        public ActionResult Quit(Guid? id)
         {
-            if (ModelState.IsValid)
+            if (id == null)
+                return new HttpStatusCodeResult(400);
+
+            var activityOperation = db.ActivityOperations.Find(id);
+            if (activityOperation == null)
+                return HttpNotFound();
+
+            var user = Extensions.GetContextUser(ref db);
+            var activityRecord = user.Activity.Find(a => a.ActivityOperation == activityOperation);
+            if (activityRecord == null)
             {
-                var ActivityOperation = db.ActivityOperations.Find(Id);
-                var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
-                var activityRecord = (from a in db.ActivityRecords where a.ActivityOperation.Id == ActivityOperation.Id && a.Receiver.Id == user.Id select a).FirstOrDefault();
-                if (activityRecord == null)
-                {
-                        TempData["ErrorInfo"] = "您未选过该活动！";
-                        return RedirectToAction("Index");
-                }
-                if (DateTime.Now > ActivityOperation.StartTime)
-                {
-                    TempData["ErrorInfo"] = "现在不是可退选的时间！";
-                    return RedirectToAction("Index");
-                }
-                if (activityRecord.Quit(Id))
-                    return RedirectToAction("Index");
-                TempData["ErrorInfo"] = "无法退选！";
+                TempData["Alert"] = "您未预约过该活动！";
+                return RedirectToAction("Index");
             }
+            if (DateTime.Now > activityOperation.StartTime)
+            {
+                TempData["Alert"] = "现在不是可取消预约的时间！";
+                return RedirectToAction("Index");
+            }
+            if (activityRecord.Quit(id))
+            {
+                TempData["Alert"] = "活动取消预约成功！";
+                return RedirectToAction("Index");
+            }
+            TempData["Alert"] = "无法取消预约！";
+
             return RedirectToAction("Index");
         }
 
