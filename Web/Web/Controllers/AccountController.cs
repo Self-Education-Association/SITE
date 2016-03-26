@@ -170,11 +170,12 @@ namespace Web.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    if (!RoleManager.RoleExists("student"))
+                    var roleName = "Student";
+                    if (!RoleManager.RoleExists(roleName))
                     {
-                        RoleManager.Create(new IdentityRole("student"));
+                        RoleManager.Create(new IdentityRole(roleName));
                     }
-                    UserManager.AddToRole(user.Id, "student");
+                    UserManager.AddToRole(user.Id, roleName);
 
                     return RedirectToAction("Index", "Home");
                 }

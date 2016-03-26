@@ -388,7 +388,7 @@ namespace Web.Controllers
                 if (result.Succeeded)
                 {
                     //为账户添加角色
-                    var roleName = "tutor";
+                    var roleName = "Tutor";
                     ApplicationRoleManager roleManager = new ApplicationRoleManager(new RoleStore<IdentityRole>(db));
 
                     //判断角色是否存在

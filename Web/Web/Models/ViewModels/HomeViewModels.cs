@@ -23,4 +23,16 @@ namespace Web.Models
         public List<Material> Sliders { get; set; }
     }
 
+    public class HomeTutorOnlineViewModel
+    {
+        public string Name { get; set; }
+
+        public string Position { get; set; }
+
+        public string Introduction { get; set; }
+
+        public Material Avatar { get; set; }
+
+        public List<CourseOperation> Courses { get; set; }
+    }
 }
