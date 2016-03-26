@@ -35,36 +35,34 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @TempData["ErrorInfo"]
-        <!--div class="col-xs-2">
-
-        </div-->
+        <div class="col-xs-2">
+            @Html.Partial("_ReportsPartial")
+        </div>
         <div class="col-xs-10 board">
-
+            @TempData["ErrorInfo"]
             <!--以下为模板内容-->
-           @using (Html.BeginForm())
-           {
-            @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-            <div class="form-horizontal">
-                <h4>团队报告</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReportFile, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        <input type="file" name="file" />
+                <div class="form-horizontal">
+                    <h4>团队报告</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReportFile, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <input type="file" name="file" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-           }
-
+            }
             <div>
                 @Html.ActionLink("Back to List", "Index")
             </div>
@@ -73,7 +71,6 @@
         </div>
     </div>
 </section>
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

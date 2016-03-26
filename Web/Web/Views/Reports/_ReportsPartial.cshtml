@@ -1,0 +1,105 @@
+﻿<style>
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    dl {
+        text-align: center;
+    }
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+</style>
+<!--menue start-->
+<div class="panel-group" id="menu" style="min-width:100px">
+    <!--侧边菜单第一栏start-->
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <h4 class="panel-title ">
+                <a href="/Manage/Index#head">个人中心</a>
+            </h4>
+        </div>
+
+    </div>
+    <!--侧边菜单第一栏end-->
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <h4 class="panel-title ">
+                <a data-toggle="collapse" data-parent="#menu" href="#menuTwo">
+                    个人信息
+                </a>
+            </h4>
+        </div>
+        <div id="menuTwo" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <a href="/Manage/RecordList">显示履历</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/UserIdentity">身份验证</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/UserProfile">修改信息</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/ChangePassword">修改密码</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading ">
+            <h4 class="panel-title ">
+                <a data-toggle="collapse" data-parent="#menu" href="#menuThree">
+                    项目团队
+                </a>
+            </h4>
+        </div>
+        <div id="menuThree" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li>
+                        <a href="/Manage/Project">申请项目</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/TeamApply">加入团队</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/TeamMember">成员列表</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/TeamProfile">管理团队</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/TeamRecruit">招募成员</a>
+                    </li>
+                    <li>
+                        <a href="/Manage/Company">注册公司</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--menue end-->

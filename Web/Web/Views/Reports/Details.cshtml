@@ -51,20 +51,26 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.ReportFile)
-            </dt>
+        <div class="col-xs-2">
+            @Html.Partial("_ReportsPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <!--以下为模板内容-->
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.ReportFile)
+                </dt>
 
-            <dd>
-                @Url.Content(Model.ReportFile.GetUrl())
-            </dd>
+                <dd>
+                    @Url.Content(Model.ReportFile.GetUrl())
+                </dd>
 
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
-
+            </dl>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+            <!--以上为模板内容-->
+        </div>
     </div>
 </section>

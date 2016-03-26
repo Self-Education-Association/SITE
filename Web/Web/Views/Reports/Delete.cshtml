@@ -37,10 +37,9 @@
     <div class="row" style="padding:0 5%;">
         @TempData["ErrorInfo"]
         <div class="col-xs-2">
-      
+            @Html.Partial("_ReportsPartial")
         </div>
         <div class="col-xs-10 board">
-
             <!--以下为模板内容-->
             <h4> 删除</h4>
             <hr />
@@ -70,7 +69,6 @@
                     </div>
                 }
             </div>
-
             <!--以上为模板内容-->
         </div>
     </div>
