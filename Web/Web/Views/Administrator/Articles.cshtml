@@ -90,7 +90,7 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.Raw(item.ShortContent)
+                            @Html.DisplayFor(modelItem => item.ShortContent)
                         </td>
                         <td>
                             @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)

@@ -46,19 +46,20 @@ namespace Web.Models
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                try
-                {
+                //try
+                //{
                     Time = DateTime.Now;
+                    Usable = true;
                     db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     if (db.RoomOperations.Find(Id) != null)
                         return true;
                     return false;
-                }
-                catch
-                {
-                    return false;
-                }
+                //}
+                //catch
+                //{
+                //    return false;
+                //}
             }
         }
         public bool Delete(ref BaseDbContext db)
