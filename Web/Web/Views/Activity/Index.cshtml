@@ -85,7 +85,7 @@
                         @Html.Raw(item.ShortContent)
                     </td>
                     <td>
-                        @Html.ActionLink("Apply", "Apply", new { id = item.Id }) |
+                        @Html.ActionLink("Apply", "Apply", new { id = item.Id },new { @class = "btn-success"}) |
                         @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                         @Html.ActionLink("Quit", "Quit", new { id = item.Id })
                     </td>

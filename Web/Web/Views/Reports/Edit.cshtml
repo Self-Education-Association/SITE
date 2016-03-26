@@ -3,14 +3,29 @@
 @{
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
-
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">团队报告 |  编辑</b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <!--div class="col-xs-2">
+   
+        </div-->
+        <div class="col-xs-10 board">
+            <!--以下为模板内容-->
+            <h4>编辑</h4>
+            <hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>TeamReport</h4>
         <hr />
@@ -35,6 +50,14 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+
+            <!--以上为模板内容-->
+        </div>
+    </div>
+</section>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
