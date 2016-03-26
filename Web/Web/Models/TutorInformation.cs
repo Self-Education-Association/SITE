@@ -9,7 +9,7 @@ namespace Web.Models
     public class TutorInformation
     {
         [Display(Name = "唯一编号")]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } 
 
         public User Tutor { get; set; }
 
@@ -58,9 +58,9 @@ namespace Web.Models
             }
         }
 
-        public string Message { get; private set; } = "";
+        public string Message { get; private set; }
 
-        public bool Succeed { get; private set; } = false;
+        public bool Succeed { get; private set; }
     }
 
     public interface ITutor

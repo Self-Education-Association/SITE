@@ -5,6 +5,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
+using Ganss.XSS;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using System.IO;
 
 namespace Web.Controllers
 {
@@ -58,10 +63,13 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Count,Limit,Location,Name,StartTime,EndTime,Content,Status")] RoomOperation roomOperation)
+        [ValidateInput(false)]
+        public ActionResult Edit(RoomOperation roomOperation)
         {
             if (ModelState.IsValid && roomOperation != null)
             {
+                var s = new HtmlSanitizer();
+                roomOperation.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 if (roomOperation.StartTime >= roomOperation.EndTime)
                 {
                     TempData["ErrorInfo"] = "无法完成修改，开始时间晚于结束时间。";
@@ -71,25 +79,29 @@ namespace Web.Controllers
                 {
                     var user = Extensions.GetContextUser(ref db);
                     var RoomRecords = roomOperation.RoomRecords;
-                    var lastRecord = RoomRecords.Where(r => r.ActionTime.AddDays(7.0) > r.RoomOperation.StartTime);
-                    if (RoomRecords != null && lastRecord != null)
+                    if (RoomRecords != null)
                     {
-                        string title = "场地修改通知";
-                        string content = "您好，你选择的场地[" + roomOperation.Name + "]已被修改，请及时查看相关信息，并根据新的场地信息安排你的日程";
-                        Message message = new Message(title, content, lastRecord.First().Receiver.Id, MessageType.System, db);
-                        if (message.Publish())
+                        var lastRecord = RoomRecords.Where(r => r.ActionTime.AddDays(7.0) > r.RoomOperation.StartTime);
+                        if (RoomRecords != null && lastRecord != null)
                         {
-                            return RedirectToAction("Index");
+                            string title = "场地修改通知";
+                            string content = "您好，你选择的场地[" + roomOperation.Name + "]已被修改，请及时查看相关信息，并根据新的场地信息安排你的日程";
+                            Message message = new Message(title, content, lastRecord.First().Receiver.Id, MessageType.System, db);
+                            if (message.Publish())
+                            {
+                                return RedirectToAction("Index");
+                            }
+                            TempData["ErrorInfo"] = "无法给学生发布修改信息";
                         }
-                        TempData["ErrorInfo"] = "无法给学生发布修改信息";
                     }
                 }
-                TempData["ErrorInfo"] = "修改失败!";
+                else
+                    TempData["ErrorInfo"] = "修改失败!";
             }
             else
                 TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
 
-            return View();
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(Guid? id)
@@ -119,77 +131,6 @@ namespace Web.Controllers
                 return View();
             }
             return RedirectToAction("Index");
-        }
-
-        public ActionResult Remark(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            RoomRecord roomRecord = db.RoomRecords.Find(id);
-
-            //这句话有问题，为什么找不到room呢。。。
-            RoomOperation room = roomRecord.RoomOperation;
-            if (roomRecord == null)
-            {
-                return HttpNotFound();
-            }
-            if (roomRecord.RemarkRate > 0)
-            {
-
-                return View(roomRecord);
-            }
-            if (room != null)
-            {
-                if (DateTime.Now > room.EndTime)
-                {
-                    if (roomRecord.Receiver != null)
-
-                        return View(roomRecord);
-                }
-                TempData["ErrorInfo"] = "还未到允许评论的时间！";
-            }
-            else
-            {
-                TempData["ErrorInfo"] = "该课程没有成员！";
-            }
-            return RedirectToAction("StudentList");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Remark([Bind(Include = "Id,ActionTime,RemarkContent,RemarkRate,Time")] RoomRecord roomRecord)
-        {
-            if (ModelState.IsValid)
-            {
-                if (roomRecord.Remark())
-                    return RedirectToAction("StudentList");
-                TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
-            }
-            return View();
-        }
-
-        public ActionResult StudentList(Guid? Id)
-        {
-            var user = Extensions.GetContextUser(ref db);
-            if (Id == null)
-                return View(db.RoomRecords.Where(c => c.RoomOperation.Creator.Id == user.Id).ToList());
-            RoomOperation room = db.RoomOperations.Find(Id);
-            if (room == null)
-            {
-                TempData["ErrorInfo"] = "该课程不存在！";
-                return RedirectToAction("Index");
-            }
-            if (room.Creator != user)
-            {
-                TempData["ErrorInfo"] = "你没有权限对该场地进行评价！";
-                return View("Index");
-            }
-            IQueryable<RoomRecord> studentList = (from a in db.RoomRecords where a.RoomOperation.Id == room.Id select a).Distinct();
-            if (studentList.FirstOrDefault() == null)
-                return View(db.RoomRecords.ToList());
-            return View(studentList);
         }
 
     }
