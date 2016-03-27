@@ -27,7 +27,7 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">团队报告 |  删除</b>
+        <b class="secheader">团队事项 |  删除</b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -35,12 +35,11 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @TempData["ErrorInfo"]
         <div class="col-xs-2">
-
+            @Html.Partial("_EventsPartial")
         </div>
         <div class="col-xs-10 board">
-
+            @TempData["ErrorInfo"]
             <!--以下为模板内容-->
             <h4> 删除</h4>
             <hr />
@@ -94,9 +93,7 @@
                     </div>
                 }
             </div>
-
             <!--以上为模板内容-->
         </div>
     </div>
 </section>
-
