@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Web.Models.User>
 
 @{
-    ViewBag.Title = "UserList";
+    ViewBag.Title = "用户列表";
 }
 <section class="sec2">
     <div class="cover">
@@ -24,7 +24,7 @@
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.UserName)
+                       用户名
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.DisplayName)
@@ -62,7 +62,7 @@
                         </td>
 
                         <td>
-                            @Html.ActionLink("Edit", "UserEdit", new { id = item.Id })
+                            @Html.ActionLink("编辑", "UserEdit", new { id = item.Id })
                         </td>
                     </tr>
                 }

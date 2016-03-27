@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Web.Models.RoomOperation>
 
 @{
-    ViewBag.Title = "Rooms";
+    ViewBag.Title = " 场地列表";
 }
 <section class="sec2">
     <div class="cover">
@@ -19,7 +19,7 @@
             @Html.Partial("../Administrator/_AdminMenuPartial")
         </div>
         <div class="col-xs-10 board">
-            <h4>场地管理</h4>
+            <h4>场地列表</h4>
             <hr />
             <p>
                 @Html.ActionLink("添加场地", "Create")
@@ -69,8 +69,8 @@
                             @Html.DisplayFor(modelItem => item.Enabled)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.Id })
                         </td>
                     </tr>
                 }
