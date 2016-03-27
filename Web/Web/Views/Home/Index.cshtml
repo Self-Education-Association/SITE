@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Web.Models.HomeIndexViewModel
+@{
     ViewBag.Title = "首页";
 }
 <!--第一部分：大标题-->
@@ -59,13 +60,13 @@
 <section class="secblank" style="background-image:url(../../img/featuresbg.jpg);background-size: cover;background-position: center;background-attachment:fixed;">
     <div class="row" style="padding-left:10%;padding-right:10%;">
         <b class="secheader col-xs-12">近期活动|Recent</b>
-        @foreach (var a in Model.LatestActivitys)
+        @foreach (Web.Models.ActivityOperation a in Model.LatestActivitys)
         {
         <div class="col-md-3 col-xs-6">
             <div class="feature">
                 <img src="~/img/timelane1.jpg" alt="Compas">
                 <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@a.Name</h3>
-                <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">@Html.Raw(a.Content)</p>
+                <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">@a.ShortContent</p>
                 <a class="btn btn-primary btn-large btn-block imgbtn" href="~/Activity/Details/@a.Id" style="background-color:rgb(0,161,196)">阅读详细</a>
             </div>
         </div>
