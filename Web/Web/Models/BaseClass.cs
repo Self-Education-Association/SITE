@@ -76,7 +76,7 @@ namespace Web.Models
                         this.ShortContent = Extensions.ReplaceHtmlTag(value);
                     }
                     else
-                        ShortContent = Extensions.ReplaceHtmlTag(value).Substring(0, 50);
+                        ShortContent = Extensions.ReplaceHtmlTag(value).Substring(0, 48) + "..";
                 }
                 else
                     ShortContent = null;
