@@ -20,15 +20,14 @@
             @Html.Partial("_ManageMenuPartial")
         </div>
         <div class="col-xs-10 board">
-
-
+            <h4>添加教育经历</h4>
+            <hr /> 
             @using (Html.BeginForm("AddEducationRecord", "Manage", FormMethod.Post))
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>添加教育经历</h4>
-                    <hr />  
+ 
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.LabelFor(model => model.StartYear, htmlAttributes: new { @class = "control-label col-md-2" })

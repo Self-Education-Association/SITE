@@ -22,15 +22,16 @@
             @Html.Partial("_ManageMenuPartial")
         </div>
         <div class="col-xs-10 board">
+            <h4>注册公司</h4>
+            <hr />
             <!--以下为模板内容-->
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
-
+         
                 <div class="form-horizontal">
-                    <h4>注册公司</h4>
-                    <hr />
+
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
                         @Html.LabelFor(model => model.Plan, htmlAttributes: new { @class = "control-label col-md-2" })
