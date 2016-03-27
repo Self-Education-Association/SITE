@@ -1,0 +1,13 @@
+﻿@model List<Web.Models.Calendar>
+@{
+    Layout = "";
+}
+
+@foreach (var item in Model)
+{
+    <div>
+        @Html.ActionLink(item.Name, "Details", "Activity", new { id = item.Id }, new { });
+        @item.ShortContent
+    </div>
+}
+

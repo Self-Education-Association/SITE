@@ -890,6 +890,7 @@
     <Content Include="Views\Room\Index.cshtml" />
     <Content Include="Views\Reports\_ReportsPartial.cshtml" />
     <Content Include="Views\TeamEvents\_EventsPartial.cshtml" />
+    <Content Include="Views\Home\ActivitiesByMonth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
