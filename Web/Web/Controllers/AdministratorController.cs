@@ -68,7 +68,7 @@ namespace Web.Controllers
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
             ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
 
-            return View();
+            return View(new Article());
         }
 
         [HttpPost]
@@ -80,14 +80,25 @@ namespace Web.Controllers
             {
                 var s = new HtmlSanitizer();
                 model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
-                if (Request.Files.Count >= 1 && Request.Files[0].FileName != "")
+                var file = Request.Files[0];
+                if (Request.Files.Count >= 1 && file.FileName != "")
                 {
-                    model.Image = Material.Create("", MaterialType.Avatar, Request.Files[0], db);
-                    if (model.Image == null)
+                    if (MaterialType.Avatar.Match(file))
+                    {
+                        model.Image = Material.Create("", MaterialType.Avatar, Request.Files[0], db);
+                        if (model.Image == null)
+                        {
+                            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+                            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
+                            return View(model);
+                        }
+                    }
+                    else
                     {
                         ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
                         ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
-                        return View();
+                        TempData["Alert"] = "请检查上传文件的格式是否正确！";
+                        return View(model);
                     }
                 }
                 else
@@ -247,10 +258,6 @@ namespace Web.Controllers
 
             return View(model);
         }
-        #endregion
-        //constructing
-        #region 场地管理模块
-        
         #endregion
         //5 Views
         #region 上传文件模块

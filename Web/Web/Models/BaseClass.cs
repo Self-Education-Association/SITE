@@ -73,7 +73,7 @@ namespace Web.Models
                 {
                     if (Extensions.ReplaceHtmlTag(value).Length <= 50)
                     {
-                        this.ShortContent = Extensions.ReplaceHtmlTag(value);
+                        ShortContent = Extensions.ReplaceHtmlTag(value);
                     }
                     else
                         ShortContent = Extensions.ReplaceHtmlTag(value).Substring(0, 50);

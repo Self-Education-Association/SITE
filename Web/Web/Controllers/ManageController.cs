@@ -14,7 +14,7 @@ using System.Data.Entity.Migrations;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "student")]
+    [Authorize(Roles = "Student")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -235,7 +235,7 @@ namespace Web.Controllers
                 return View(new Project());
             if (user.Project.Status == ProjectStatus.Denied)
             {
-                TempData["DeniedInfo"] = "项目未通过";
+                TempData["DeniedInfo"] = "项目未通过,请重新申请。";
                 return View(user.Project);
             }
 
@@ -245,9 +245,13 @@ namespace Web.Controllers
         public ActionResult ProjectProfile()
         {
             User user = db.Users.Find(Extensions.GetUserId());
+            if (user == null || user.Project == null)
+            {
+                TempData["Alert"] = "您请求的项目不存在！";
+                return RedirectToAction("Index");
+            }
             if (user.Project.Status == ProjectStatus.Denied)
             {
-                TempData["DeniedInfo"] = "项目未通过,请重新申请。";
                 return RedirectToAction("Project", user.Project);
             }
 
@@ -260,10 +264,16 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                User user = db.Users.Find(Extensions.GetUserId());
                 if (Request.Files.Count != 1)//如果文件列表为空则返回
                     return View();
                 var file = Request.Files[0];//只上传第一个文件
-
+                if (!MaterialType.Avatar.Match(file))
+                {
+                    TempData["Alert"] = "请上传格式为jpg, jpeg，png的图片";
+                    model.Avatar = null;
+                    return View(model);
+                }
                 if (model.Avatar == null)
                 {
                     model.Avatar = Material.Create("", MaterialType.Avatar, file, db);
