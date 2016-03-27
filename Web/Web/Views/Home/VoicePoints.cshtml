@@ -8,10 +8,10 @@
         background: url(/img/HeaderGreyDenim.jpg);
         background-repeat: repeat;
     }
-    p
-    {
-        word-wrap:break-word; 
-        word-break:normal; 
+
+    p {
+        word-wrap: break-word;
+        word-break: normal;
     }
 </style>
 <section class="sec2">
@@ -59,19 +59,19 @@
             </ul>
         }
         <div class="row">
-                @foreach (Web.Models.Article item in Model)
-                {
-                    <div class="col-md-3 col-xs-6">
-                        <div class="feature">
-                            <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
-                            <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@item.Title</h3>
-                            <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">
-                                @item.ShortContent
-                            </p>
-                            <a class="btn btn-primary btn-large btn-block imgbtn" href="@Url.Content(item.GetUrl())" style="background-color:rgb(0,161,196)">阅读详细</a>
-                        </div>
+            @foreach (Web.Models.Article item in Model)
+            {
+                <div class="col-md-4 col-xs-12">
+                    <div class="feature" style="position:relative;">
+                        <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
+                        <h3 class="featuretitle">@item.Title</h3>
+                        <p class="featurep">
+                            @item.ShortContent
+                        </p>
+                        <a class="btn btn-primary btn-large btn-block imgbtn" href="@Url.Content(item.GetUrl())" style="background-color:rgb(0,161,196)">阅读详细</a>
                     </div>
-                }
+                </div>
+            }
         </div>
     </div>
 </section>
