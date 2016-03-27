@@ -1,7 +1,7 @@
 ﻿@model Web.Models.Project
 
 @{
-    ViewBag.Title = "Project";
+    ViewBag.Title = "申请项目";
 }
 
 
@@ -17,7 +17,10 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @ViewBag.StatusMessage
+            @TempData["DeniedInfo"]
+        </b>
         <div class="col-xs-2">
             @Html.Partial("_ManageMenuPartial")
         </div>
@@ -42,7 +45,6 @@
                 <div class="form-horizontal">
                     <h4>申请项目</h4>
                     <hr />
-                    @TempData["DeniedInfo"]
                     <br />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

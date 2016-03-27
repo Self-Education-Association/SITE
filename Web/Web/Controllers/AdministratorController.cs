@@ -68,7 +68,7 @@ namespace Web.Controllers
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
             ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
 
-            return View();
+            return View(new Article());
         }
 
         [HttpPost]
@@ -80,14 +80,25 @@ namespace Web.Controllers
             {
                 var s = new HtmlSanitizer();
                 model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
-                if (Request.Files.Count >= 1 && Request.Files[0].FileName != "")
+                var file = Request.Files[0];
+                if (Request.Files.Count >= 1 && file.FileName != "")
                 {
-                    model.Image = Material.Create("", MaterialType.Avatar, Request.Files[0], db);
-                    if (model.Image == null)
+                    if (MaterialType.Avatar.Match(file))
+                    {
+                        model.Image = Material.Create("", MaterialType.Avatar, Request.Files[0], db);
+                        if (model.Image == null)
+                        {
+                            ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
+                            ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
+                            return View(model);
+                        }
+                    }
+                    else
                     {
                         ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
                         ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
-                        return View();
+                        TempData["Alert"] = "请检查上传文件的格式是否正确！";
+                        return View(model);
                     }
                 }
                 else
@@ -247,10 +258,6 @@ namespace Web.Controllers
 
             return View(model);
         }
-        #endregion
-        //constructing
-        #region 场地管理模块
-        
         #endregion
         //5 Views
         #region 上传文件模块
@@ -432,12 +439,19 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserEdit(User model)
+        public ActionResult UserEdit([Bind(Include = "DisplayName,Email,PhoneNumber,Identitied,IsDisabled,Id")]User model)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Attach(model);
-                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                var user = db.Users.Find(model.Id);
+                user.DisplayName = string.IsNullOrWhiteSpace(model.DisplayName) ? user.DisplayName : model.DisplayName;
+                user.Email = model.Email == null ? user.Email : model.Email;
+                user.PhoneNumber = model.PhoneNumber == null ? user.PhoneNumber : model.PhoneNumber;
+                user.Profile.Email = user.Email;
+                user.Profile.Phone = user.PhoneNumber;
+                user.Identitied = model.Identitied;
+                user.IsDisabled = model.IsDisabled;
+
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
