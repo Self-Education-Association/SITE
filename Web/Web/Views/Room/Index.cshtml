@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Web.Models.RoomOperation>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "场地预约";
 }
 <style>
     h2 {
@@ -97,7 +97,7 @@
                             @Html.DisplayFor(modelItem => item.EndTime)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Content)
+                            @Html.DisplayFor(modelItem => item.ShortContent)
                         </td>
                         <td>
                             @Html.ActionLink("Apply", "Apply", new { id = item.Id }) |

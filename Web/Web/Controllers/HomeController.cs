@@ -98,9 +98,13 @@ namespace Web.Controllers
             return View(articles);
         }
 
-        public ActionResult VoicePoints()
+        public ActionResult VoicePoints(int page = 0)
         {
-            return View();
+            int pageSize = 20;
+            var news = from a in db.Articles where a.Class == ArticleClass.Points select a;
+            var articles = new ListPage<Article>(news, page, pageSize);
+
+            return View(articles);
         }
 
         public ActionResult LearnSelf()

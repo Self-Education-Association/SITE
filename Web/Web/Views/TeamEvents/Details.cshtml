@@ -51,44 +51,51 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.EventName)
-            </dt>
+        <div class="col-xs-2">
+            @Html.Partial("_EventsPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <!--以下为模板内容-->
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventName)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventName)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.EventName)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EventContent)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventContent)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventContent)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.EventContent)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.EventTime)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.EventTime)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.EventTime)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.EventTime)
+                </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.AddTime)
-            </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.AddTime)
+                </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.AddTime)
-            </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.AddTime)
+                </dd>
 
-        </dl>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>
+            </dl>
+            <p>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
 
+            <!--以上为模板内容-->
+        </div>
     </div>
 </section>

@@ -15,6 +15,16 @@ namespace Web.Controllers
 
         public ActionResult Index(string select)
         {
+            foreach (RoomOperation roomOperation in db.RoomOperations)
+            {
+                if (DateTime.Now > roomOperation.EndTime)
+                {
+                    roomOperation.StartTime = roomOperation.StartTime.AddDays(7.0);
+                    roomOperation.EndTime = roomOperation.EndTime.AddDays(7.0);
+                    roomOperation.Usable = true;
+                }
+            }
+            db.SaveChanges();
             return View(RoomOperation.List(select, false));
         }
 

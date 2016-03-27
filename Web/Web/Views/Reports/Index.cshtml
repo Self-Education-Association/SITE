@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Index";
 }
+
 <style>
     h2 {
         font-family: 'Microsoft YaHei';
@@ -35,31 +36,37 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        <p>
-            @Html.ActionLink("新建", "Create")
-        </p>
-        <table class="table table-striped">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Time)
-                </th>
-                <th></th>
-            </tr>
+        <div class="col-xs-2">
+            @Html.Partial("_ReportsPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <!--以下为模板内容-->
+            <p>
+                @Html.ActionLink("新建", "Create")
+            </p>
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Time)
+                    </th>
+                    <th></th>
+                </tr>
 
- @foreach (var item in Model)
-{
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-}
-        </table>
-
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!--以上为模板内容-->
+        </div>
     </div>
 </section>

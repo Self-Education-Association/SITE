@@ -12,15 +12,20 @@
 
     .table > tbody > tr > th {
         text-align: center;
+        vertical-align: middle;
     }
 
     .table > tbody > tr > td {
         text-align: center;
+        vertical-align: middle;
     }
 
     body {
         background: url(/img/HeaderGreyDenim.jpg);
         background-repeat: repeat;
+    }
+    p {
+        font-size:10px;
     }
 </style>
 <section class="sec2">
@@ -85,9 +90,9 @@
                         @Html.Raw(item.ShortContent)
                     </td>
                     <td>
-                        @Html.ActionLink("Apply", "Apply", new { id = item.Id },new { @class = "btn-success"}) |
-                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                        @Html.ActionLink("Quit", "Quit", new { id = item.Id })
+                        @Html.ActionLink("申请", "Apply", new { id = item.Id },new { @class = "btn-sm btn-success"}) |
+                        @Html.ActionLink("详情", "Details", new { id = item.Id }, new { @class = "btn-sm btn-info" }) |
+                        @Html.ActionLink("退出", "Quit", new { id = item.Id }, new { @class = "btn-sm btn-danger" })
                     </td>
                 </tr>
             }

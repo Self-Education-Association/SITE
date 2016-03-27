@@ -36,7 +36,7 @@ namespace Web.Models
                         return true;
                     return false;
                 }
-                catch
+                catch (Exception e)
                 {
                     return false;
                 }
@@ -46,19 +46,20 @@ namespace Web.Models
         {
             using (BaseDbContext db = new BaseDbContext())
             {
-                try
-                {
+                //try
+                //{
                     Time = DateTime.Now;
+                    Usable = true;
                     db.Entry(this).State = EntityState.Modified;
                     db.SaveChanges();
                     if (db.RoomOperations.Find(Id) != null)
                         return true;
                     return false;
-                }
-                catch
-                {
-                    return false;
-                }
+                //}
+                //catch (Exception e)
+                //{
+                //    return false;
+                //}
             }
         }
         public bool Delete(ref BaseDbContext db)
@@ -80,7 +81,7 @@ namespace Web.Models
                 db.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception e)
             {
                 return false;
             }
@@ -91,17 +92,6 @@ namespace Web.Models
             {
                 try
                 {
-                    //模拟触发器
-                    foreach (RoomOperation roomOperation in db.RoomOperations)
-                    {
-                        if (DateTime.Now > roomOperation.EndTime)
-                        {
-                            roomOperation.StartTime.AddDays(7.0);
-                            roomOperation.EndTime.AddDays(7.0);
-                            roomOperation.Usable = true;
-                        }
-                    }
-                    db.SaveChanges();
                     int pageSize = 5;
                     int page = 0;
                     IQueryable<RoomOperation> Room = db.RoomOperations.Where(a => a.Enabled != false);
@@ -140,7 +130,7 @@ namespace Web.Models
                     var paginatedNews = new ListPage<RoomOperation>(Room, page, pageSize);
                     return paginatedNews;
                 }
-                catch
+                catch (Exception e)
                 {
                     return db.RoomOperations.ToList();
                 }
@@ -164,7 +154,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch
+                catch (Exception e)
                 {
                     return false;
                 }
@@ -192,7 +182,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch
+                catch (Exception e)
                 {
                     return false;
                 }

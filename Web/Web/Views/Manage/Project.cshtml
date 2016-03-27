@@ -42,7 +42,7 @@
                 <div class="form-horizontal">
                     <h4>申请项目</h4>
                     <hr />
-
+                    @TempData["DeniedInfo"]
                     <br />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

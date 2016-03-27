@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201603251207473_UpdateTeamModel.Designer.cs">
       <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261611508_DropViewModelTable.cs" />
+    <Compile Include="Migrations\201603261611508_DropViewModelTable.Designer.cs">
+      <DependentUpon>201603261611508_DropViewModelTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -690,6 +694,7 @@
     <Content Include="img\icons\svg\ribbon.svg" />
     <Content Include="img\icons\svg\toilet-paper.svg" />
     <Content Include="img\mate1.jpg" />
+    <Content Include="img\moocintro.jpg" />
     <Content Include="img\old-brick-wall-texture-02.jpg" />
     <Content Include="img\old-brick-wall-texture-05.jpg" />
     <Content Include="img\overlay.png" />
@@ -822,8 +827,6 @@
     <Content Include="Views\Activity\Index.cshtml" />
     <Content Include="Views\Course\Details.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Room\Details.cshtml" />
-    <Content Include="Views\Room\Index.cshtml" />
     <Content Include="Views\Tutor\Remark.cshtml" />
     <Content Include="Views\Tutor\Delete.cshtml" />
     <Content Include="Views\Manage\Project.cshtml" />
@@ -883,6 +886,10 @@
     <Content Include="Views\RoomManage\Index.cshtml" />
     <Content Include="Views\RoomManage\Create.cshtml" />
     <Content Include="Views\RoomManage\Delete.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Reports\_ReportsPartial.cshtml" />
+    <Content Include="Views\TeamEvents\_EventsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -915,6 +922,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603251207473_UpdateTeamModel.resx">
       <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261611508_DropViewModelTable.resx">
+      <DependentUpon>201603261611508_DropViewModelTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

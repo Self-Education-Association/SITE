@@ -1,7 +1,9 @@
 ﻿@model List<Web.Models.HomeTutorOnlineViewModel>
+
 @{
-    ViewBag.Title = "TutorOnline";
+    ViewBag.Title = "导师在线";
 }
+
 <style>
     body {
         background: url(/img/HeaderGreyDenim.jpg);
@@ -33,11 +35,9 @@
         </div>
         <div style="padding:20px 15%">
             <h5 align="center" style="color:black;font-family:SimHei">导师在线</h5>
-        </div>
-        <div>
-            @if (Model == null)
+            @if (Model == null || Model.Count == 0)
             {
-                <a>啥也没有</a>
+                <a>敬请期待。</a>
             }
             else
             {

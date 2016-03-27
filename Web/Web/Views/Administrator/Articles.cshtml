@@ -64,7 +64,7 @@
             <h4>文章列表</h4>
             <hr />
             <p>
-                @Html.ActionLink("创建文章", "ArticleCreate")
+                @Html.ActionLink("添加文章", "ArticleCreate")
             </p>
             <table class="table table-striped">
                 <tr>
@@ -90,7 +90,7 @@
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td>
-                            @Html.Raw(item.ShortContent)
+                            @Html.DisplayFor(modelItem => item.ShortContent)
                         </td>
                         <td>
                             @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
@@ -99,8 +99,8 @@
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "ArticleEdit", new { id = item.ID }) |
-                            @Html.ActionLink("Delete", "ArticleDelete", new { id = item.ID })
+                            @Html.ActionLink("编辑", "ArticleEdit", new { id = item.ID }) |
+                            @Html.ActionLink("删除", "ArticleDelete", new { id = item.ID })
                         </td>
                     </tr>
                 }

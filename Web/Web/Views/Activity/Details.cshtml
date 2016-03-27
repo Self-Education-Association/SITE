@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Details";
 }
+
 <style>
     h2 {
         font-family: 'Microsoft YaHei';
@@ -27,17 +28,28 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">活动 | 目前活动 </b>
+        <b class="secheader">活动 | 活动详情 </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
     </div>
 </section>
-<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
-    <div class="row" style="padding:0 5%;">
-        <div>@ViewData["ErrorInfo"]</div>
-        <div>
-            <dl class="dl-horizontal">
+<section class="pagesec">
+    <div class="container-fluid pagecontainer">
+        <div class="row">
+            <div>@ViewData["ErrorInfo"]</div>
+            <ul class="breadcrumb col-md-6">
+                <li>
+                    <a href="#">首页</a> <span class="divider"></span>
+                </li>
+                <li class="active">
+                    活动<span class="divider"></span>
+                </li>
+                <li class="active">活动详情</li>
+            </ul>
+        </div>
+        <div class="row" style="padding:0 5%;">
+            <dl class="dl-horizontal" style="font-size:14px;">
                 <dt>
                     @Html.DisplayNameFor(model => model.Count)
                 </dt>
@@ -89,9 +101,9 @@
             </dl>
         </div>
         <p>
-            @Html.ActionLink("Apply", "Apply", new { id = Model.Id }) |
-            @Html.ActionLink("Quit", "Quit", new { id = Model.Id }) |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("申请", "Apply", new { id = Model.Id }, new { @class = "btn-sm btn-success" }) |
+            @Html.ActionLink("退出", "Quit", new { id = Model.Id }, new { @class = "btn-sm btn-danger" }) |
+            @Html.ActionLink("返回列表", "Index",null ,new { @class = "btn-sm btn-warning" })
         </p>
     </div>
 </section>
