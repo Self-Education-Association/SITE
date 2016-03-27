@@ -233,6 +233,10 @@
     <Compile Include="Migrations\201603251207473_UpdateTeamModel.Designer.cs">
       <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603261611508_DropViewModelTable.cs" />
+    <Compile Include="Migrations\201603261611508_DropViewModelTable.Designer.cs">
+      <DependentUpon>201603261611508_DropViewModelTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -917,6 +921,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603251207473_UpdateTeamModel.resx">
       <DependentUpon>201603251207473_UpdateTeamModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603261611508_DropViewModelTable.resx">
+      <DependentUpon>201603261611508_DropViewModelTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

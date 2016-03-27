@@ -81,8 +81,6 @@ namespace Web.Models
 
         public virtual DbSet<IdentityRecord> IdentityRecords { get; set; }
 
-        public virtual DbSet<TeamProfileViewModel> TeamProfileViewModels { get; set; }
-
         public virtual DbSet<TutorInformation> TutorInformations { get; set; }
 
         public virtual DbSet<TeamEvent> TeamEvents { get; set; }
