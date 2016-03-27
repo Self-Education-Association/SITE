@@ -41,7 +41,7 @@
         <div class="col-xs-10 board">
             @TempData["ErrorInfo"]
             <!--以下为模板内容-->
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Create","Reports",FormMethod.Post, new { @enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
 

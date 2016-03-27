@@ -93,7 +93,13 @@ namespace Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = UserManager.FindByEmail(model.Email);
+                    if (model.Email == "admin@uibe.edu.cn" || UserManager.IsInRole(user.Id, "Admin"))
+                        return RedirectToAction("Index", "Administrator");
+                    else if (UserManager.IsInRole(user.Id, "Tutor"))
+                        return RedirectToAction("Index", "Tutor");
+                    else
+                        return RedirectToAction("Index", "Manage");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -177,7 +183,7 @@ namespace Web.Controllers
                     }
                     UserManager.AddToRole(user.Id, roleName);
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Manage");
                 }
                 AddErrors(result);
             }
@@ -433,7 +439,7 @@ namespace Web.Controllers
                     _signInManager = null;
                 }
 
-                if (_roleManager!=null)
+                if (_roleManager != null)
                 {
                     _roleManager.Dispose();
                     _roleManager = null;
