@@ -234,7 +234,7 @@ dl.col-xs-4 {
     width: 100%;
     height: 100%;
     padding: 10px;
-    line-height: 2em;
+    line-height: 3.5em;
     color: white;
 }
 
@@ -266,12 +266,11 @@ dl.col-xs-4 {
 }
 
 #idCalendar td.onToday {
-    font-weight: bold;
     color: #C60;
 }
 
 #idCalendar td.onSelect {
-    font-weight: bold;
+
 }
 /*calendar*/
 .comdiv {
@@ -406,4 +405,16 @@ dl.col-xs-4 {
     padding:5px!important;
     font-family:'Microsoft YaHei';
     font-weight:bold;
+}
+.calli{
+    font-size:15px;
+    font-family:'Microsoft YaHei';
+    font-weight:600;
+    color:white;
+}
+li a{
+    color:darksalmon;
+}
+li a:hover{
+    color:antiquewhite;
 }

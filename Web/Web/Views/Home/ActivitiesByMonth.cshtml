@@ -5,9 +5,10 @@
 
 @foreach (var item in Model)
 {
-    <div>
-        @Html.ActionLink(item.Name, "Details", "Activity", new { id = item.Id }, new { });
+    <li class="calli">
+        <span class="fui-new"></span>@Html.ActionLink(item.Name, "Details", "Activity", new { id = item.Id }, new { })
+        <br>
         @item.ShortContent
-    </div>
+    </li>
 }
 
