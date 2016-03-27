@@ -14,7 +14,7 @@ using System.Data.Entity.Migrations;
 
 namespace Web.Controllers
 {
-    [Authorize(Roles = "student")]
+    [Authorize(Roles = "Student")]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -233,6 +233,11 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.Project == null)
                 return View(new Project());
+            if (user.Project.Status == ProjectStatus.Denied)
+            {
+                TempData["DeniedInfo"] = "项目未通过,请重新申请。";
+                return View(user.Project);
+            }
 
             return RedirectToAction("ProjectProfile");
         }
@@ -247,7 +252,6 @@ namespace Web.Controllers
             }
             if (user.Project.Status == ProjectStatus.Denied)
             {
-                TempData["DeniedInfo"] = "项目未通过,请重新申请。";
                 return RedirectToAction("Project", user.Project);
             }
 
