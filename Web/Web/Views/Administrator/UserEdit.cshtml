@@ -25,22 +25,10 @@
             {
                 @Html.AntiForgeryToken()
                 <h4>编辑用户</h4>
-                            <hr />
+                <hr />
                 <div class="form-horizontal">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.PasswordHash)
-                    @Html.HiddenFor(model => model.TwoFactorEnabled)
-                    @Html.HiddenFor(model => model.AccessFailedCount)
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.DisplayName, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -57,14 +45,6 @@
                                 @Html.EditorFor(model => model.Identitied)
                                 @Html.ValidationMessageFor(model => model.Identitied, "", new { @class = "text-danger" })
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Time, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.DisplayFor(model => model.Time, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Time, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
@@ -87,40 +67,10 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.EmailConfirmed, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.EmailConfirmed)
-                                @Html.ValidationMessageFor(model => model.EmailConfirmed, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
                         @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PhoneNumberConfirmed, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.PhoneNumberConfirmed)
-                                @Html.ValidationMessageFor(model => model.PhoneNumberConfirmed, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.LockoutEnabled, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.DisplayFor(model => model.LockoutEnabled)
-                                @Html.ValidationMessageFor(model => model.LockoutEnabled, "", new { @class = "text-danger" })
-                            </div>
                         </div>
                     </div>
 

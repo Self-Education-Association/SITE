@@ -439,12 +439,19 @@ namespace Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UserEdit(User model)
+        public ActionResult UserEdit([Bind(Include = "DisplayName,Email,PhoneNumber,Identitied,IsDisabled,Id")]User model)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Attach(model);
-                db.Entry(model).State = System.Data.Entity.EntityState.Modified;
+                var user = db.Users.Find(model.Id);
+                user.DisplayName = string.IsNullOrWhiteSpace(model.DisplayName) ? user.DisplayName : model.DisplayName;
+                user.Email = model.Email == null ? user.Email : model.Email;
+                user.PhoneNumber = model.PhoneNumber == null ? user.PhoneNumber : model.PhoneNumber;
+                user.Profile.Email = user.Email;
+                user.Profile.Phone = user.PhoneNumber;
+                user.Identitied = model.Identitied;
+                user.IsDisabled = model.IsDisabled;
+
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }

@@ -411,13 +411,37 @@ namespace Web.Controllers
 
             return View(teamMember);
         }
-        public ActionResult TeamMemberDelete(string userId)
+        public ActionResult TeamMemberDelete(string id)
         {
             if (IllegalIdentity())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            User member = db.Users.Find(userId);
-            if (member.TeamRecord.Status == TeamMemberStatus.Admin | Extensions.GetContextUser(ref db).TeamRecord.Status != TeamMemberStatus.Admin)
+            User member = db.Users.Find(id);
+            if (member.TeamRecord.Status == TeamMemberStatus.Admin)
+            {
+                var user = Extensions.GetContextUser(ref db);
+                var teamRecord = user.TeamRecord;
+                var team = teamRecord.Team;
+                if (team.Member.Count == 1)
+                {
+                    if (TempData["isConfirmed"] != "true")
+                    {
+                        TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！请确定是否想要进行该操作?";
+                        TempData["isConfirmed"] = "1";
+                        return RedirectToAction("TeamMember");
+                    }
+                    else
+                    {
+                        db.Projects.Remove(user.Project);
+                        db.Teams.Remove(team);
+                        db.TeamRecords.Remove(teamRecord);
+                        db.SaveChanges();
+                        TempData["isConfirmed"] = "0";
+                        TempData["Alert"] = "删除成功！";
+                        return RedirectToAction("Index");
+                    }
+                }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
+            }
             member.Project = null;
             db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
             db.SaveChanges();

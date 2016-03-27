@@ -163,12 +163,14 @@ namespace Web.Models
         {
             Team = team;
             Status = TeamMemberStatus.Normal;
+            Time = DateTime.Parse("2000-1-1");
         }
 
         public TeamRecord(Team team, TeamMemberStatus status) : base()
         {
             Team = team;
             Status = status;
+            Time = DateTime.Parse("2000-1-1");
         }
 
         public TeamRecord(Team team, TeamMemberStatus status, User user) : base()
@@ -176,6 +178,7 @@ namespace Web.Models
             Team = team;
             Status = status;
             Receiver = user;
+            Time = DateTime.Parse("2000-1-1");
         }
     }
 
