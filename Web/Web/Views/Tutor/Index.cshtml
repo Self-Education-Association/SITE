@@ -16,12 +16,13 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @TempData["ErrorInfo"]
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @TempData["ErrorInfo"]
+        </b>       
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
         <div class="col-xs-10 board">
-
             <!--以下为模板内容-->
             <h4>首页</h4>
             <hr />
@@ -79,9 +80,9 @@
                             @Html.DisplayFor(modelItem => item.Content)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "StudentList", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("详情", "StudentList", new { id = item.Id }) |
+                            @Html.ActionLink("删除", "Delete", new { id = item.Id })
                         </td>
                     </tr>
                 }

@@ -150,9 +150,18 @@ namespace Web.Controllers
         {
             return View();
         }
-        public ActionResult NewsPage1()
+
+        public ActionResult ActivitiesByMonth(int year, int month)
         {
-            return View();
+            DateTime start = new DateTime(year, month, 1, 0, 0, 0);
+            DateTime end = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
+            var data = db.ActivityOperations.Where(a => a.EndTime >= start && a.EndTime <= end).ToList();
+            var model = new List<Calendar>();
+            foreach(var item in data)
+            {
+                model.Add(new Calendar { Id = item.Id, Name = item.Name, ShortContent = item.ShortContent });
+            }
+            return View(model);
         }
     }
 }

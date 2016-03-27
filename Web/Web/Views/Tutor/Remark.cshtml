@@ -1,7 +1,7 @@
 ﻿@model Web.Models.CourseRecord
 
 @{
-    ViewBag.Title = "评论";
+    ViewBag.Title = "评价";
 }
 
 
@@ -9,7 +9,7 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">导师 |  评论</b>
+        <b class="secheader">导师 |  评价</b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -17,25 +17,23 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @TempData["ErrorInfo"]
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @TempData["ErrorInfo"]
+        </b>    
         <div class="col-xs-2">
             @Html.Partial("_TutorMenuPartial")
         </div>
         <div class="col-xs-10 board">
 
             <!--以下为模板内容-->
-            <h4>评论</h4>
+            <h4>课程记录</h4>
             <hr />
-
-            <h2>评论</h2>
-
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>课程记录</h4>
-                    <hr />
+  
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
                     @Html.HiddenFor(model => model.ActionTime)

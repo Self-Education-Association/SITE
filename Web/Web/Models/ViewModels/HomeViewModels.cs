@@ -7,10 +7,11 @@ namespace Web.Models
 {
     public class Calendar
     {
+        public Guid Id { get; set; }
 
-        public List<ActivityOperation> CalendarActivity { get; set; }
+        public string Name { get; set; }
 
-        public int Date { get; set; }
+        public string ShortContent { get; set; }
     }
 
     public class HomeIndexViewModel

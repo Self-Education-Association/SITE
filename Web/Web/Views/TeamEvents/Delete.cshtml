@@ -3,26 +3,7 @@
 @{
     ViewBag.Title = "删除";
 }
-<style>
-    h2 {
-        font-family: 'Microsoft YaHei';
-        color: #577492;
-        text-align: center;
-    }
 
-    .table > tbody > tr > th {
-        text-align: center;
-    }
-
-    .table > tbody > tr > td {
-        text-align: center;
-    }
-
-    body {
-        background: url(/img/HeaderGreyDenim.jpg);
-        background-repeat: repeat;
-    }
-</style>
 <section class="sec2">
     <div class="cover">
     </div>
@@ -35,19 +16,17 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @TempData["ErrorInfo"]
+        </b>
         <div class="col-xs-2">
             @Html.Partial("_EventsPartial")
         </div>
         <div class="col-xs-10 board">
-            @TempData["ErrorInfo"]
             <!--以下为模板内容-->
-            <h4> 删除</h4>
+            <h4> 确认删除？</h4>
             <hr />
-
-            <h3>确认删除？</h3>
             <div>
-                <h4>TeamEvent</h4>
-                <hr />
                 <dl class="dl-horizontal">
                     <dt>
                         @Html.DisplayNameFor(model => model.EventName)
@@ -89,7 +68,7 @@
 
                     <div class="form-actions no-color">
                         <input type="submit" value="Delete" class="btn btn-default" /> |
-                        @Html.ActionLink("Back to List", "Index")
+                        @Html.ActionLink("返回", "Index")
                     </div>
                 }
             </div>

@@ -69,7 +69,10 @@ namespace Web.Models
                 case MaterialType.Avatar:
                 case MaterialType.Identity:
                 case MaterialType.Slider:
-                    allowList = new List<string>() { ".jpg", ".jpeg", ".png" };
+                    allowList = new List<string> { ".jpg", ".jpeg", ".png" };
+                    break;
+                case MaterialType.Management:
+                    allowList = new List<string> { ".zip", ".rar", ".doc", ".docx" };
                     break;
                 default:
                     return true;

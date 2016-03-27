@@ -16,7 +16,9 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @ViewBag.StatusMessage
+        </b>
         <div class="col-xs-2">
             @Html.Partial("_ManageMenuPartial")
         </div>
@@ -24,8 +26,6 @@
             <!--以下为模板内容-->
             <h4>用户详情</h4>
             <hr />
-
-
           
             <dl class="dl-horizontal">
                 <dt>

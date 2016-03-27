@@ -14,12 +14,13 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        @ViewBag.StatusMessage
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @ViewBag.StatusMessage
+        </b>
         <div class="col-xs-2">
             @Html.Partial("_ManageMenuPartial")
         </div>
-        <div class="col-xs-10 board">
-           
+        <div class="col-xs-10 board">           
             <!--以下为模板内容-->
             <h4>显示履历</h4>
             <hr />

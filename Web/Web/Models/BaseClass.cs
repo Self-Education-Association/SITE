@@ -62,6 +62,7 @@ namespace Web.Models
         public DateTime EndTime { get; set; }
 
         [NotMapped]
+        [Display(Name = "描述")]
         public string Content
         {
             get { return ContentStored; }
@@ -84,18 +85,19 @@ namespace Web.Models
         }
 
         [Display(Name = "描述")]
-        public string ContentStored{get;set;}
+        public string ContentStored { get; set; }
 
         [NotMapped]
+        [Display(Name = "摘要")]
         public string ShortContent
         {
-            get{ return ShortContentStored; }
-            set{ ShortContentStored = value; }
+            get { return ShortContentStored; }
+            set { ShortContentStored = value; }
         }
 
         [Display(Name = "摘要")]
         [MaxLength(50)]
-        public string ShortContentStored{get;set;}
+        public string ShortContentStored { get; set; }
 
         [Display(Name = "启用中")]
         public bool Enabled { get; set; }

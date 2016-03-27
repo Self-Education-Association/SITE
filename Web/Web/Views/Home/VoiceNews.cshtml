@@ -59,34 +59,13 @@
             </ul>
         }
         <div class="row">
-            <!--分页-->
-            <!--  <ul class="pager">
-                @if (Model.HasPreviousPage)
-                {
-                    <li class="previous"><a href="@Url.Action("VoiceNews", new { page = Model.PageIndex - 1 })">上一页</a></li>
-                }
-                else
-                {
-                    <li class="previous disabled"><a href="#">上一页</a></li>
-                }
-                <li><a href="#">@index</a></li>
-                @if (Model.HasNextPage)
-                {
-                    <li class="next"><a href="@Url.Action("VoiceNews", new { page = Model.PageIndex + 1 })">下一页</a></li>
-                }
-                else
-                {
-                    <li class="next disabled"><a href="#">下一页</a></li>
-                }
-            </ul>             -->
-            <!--文章项目-->
             @foreach (Web.Models.Article item in Model)
             {
-                <div class="col-md-3 col-xs-6">
-                    <div class="feature">
+                <div class="col-md-4 col-xs-12">
+                    <div class="feature" style="position:relative;">
                         <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
-                        <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@item.Title</h3>
-                        <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">
+                        <h3 class="featuretitle">@item.Title</h3>
+                        <p class="featurep">
                             @item.ShortContent
                         </p>
                         <a class="btn btn-primary btn-large btn-block imgbtn" href="@Url.Content(item.GetUrl())" style="background-color:rgb(0,161,196)">阅读详细</a>
