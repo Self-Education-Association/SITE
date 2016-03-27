@@ -37,7 +37,9 @@
 <section class="pagesec">
     <div class="container-fluid pagecontainer">
         <div class="row">
-            <div>@ViewData["ErrorInfo"]</div>
+            <b style="font-size:16px;font-weight:bold;color:red;">
+                @TempData["DeniedInfo"]
+            </b>
             <ul class="breadcrumb col-md-6">
                 <li>
                     <a href="#">首页</a> <span class="divider"></span>
