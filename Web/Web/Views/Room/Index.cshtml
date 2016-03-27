@@ -73,7 +73,7 @@
                         @Html.DisplayNameFor(model => model.EndTime)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Content)
+                       描述
                     </th>
                     <th></th>
                 </tr>
@@ -100,9 +100,9 @@
                             @Html.DisplayFor(modelItem => item.ShortContent)
                         </td>
                         <td>
-                            @Html.ActionLink("Apply", "Apply", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Quit", "Quit", new { id = item.Id })
+                            @Html.ActionLink("申请", "Apply", new { id = item.Id }) |
+                            @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("退选", "Quit", new { id = item.Id })
                         </td>
                     </tr>
                 }

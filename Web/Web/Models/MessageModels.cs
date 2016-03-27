@@ -25,7 +25,7 @@ namespace Web.Models
             {
                 ContentStored = value;
                 if (value != null)
-                    ShortContent = Extensions.ReplaceHtmlTag(value, 30);
+                    ShortContent = Extensions.ReplaceHtmlTag(value, 20);
                 else
                     ShortContent = null;
             }
