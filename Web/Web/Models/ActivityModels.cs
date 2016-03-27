@@ -67,7 +67,7 @@ namespace Web.Models
                     var paginatedNews = new ListPage<ActivityOperation>(Activity, page, pageSize);
                     return paginatedNews;
                 }
-                catch
+                catch (Exception e)
                 {
                     return db.ActivityOperations.ToList();
                 }
@@ -99,7 +99,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch
+                catch (Exception e)
                 {
                     return false;
                 }
@@ -130,7 +130,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch
+                catch (Exception e)
                 {
                     return false;
                 }
@@ -159,7 +159,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch(Exception)
+                catch (Exception e)
                 {
                     return false;
                 }
