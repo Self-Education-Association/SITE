@@ -109,16 +109,16 @@
 
 </section>
 <!--第五部分：日历-->
-<section class="secblank" style="background:url(../../img/calenderbg.jpg) center">
-    <div class="row cover" style="padding-left:10%;padding-right:10%;padding-top:60px;padding-bottom:60px;">
+<section class="secblank" style="background:url(../../img/calenderbg.jpg) center;padding:100px 0;">
+    <div class="row" style="padding-left:10%;padding-right:10%;">
         <div class="col-xs-12">
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-6 col-xs-6">
                 <h1 class="showtitle" style="font-size:30px;color:white;font-family:'Microsoft YaHei UI'">日历|Calendar</h1>
                 <ul id="activityByMonth">
                     @Html.Action("ActivitiesByMonth", new { year = DateTime.Now.Year, month = DateTime.Now.Month });
                 </ul>
             </div>
-            <div class="col-md-6 col-xs-12">
+            <div class="col-md-6 col-xs-6">
                 <div class="Calendar">
                     <div id="idCalendarPre">&lt;&lt;</div>
                     <div id="idCalendarNext">&gt;&gt;</div>
