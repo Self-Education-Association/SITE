@@ -891,6 +891,7 @@
     <Content Include="Views\Reports\_ReportsPartial.cshtml" />
     <Content Include="Views\TeamEvents\_EventsPartial.cshtml" />
     <Content Include="Views\Home\ActivitiesByMonth.cshtml" />
+    <Content Include="Views\Manage\TeamEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

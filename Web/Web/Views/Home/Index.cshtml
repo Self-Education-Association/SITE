@@ -65,9 +65,9 @@
             <div class="col-md-4 col-xs-6">
                 <div class="feature">
                     <img src="~/img/timelane1.jpg" alt="Compas">
-                    <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 26px;">@a.Name</h3>
-                    <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;">@a.ShortContent</p>
-                    <a class="btn btn-primary btn-large btn-block imgbtn" href="~/Activity/Details/@a.Id" style="background-color:rgb(0,161,196)">阅读详细</a>
+                    <h3 style="margin-top: 25px; margin-bottom: 5px; font-size: 18px;min-height:32px;font-family:SimHei">@a.Name</h3>
+                    <p style="font-size: 16px;line-height: 1.6;  margin: 0 0 10px;text-wrap:normal;min-height:75px;">@a.ShortContent</p>
+                    <a class="btn btn-primary btn-large btn-block imgbtn" href="~/Activity/Details/@a.Id" style="background-color:rgb(0,161,196);">阅读详细</a>
                 </div>
             </div>
         }
@@ -112,12 +112,11 @@
 <section class="secblank" style="background:url(../../img/calenderbg.jpg) center">
     <div class="row cover" style="padding-left:10%;padding-right:10%;padding-top:60px;padding-bottom:60px;">
         <div class="col-xs-12">
-            <div class="col-md-3 col-xs-6"><img style="height:100px;width:100px;" src="~/img/icons/png/Calendar.png" /></div>
-            <div class="col-md-3 col-xs-6">
+            <div class="col-md-6 col-xs-12">
                 <h1 class="showtitle" style="font-size:30px;color:white;font-family:'Microsoft YaHei UI'">日历|Calendar</h1>
-                <div id="activityByMonth">
+                <ul id="activityByMonth">
                     @Html.Action("ActivitiesByMonth", new { year = DateTime.Now.Year, month = DateTime.Now.Month });
-                </div>
+                </ul>
             </div>
             <div class="col-md-6 col-xs-12">
                 <div class="Calendar">

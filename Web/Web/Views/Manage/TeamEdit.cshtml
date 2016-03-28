@@ -1,0 +1,87 @@
+﻿@model Web.Models.Team
+
+@{
+    ViewBag.Title = "编辑团队";
+}
+
+@Scripts.Render("~/bundles/timepickerscripts")
+@Styles.Render("~/bundles/timepickerstyles")
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">管理员 | 编辑团队 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <div class="col-xs-2">
+            @Html.Partial("../Administrator/_AdminMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>编辑团队</h4>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+                    @Html.HiddenFor(model => model.Time)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Introduction, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Introduction, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Introduction, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Announcement, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Announcement, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Announcement, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    @Html.LabelFor(model => model.Searchable, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Searchable, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Searchable, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+
+            }
+
+            <div>
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

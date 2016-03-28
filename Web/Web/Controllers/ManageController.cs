@@ -11,6 +11,7 @@ using System.IO;
 using System.Net;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
+using System.Data.Entity;
 
 namespace Web.Controllers
 {
@@ -316,8 +317,9 @@ namespace Web.Controllers
             Team team = db.Teams.Find(teamId);
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply));
-            db.Messages.Add(new Message(team.Admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
+            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply,Extensions.GetContextUser(ref db)));
+            User admin = db.Users.Where(u => u.TeamRecord.Team.Id == team.Id && u.TeamRecord.Status == TeamMemberStatus.Admin ).First();
+            db.Messages.Add(new Message(admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
@@ -458,6 +460,45 @@ namespace Web.Controllers
             User member = Extensions.GetContextUser(ref db);
             member.Project = null;
             db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
+            db.SaveChanges();
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
+        }
+
+        public ActionResult TeamEdit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Team team = db.Teams.Find(id);
+            if (team == null)
+            {
+                return HttpNotFound();
+            }
+            if (IllegalIdentity())
+            {
+                TempData["Alert"] = "你没有权限进行此操作！";
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult TeamEdit(Team team)
+        {
+            if (Extensions.GetContextUser(ref db).TeamRecord == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
+            if (IllegalIdentity())
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            Team editTeam = db.Teams.Find(team.Id);
+            editTeam.Name = team.Name;
+            editTeam.Introduction = team.Introduction;
+            editTeam.Announcement = team.Announcement;
+            editTeam.Searchable = team.Searchable;
+            db.Entry(editTeam).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });

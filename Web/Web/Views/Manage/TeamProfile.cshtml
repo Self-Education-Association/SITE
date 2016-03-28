@@ -19,7 +19,7 @@
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
         <b style="font-size:16px;font-weight:bold;color:red;">
-            @ViewBag.StatusMessage
+        @ViewBag.StatusMessage
         </b>
         <div class="col-xs-2">
             @Html.Partial("_ManageMenuPartial")
@@ -72,7 +72,7 @@
             </dl>
 
             <p>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Edit", "TeamEdit", new { id = Model.Id }) |
                 @Html.ActionLink("Back to List", "Index")
             </p>
             <!--以上为模板内容-->
