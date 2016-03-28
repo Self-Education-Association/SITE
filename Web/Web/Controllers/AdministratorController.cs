@@ -195,7 +195,7 @@ namespace Web.Controllers
             {
                 if (model.StartTime > model.EndTime)
                 {
-                    ViewData["ErrorInfo"] = "活动开始时间必须在结束时间之前。";
+                    ViewData["Alert"] = "活动开始时间必须在结束时间之前。";
                     return View();
                 }
                 var s = new HtmlSanitizer();
@@ -413,7 +413,13 @@ namespace Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db), Position = model.Position, Introduction = model.Introduction };
+                    var avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db);
+                    if (avatar == null)
+                    {
+                        TempData["ALert"] = "请检查上传文件！";
+                        return View(model);
+                    }
+                    var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = avatar, Position = model.Position, Introduction = model.Introduction };
                     db.TutorInformations.Add(tutor);
                     db.SaveChanges();
                     ViewBag.Alert = "操作成功！";
@@ -555,12 +561,16 @@ namespace Web.Controllers
                 user.Status = IdentityStatus.Done;
                 user.User.Identitied = true;
                 db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, ref db));
+                TempData["Alert"] = "审核通过成功！";
             }
             else
             {
-                user.Status = IdentityStatus.Denied;
                 user.User.Identitied = false;
                 db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, ref db));
+                db.Materials.Remove(user.FrontIdCard);
+                db.Materials.Remove(user.BackIdCard);
+                db.IdentityRecords.Remove(user);
+                TempData["Alert"] = "审核驳回成功！";
             }
             db.SaveChanges();
             return RedirectToAction("IdentityRecords");

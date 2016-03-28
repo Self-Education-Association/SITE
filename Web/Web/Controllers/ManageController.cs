@@ -184,7 +184,8 @@ namespace Web.Controllers
                     db.Users.Find(User.Identity.GetUserId()).Profile = model;
                     db.SaveChanges();
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.UpdateUserProfileSuccess });
+                TempData["Alert"] = "修改成功！";
+                return View();
             }
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
@@ -192,7 +193,20 @@ namespace Web.Controllers
         public ActionResult UserIdentity()
         {
             var status = db.Users.Find(User.Identity.GetUserId()).IdentityRecord;
-            ViewBag.Status = status != null ? status.Status : IdentityStatus.None;
+            if (status != null)
+            {
+                switch (status.Status)
+                {
+                    case IdentityStatus.ToApprove:
+                        TempData["Alert"] = "你已提交过实名认证，管理员尚未确认！";
+                        break;
+                    case IdentityStatus.Done:
+                        TempData["Alert"] = "你通过实名认证！";
+                        break;
+                }
+
+                return RedirectToAction("Index", "Manage");
+            }
 
             return View();
         }
@@ -212,7 +226,19 @@ namespace Web.Controllers
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }*/
                 model.FrontIdCard = Material.Create("", MaterialType.Identity, Request.Files[0], db);
+                if (model.FrontIdCard == null)
+                {
+                    TempData["Alert"] = "请检查上传文件！";
+                    return View(model);
+                }
                 model.BackIdCard = Material.Create("", MaterialType.Identity, Request.Files[1], db);
+                if (model.BackIdCard == null)
+                {
+                    db.Materials.Remove(model.FrontIdCard);
+                    db.SaveChanges();
+                    TempData["Alert"] = "请检查上传文件！";
+                    return View(model);
+                }
                 model.Status = IdentityStatus.ToApprove;
                 model.Time = DateTime.Now;
                 model.Id = Guid.NewGuid();
@@ -317,8 +343,8 @@ namespace Web.Controllers
             Team team = db.Teams.Find(teamId);
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply,Extensions.GetContextUser(ref db)));
-            User admin = db.Users.Where(u => u.TeamRecord.Team.Id == team.Id && u.TeamRecord.Status == TeamMemberStatus.Admin ).First();
+            db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply, Extensions.GetContextUser(ref db)));
+            User admin = db.Users.Where(u => u.TeamRecord.Team.Id == team.Id && u.TeamRecord.Status == TeamMemberStatus.Admin).First();
             db.Messages.Add(new Message(admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
             db.SaveChanges();
 

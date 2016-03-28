@@ -50,23 +50,23 @@ namespace Web.Controllers
                 var user = db.Users.Find(HttpContext.User.Identity.GetUserId());
                 if (RoomOperation == null)
                 {
-                    TempData["ErrorInfo"] = "该场地不存在！";
+                    TempData["Alert"] = "该场地不存在！";
                     return RedirectToAction("Index");
                 }
                 if (RoomOperation.Usable == false)
                 {
-                    TempData["ErrorInfo"] = "该场地已被使用！";
+                    TempData["Alert"] = "该场地已被使用！";
                     return RedirectToAction("Index");
                 }
                 if (DateTime.Now > RoomOperation.StartTime)
                 {
-                    TempData["ErrorInfo"] = "该场地现在不可预约！";
+                    TempData["Alert"] = "该场地现在不可预约！";
                     return RedirectToAction("Index");
                 }
                 var roomRecord = new RoomRecord();
                 if (roomRecord.Apply(Id))
                     return RedirectToAction("Index"); ;
-                TempData["ErrorInfo"] = "你不符合预约要求！";
+                TempData["Alert"] = "你不符合预约要求！";
             }
             return RedirectToAction("Index");
         }
@@ -81,7 +81,7 @@ namespace Web.Controllers
                     return new HttpStatusCodeResult(404);
                 if (DateTime.Now > roomOperation.StartTime)
                 {
-                    TempData["ErrorInfo"] = "现在不是可退选的时间！";
+                    TempData["Alert"] = "现在不是可退选的时间！";
                 }
                 if (roomOperation.Usable == false)
                 {
@@ -94,14 +94,14 @@ namespace Web.Controllers
                         db.SaveChanges();
                         if (roomOperation.Usable != false)
                         {
-                            TempData["ErrorInfo"] = "退选成功";
+                            TempData["Alert"] = "退选成功";
 
                             return RedirectToAction("Index");
                         }
                     }
                 }
             }
-            TempData["ErrorInfo"] = "退选失败";
+            TempData["Alert"] = "退选失败";
 
             return RedirectToAction("Index");
         }

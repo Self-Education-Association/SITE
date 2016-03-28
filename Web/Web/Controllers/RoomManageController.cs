@@ -36,14 +36,14 @@ namespace Web.Controllers
             {
                 if (roomOperation.StartTime >= roomOperation.EndTime)
                 {
-                    TempData["ErrorInfo"] = "无法创建场地，开始时间晚于结束时间。";
+                    TempData["Alert"] = "无法创建场地，开始时间晚于结束时间。";
                     return View();
                 }
                 //创建成功返回至列表菜单
                 if (roomOperation.Create())
                     return RedirectToAction("Index");
             }
-            TempData["ErrorInfo"] = "错误：无法创建场地，对象不存在或无效。";
+            TempData["Alert"] = "错误：无法创建场地，对象不存在或无效。";
             return View(roomOperation);
         }
 
@@ -72,7 +72,7 @@ namespace Web.Controllers
                 roomOperation.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 if (roomOperation.StartTime >= roomOperation.EndTime)
                 {
-                    TempData["ErrorInfo"] = "无法完成修改，开始时间晚于结束时间。";
+                    TempData["Alert"] = "无法完成修改，开始时间晚于结束时间。";
                     return View();
                 }
                 if (roomOperation.Edit())
@@ -91,15 +91,15 @@ namespace Web.Controllers
                             {
                                 return RedirectToAction("Index");
                             }
-                            TempData["ErrorInfo"] = "无法给学生发布修改信息";
+                            TempData["Alert"] = "无法给学生发布修改信息";
                         }
                     }
                 }
                 else
-                    TempData["ErrorInfo"] = "修改失败!";
+                    TempData["Alert"] = "修改失败!";
             }
             else
-                TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
+                TempData["Alert"] = "无法修改！对象不存在或无效。";
 
             return RedirectToAction("Index");
         }
@@ -127,7 +127,7 @@ namespace Web.Controllers
             RoomOperation roomOperation = db.RoomOperations.Find(Id);
             if (!roomOperation.Delete(ref db))
             {
-                TempData["ErrorInfo"] = "无法删除";
+                TempData["Alert"] = "无法删除";
                 return View();
             }
             return RedirectToAction("Index");

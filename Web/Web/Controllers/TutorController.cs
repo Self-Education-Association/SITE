@@ -87,14 +87,14 @@ namespace Web.Controllers
             {
                 if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    TempData["ErrorInfo"] = "无法创建课程，开始时间晚于结束时间。";
+                    TempData["Alert"] = "无法创建课程，开始时间晚于结束时间。";
                     return View();
                 } 
                 //创建成功返回至列表菜单
                 if (courseOperation.Create())
                     return RedirectToAction("Index");
             }
-            TempData["ErrorInfo"] = "错误：无法创建课程，对象不存在或无效。";
+            TempData["Alert"] = "错误：无法创建课程，对象不存在或无效。";
             return View(courseOperation);
         }
 
@@ -120,14 +120,14 @@ namespace Web.Controllers
             {
                 if (courseOperation.StartTime >= courseOperation.EndTime)
                 {
-                    TempData["ErrorInfo"] = "无法完成修改，开始时间晚于结束时间。";
+                    TempData["Alert"] = "无法完成修改，开始时间晚于结束时间。";
                     return View();
                 }
                 if (courseOperation.Students != null)
                 {
                     if (courseOperation.Students.Count > courseOperation.Limit)
                     {
-                        TempData["ErrorInfo"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
+                        TempData["Alert"] = "无法修改！新人数上限小于现有人数，请审核修改内容。";
                         return View();
                     }
                 }
@@ -142,17 +142,17 @@ namespace Web.Controllers
                             Message message = new Message(title, content, user.Id, MessageType.System, db);
                             if (!message.Publish())
                             {
-                                TempData["ErrorInfo"] = "无法给学生发布修改信息";
+                                TempData["Alert"] = "无法给学生发布修改信息";
                                 return View();
                             }
                         }
                     }
                     return RedirectToAction("Index");
                 }
-                TempData["ErrorInfo"] = "无法修改！无法连接到服务器.";
+                TempData["Alert"] = "无法修改！无法连接到服务器.";
                 return View();
             }
-            TempData["ErrorInfo"] = "无法修改！对象不存在或无效。";
+            TempData["Alert"] = "无法修改！对象不存在或无效。";
             return View();
         }
         
@@ -179,7 +179,7 @@ namespace Web.Controllers
             CourseOperation courseOperation = db.CourseOperations.Find(Id);
             if (!courseOperation.Delete(ref db))
             {
-                TempData["ErrorInfo"] = "无法删除";
+                TempData["Alert"] = "无法删除";
                 return View();
             }
             return RedirectToAction("Index");
@@ -212,11 +212,11 @@ namespace Web.Controllers
 
                         return View(courseRecord);
                 }
-                    TempData["ErrorInfo"] = "还未到允许评论的时间！";
+                    TempData["Alert"] = "还未到允许评论的时间！";
             }
             else
             {
-                TempData["ErrorInfo"] = "该课程没有成员！";
+                TempData["Alert"] = "该课程没有成员！";
             }
             return RedirectToAction("StudentList");
         }
@@ -229,7 +229,7 @@ namespace Web.Controllers
             {
                 if (courseRecord.Remark())
                     return RedirectToAction("StudentList");
-                TempData["ErrorInfo"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
+                TempData["Alert"] = "错误，你提交的评价不符合标准，请更改评分及评价内容！";
             }
             return View();
         }
@@ -242,12 +242,12 @@ namespace Web.Controllers
             CourseOperation course = db.CourseOperations.Find(Id);
             if (course == null)
             {
-                TempData["ErrorInfo"] = "该课程不存在！";
+                TempData["Alert"] = "该课程不存在！";
                 return RedirectToAction("Index");
             }
             if (course.Creator != user)
             {
-                TempData["ErrorInfo"] = "你没有权限对该课程进行评价！";
+                TempData["Alert"] = "你没有权限对该课程进行评价！";
                 return View("Index");
             }
             IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id == course.Id select a).Distinct();
