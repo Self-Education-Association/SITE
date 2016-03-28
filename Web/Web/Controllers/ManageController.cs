@@ -423,7 +423,7 @@ namespace Web.Controllers
                 var team = teamRecord.Team;
                 if (team.Member.Count == 1)
                 {
-                    if (TempData["isConfirmed"] != "true")
+                    if (TempData["isConfirmed"].ToString() != "true")
                     {
                         TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！请确定是否想要进行该操作?";
                         TempData["isConfirmed"] = "1";
