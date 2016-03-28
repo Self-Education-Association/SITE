@@ -413,7 +413,13 @@ namespace Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "确认你的帐户", "请通过单击 <a href=\"" + callbackUrl + "\">這裏</a>来确认你的帐户");
 
-                    var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db), Position = model.Position, Introduction = model.Introduction };
+                    var avatar = Material.Create(user.DisplayName, MaterialType.Avatar, file, db);
+                    if (avatar == null)
+                    {
+                        TempData["ALert"] = "请检查上传文件！";
+                        return View(model);
+                    }
+                    var tutor = new TutorInformation { Id = Guid.NewGuid(), Tutor = db.Users.Find(user.Id), Avatar = avatar, Position = model.Position, Introduction = model.Introduction };
                     db.TutorInformations.Add(tutor);
                     db.SaveChanges();
                     ViewBag.Alert = "操作成功！";
