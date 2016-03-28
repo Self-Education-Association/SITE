@@ -43,27 +43,27 @@ namespace Web.Controllers
                 {
                     if (CourseOperation.Students.Contains(db.Users.Find(HttpContext.User.Identity.GetUserId())))
                     {
-                        TempData["ErrorInfo"] = "您已选过该课程！";
+                        TempData["Alert"] = "您已选过该课程！";
                         return RedirectToAction("Index");
                     }
                 }
                 if (CourseOperation.Count >= CourseOperation.Limit)
                 {
-                    TempData["ErrorInfo"] = "该课程已满！";
+                    TempData["Alert"] = "该课程已满！";
                     return RedirectToAction("Index");
                 }
                 if (DateTime.Now > CourseOperation.StartTime)
                 {
-                    TempData["ErrorInfo"] = "该课程现在不可预约！";
+                    TempData["Alert"] = "该课程现在不可预约！";
                     return RedirectToAction("Index");
                 }
                 var courseRecord = new CourseRecord();
                 if (courseRecord.Apply(CourseOperation.Id))
                 {
-                    TempData["ErrorInfo"] = "选课成功！";
+                    TempData["Alert"] = "选课成功！";
                     return RedirectToAction("Index");
                 }
-                TempData["ErrorInfo"] = "你不符合选课要求";
+                TempData["Alert"] = "你不符合选课要求";
             }
             return RedirectToAction("Index");
         }
@@ -79,13 +79,13 @@ namespace Web.Controllers
                 {
                     if (DateTime.Now > courseOperation.StartTime)
                     {
-                        TempData["ErrorInfo"] = "现在不是可退选的时间！";
+                        TempData["Alert"] = "现在不是可退选的时间！";
                     }
                     if (courseOperation.Students != null)
                     {
                         if (!courseOperation.Students.Contains(user))
                         {
-                            TempData["ErrorInfo"] = "您未选过该课程！";
+                            TempData["Alert"] = "您未选过该课程！";
                         }
                         else
                         {
@@ -94,9 +94,9 @@ namespace Web.Controllers
                             courseOperation.Count--;
                             db.SaveChanges();
                             if (courseOperation.Students.Contains(user))
-                                TempData["ErrorInfo"] = "退课失败";
+                                TempData["Alert"] = "退课失败";
                             else
-                                TempData["ErrorInfo"] = "退课成功";
+                                TempData["Alert"] = "退课成功";
                         }
                     }
                 }

@@ -195,7 +195,7 @@ namespace Web.Controllers
             {
                 if (model.StartTime > model.EndTime)
                 {
-                    ViewData["ErrorInfo"] = "活动开始时间必须在结束时间之前。";
+                    ViewData["Alert"] = "活动开始时间必须在结束时间之前。";
                     return View();
                 }
                 var s = new HtmlSanitizer();
@@ -555,12 +555,16 @@ namespace Web.Controllers
                 user.Status = IdentityStatus.Done;
                 user.User.Identitied = true;
                 db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordSuccess, ref db));
+                TempData["Alert"] = "审核通过成功！";
             }
             else
             {
-                user.Status = IdentityStatus.Denied;
                 user.User.Identitied = false;
                 db.Messages.Add(new Message(user.User.Id, MessageType.System, MessageTemplate.IdentityRecordFailure, ref db));
+                db.Materials.Remove(user.FrontIdCard);
+                db.Materials.Remove(user.BackIdCard);
+                db.IdentityRecords.Remove(user);
+                TempData["Alert"] = "审核驳回成功！";
             }
             db.SaveChanges();
             return RedirectToAction("IdentityRecords");

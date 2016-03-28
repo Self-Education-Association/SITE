@@ -70,12 +70,14 @@ namespace Web.Models
         [Display(Name = "唯一编号")]
         public Guid Id { get; set; }
 
+        [Required]
         [Display(Name = "身份证号或学号")]
         public string IdNumber { get; set; }//身份证号或学号
 
         [Display(Name = "用户")]
         public virtual User User { get; set; }//用户
 
+        [Required]
         [Display(Name = "真实姓名")]
         public string Name { get; set; } //真实姓名
 
