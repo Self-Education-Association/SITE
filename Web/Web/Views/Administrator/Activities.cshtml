@@ -80,9 +80,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Enabled)
                         </td>
-                        <td>
-                            @Html.ActionLink("ActivityEdit", "ActivityEdit", new { id = item.Id }) |
-                            @Html.ActionLink("ActivityDelete", "ActivityDelete", new { id = item.Id })
+                        <td style="min-width:100px;">
+                            @Html.ActionLink("编辑", "ActivityEdit", new { id = item.Id })|
+                            @Html.ActionLink("删除", "ActivityDelete", new { id = item.Id })
                         </td>
                     </tr>
                 }

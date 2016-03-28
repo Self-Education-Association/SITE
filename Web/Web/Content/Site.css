@@ -266,7 +266,8 @@ dl.col-xs-4 {
 }
 
 #idCalendar td.onToday {
-    color: #C60;
+    color: black;
+    font-weight:bolder;
 }
 
 #idCalendar td.onSelect {
@@ -406,15 +407,19 @@ dl.col-xs-4 {
     font-family:'Microsoft YaHei';
     font-weight:bold;
 }
+
 .calli{
     font-size:15px;
     font-family:'Microsoft YaHei';
     font-weight:600;
     color:white;
+    margin-top:15px;
 }
+
 li a{
     color:darksalmon;
 }
+
 li a:hover{
     color:antiquewhite;
 }
