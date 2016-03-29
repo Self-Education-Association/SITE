@@ -846,7 +846,6 @@
     <Content Include="Views\Administrator\ActivityDelete.cshtml" />
     <Content Include="Views\Administrator\ArticleCreate.cshtml" />
     <Content Include="Views\Administrator\ArticleEdit.cshtml" />
-    <Content Include="Views\Administrator\ArticleDelete.cshtml" />
     <Content Include="Views\Administrator\Articles.cshtml" />
     <Content Include="Views\Administrator\UserList.cshtml" />
     <Content Include="Views\Home\VoiceNews.cshtml" />
@@ -882,10 +881,10 @@
     <Content Include="Views\TeamEvents\Edit.cshtml" />
     <Content Include="Views\TeamEvents\Index.cshtml" />
     <Content Include="Views\Reports\Create.cshtml" />
-    <Content Include="Views\Reports\Delete.cshtml" />
-    <Content Include="Views\Reports\Details.cshtml" />
+    <Content Include="Views\Administrator\ReportDelete.cshtml" />
+    <Content Include="Views\Administrator\ReportDetails.cshtml" />
     <Content Include="Views\Reports\Edit.cshtml" />
-    <Content Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Administrator\Reports.cshtml" />
     <Content Include="Views\RoomManage\Edit.cshtml" />
     <Content Include="Views\RoomManage\Index.cshtml" />
     <Content Include="Views\RoomManage\Create.cshtml" />

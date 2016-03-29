@@ -24,22 +24,31 @@ namespace Web.Controllers
                 return View(model);
             }
 
-            return View(db.TeamEvents.ToList());
+            return new HttpStatusCodeResult(403);
         }
 
         // GET: TeamEvents/Details/5
         public ActionResult Details(Guid? id)
         {
-            if (id == null)
+            if (HasTeam())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                TeamEvent teamEvent = db.TeamEvents.Find(id);
+                if (teamEvent == null)
+                {
+                    return HttpNotFound();
+                }
+                if (teamEvent.Team.Id == Extensions.GetContextUser(ref db).TeamRecord.Team.Id)
+                {
+                    ViewBag.IsAdmin = IsTeamAdmin();
+                    return View(teamEvent);
+                }
             }
-            TeamEvent teamEvent = db.TeamEvents.Find(id);
-            if (teamEvent == null)
-            {
-                return HttpNotFound();
-            }
-            return View(teamEvent);
+
+            return new HttpStatusCodeResult(403);
         }
 
         // GET: TeamEvents/Create
@@ -47,6 +56,7 @@ namespace Web.Controllers
         {
             if (IsTeamAdmin())
                 return View();
+
             return new HttpStatusCodeResult(403);
         }
 
@@ -55,7 +65,7 @@ namespace Web.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EventName,EventContent,EventTime,AddTime")] TeamEvent teamEvent)
+        public ActionResult Create([Bind(Include = "EventName,EventContent,EventTime")] TeamEvent teamEvent)
         {
             if (IsTeamAdmin())
             {
@@ -67,10 +77,12 @@ namespace Web.Controllers
                     teamEvent.Team = team;
                     db.TeamEvents.Add(teamEvent);
                     db.SaveChanges();
+                    TempData["Alert"] = "添加成功！";
                     return RedirectToAction("Index");
                 }
 
-                return View(teamEvent);
+                TempData["Alert"] = "请检查输入值。";
+                return View();
             }
 
             return new HttpStatusCodeResult(403);
@@ -109,8 +121,11 @@ namespace Web.Controllers
                 {
                     db.Entry(teamEvent).State = EntityState.Modified;
                     db.SaveChanges();
+                    TempData["Alert"] = "修改成功！";
                     return RedirectToAction("Index");
                 }
+
+                TempData["Alert"] = "请检查输入值。";
                 return View(teamEvent);
             }
 
@@ -152,7 +167,8 @@ namespace Web.Controllers
 
             return new HttpStatusCodeResult(403);
         }
-        #region HelpFunction
+
+        #region HelperFunction
         protected bool HasTeam()
         {
             var user = Extensions.GetContextUser(ref db);
@@ -164,7 +180,7 @@ namespace Web.Controllers
         protected bool IsTeamAdmin()
         {
             var user = Extensions.GetContextUser(ref db);
-            if (HasTeam() == false)
+            if (user == null || user.TeamRecord == null)
                 return false;
             return user.TeamRecord.Status == TeamMemberStatus.Admin;
         }
