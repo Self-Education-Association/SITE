@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Web.Models.Article>
+    @{ 
+        ViewBag.Title = "文章列表";
+    }
 <style>
     .nav-pills > li > a {
         color: white;
@@ -100,14 +103,19 @@
                         </td>
                         <td>
                             @Html.ActionLink("编辑", "ArticleEdit", new { id = item.ID }) |
-                            @Html.ActionLink("删除", "ArticleDelete", new { id = item.ID })
+                            @Html.ActionLink("删除", "ArticleDelete", new { id = item.ID }, new { onClick = "delcfm()" })
                         </td>
                     </tr>
                 }
             </table>
-            @Html.ActionLink("回到管理主页", "Index")
-
         </div>
     </div>
 </section>
+<script>
+    function delcfm() {
+        if (!confirm("确认要删除？")) {
+            window.event.returnValue = false;
+        }
+    }
+</script>
 

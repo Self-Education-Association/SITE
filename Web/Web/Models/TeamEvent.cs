@@ -10,7 +10,7 @@ namespace Web.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
         public string EventName { get; set; }
 
@@ -26,9 +26,9 @@ namespace Web.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
-        public Material ReportFile { get; set; }
+        public virtual Material ReportFile { get; set; }
 
         public DateTime Time { get; set; } = DateTime.Now;
     }

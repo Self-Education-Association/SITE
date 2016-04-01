@@ -108,7 +108,8 @@ namespace Web.Controllers
                 model.NewArticle();
                 db.Articles.Add(model);
                 db.SaveChanges();
-                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+                TempData["Alert"] = "文章创建成功！";
+                return RedirectToAction("Articles");
             }
 
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
@@ -141,23 +142,13 @@ namespace Web.Controllers
                 db.Articles.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+                TempData["Alert"] = "文章编辑成功！";
+                return RedirectToAction("Articles");
             }
 
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
             ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
             return View();
-        }
-
-        public ActionResult ArticleDeleteConfirm(Guid? Id)
-        {
-            if (Id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Article model = db.Articles.Find(Id);
-            if (model == null)
-                return HttpNotFound();
-
-            return View(model);
         }
 
         public ActionResult ArticleDelete(Guid? Id)
@@ -170,8 +161,8 @@ namespace Web.Controllers
 
             db.Articles.Remove(model);
             db.SaveChanges();
-
-            return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
+            TempData["Alert"] = "文章删除成功！";
+            return RedirectToAction("Articles");
         }
         #endregion
         //4 Views
@@ -597,6 +588,54 @@ namespace Web.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("CompanyIdentityRecords");
+        }
+        #endregion
+
+        #region 项目团队管理模块
+        // GET: Reports
+        public ActionResult Reports()
+        {
+            return View(db.TeamReports.ToList());
+        }
+
+        // GET: Reports/Details/5
+        public ActionResult ReportDetails(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeamReport teamReport = db.TeamReports.Find(id);
+            if (teamReport == null)
+            {
+                return HttpNotFound();
+            }
+            return View(teamReport);
+        }
+        // GET: Reports/Delete/5
+        public ActionResult ReportDelete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeamReport teamReport = db.TeamReports.Find(id);
+            if (teamReport == null)
+            {
+                return HttpNotFound();
+            }
+            return View(teamReport);
+        }
+
+        // POST: Reports/ReportDelete/5
+        [HttpPost, ActionName("ReportDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReportDeleteConfirmed(Guid id)
+        {
+            TeamReport teamReport = db.TeamReports.Find(id);
+            db.TeamReports.Remove(teamReport);
+            db.SaveChanges();
+            return RedirectToAction("Reports");
         }
         #endregion
 
