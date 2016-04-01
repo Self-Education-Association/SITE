@@ -259,7 +259,15 @@ namespace Web.Controllers
             if (user.TeamRecord != null && user.TeamRecord.Status != TeamMemberStatus.Admin)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (user.Project == null)
+            {
+                var data = db.IndustryList.ToList();
+                if (data.Count() == 0)
+                {
+                    data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
+                }
+                ViewBag.Industry = new SelectList(data, "IndustryName", "IndustryName");
                 return View(new Project());
+            }
             if (user.Project.Status == ProjectStatus.Denied)
             {
                 TempData["DeniedInfo"] = "项目未通过,请重新申请。";
