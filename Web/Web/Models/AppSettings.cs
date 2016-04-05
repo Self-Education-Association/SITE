@@ -5,12 +5,14 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Xml;
+using System.Configuration;
+using System.Web.Configuration;
 
 namespace Web.Models
 {
     public class AppSettings
     {
-        UrlHelper url = new UrlHelper();
+        public Configuration config = WebConfigurationManager.OpenWebConfiguration("~");
         public bool Installed
         {
             get
@@ -63,7 +65,7 @@ namespace Web.Models
         {
             get
             {
-                return ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                return config.ConnectionStrings.ConnectionStrings["DefaultConnection"].ConnectionString;
             }
         }
 
@@ -75,7 +77,7 @@ namespace Web.Models
                 key = supressKey;
             }
 
-            var node = ConfigurationManager.AppSettings[key];
+            var node = config.AppSettings.Settings[key].Value;
             return !string.IsNullOrEmpty(node) ? parseFunc(node) : defaultTValueFunc();
         }
 
@@ -86,13 +88,8 @@ namespace Web.Models
                 key = supressKey;
             }
 
-            ConfigurationManager.AppSettings.Set(key, value.ToString());
-            Refresh();
-        }
-
-        private void Refresh()
-        {
-            ConfigurationManager.RefreshSection("appSettings");
+            config.AppSettings.Settings[key].Value = value.ToString();
+            config.Save();
         }
     }
 }

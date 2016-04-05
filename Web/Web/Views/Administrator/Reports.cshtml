@@ -29,7 +29,13 @@
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        @Html.DisplayNameFor(model => model.Team.Name)
+                    </th>
+                    <th>
+                        报告文件
+                    </th>
+                    <th>
+                        上传时间
                     </th>
                     <th></th>
                 </tr>
@@ -37,6 +43,12 @@
                 @foreach (var item in Model)
                 {
                     <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Team.Name)
+                        </td>
+                        <td>
+                            <a href="@Url.Content(item.ReportFile.GetUrl())">下载</a>
+                        </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
