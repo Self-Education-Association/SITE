@@ -764,7 +764,6 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\部署.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />

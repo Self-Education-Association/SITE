@@ -48,7 +48,7 @@ namespace Web.Controllers
 
         public ActionResult Index(ManageMessageId? message)
         {
-            ViewBag.StatusMessage =
+            TempData["Alert"] =
                 message == ManageMessageId.Error ? "出现错误。"
                 : message == ManageMessageId.AddEducationSuccess ? "已添加你的一条教育经历。"
                 : message == ManageMessageId.AddWorkSuccess ? "已添加一条你的工作经历。"
@@ -61,11 +61,11 @@ namespace Web.Controllers
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
                 : "";
 
-            var userId = User.Identity.GetUserId();
+            /*var user = Extensions.GetContextUser(ref db);
             var model = new ManageIndexViewModel
             {
-            };
-            return View(model);
+            };*/
+            return View();
         }
 
         #region 个人履历模块

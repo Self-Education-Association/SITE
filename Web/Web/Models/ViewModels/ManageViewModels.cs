@@ -9,6 +9,8 @@ namespace Web.Models
     public class ManageIndexViewModel
     {
         public bool HasIdentited { get; set; }
+
+        public List<Message> NewMessage { get; set; }
     }
 
     public class ManageLoginsViewModel
