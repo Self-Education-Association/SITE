@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201603281620342_UpdateModels.Designer.cs">
       <DependentUpon>201603281620342_UpdateModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604051252094_UpdateTeamModels.cs" />
+    <Compile Include="Migrations\201604051252094_UpdateTeamModels.Designer.cs">
+      <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -253,7 +257,7 @@
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\ProjectModels.cs" />
     <Compile Include="Models\RoomModels.cs" />
-    <Compile Include="Models\TeamEvent.cs" />
+    <Compile Include="Models\TeamManageModels.cs" />
     <Compile Include="Models\TutorInformation.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
@@ -894,6 +898,7 @@
     <Content Include="Views\TeamEvents\_EventsPartial.cshtml" />
     <Content Include="Views\Home\ActivitiesByMonth.cshtml" />
     <Content Include="Views\Manage\TeamEdit.cshtml" />
+    <Content Include="Views\Administrator\NewReportRound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -932,6 +937,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603281620342_UpdateModels.resx">
       <DependentUpon>201603281620342_UpdateModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604051252094_UpdateTeamModels.resx">
+      <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

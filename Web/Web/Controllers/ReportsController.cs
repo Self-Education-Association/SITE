@@ -50,6 +50,19 @@ namespace Web.Controllers
                 return new HttpStatusCodeResult(403);
             }
 
+            var round = new TeamReportRound();
+            if (!round.Enabled)
+            {
+                TempData["Alert"] = string.Format("现在不在上传时间之内，【{2}】的允许上传时间时间为{0}-{1}", round.StartTime, round.EndTime, round.Name);
+                return RedirectToAction("Index", "Manage");
+            }
+
+            if (Extensions.GetContextUser(ref db).TeamRecord.Team.ReportUpdated == true)
+            {
+                TempData["Alert"] = string.Format("【{0}】你已经上传过团队报告！", round.Name);
+                return RedirectToAction("Index", "Manage");
+            }
+
             return View();
         }
 
@@ -78,6 +91,7 @@ namespace Web.Controllers
                     }
                     teamReport.Id = Guid.NewGuid();
                     teamReport.ReportFile = report;
+                    teamReport.Team = team;
                     db.TeamReports.Add(teamReport);
                     db.SaveChanges();
                     TempData["Alert"] = "上传成功！";
@@ -93,6 +107,7 @@ namespace Web.Controllers
             ViewBag.Alert = "请检查各选项，并确保上传了正确的文件。";
             return View(teamReport);
         }
+
 
         /*
 // GET: Reports/Edit/5

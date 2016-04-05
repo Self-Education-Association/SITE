@@ -23,6 +23,42 @@ namespace Web.Models
             }
         }
 
+        public DateTime ReportStartTime
+        {
+            get
+            {
+                return GetValue(DateTime.Parse, () => DateTime.MinValue);
+            }
+            set
+            {
+                SetValue(value);
+            }
+        }
+
+        public DateTime ReportEndTime
+        {
+            get
+            {
+                return GetValue(DateTime.Parse, () => DateTime.MaxValue);
+            }
+            set
+            {
+                SetValue(value);
+            }
+        }
+
+        public string ReportRoundName
+        {
+            get
+            {
+                return GetValue(x => x, () => string.Empty);
+            }
+            set
+            {
+                SetValue(value);
+            }
+        }
+
         public string DefaultConnection
         {
             get

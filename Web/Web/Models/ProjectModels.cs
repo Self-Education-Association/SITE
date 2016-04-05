@@ -134,6 +134,9 @@ namespace Web.Models
         [Display(Name = "团队报告")]
         public virtual List<TeamReport> Reports { get; set; }
 
+        [Display(Name = "报告状态")]
+        public bool ReportUpdated { get; set; }
+
         public void NewTeam(ref Project project)
         {
             Id = Guid.NewGuid();
@@ -142,7 +145,8 @@ namespace Web.Models
             Time = DateTime.Now;
             Introduction = "此处的信息将作为团队的对外介绍。";
             Announcement = "此处的信息将作为团队的内部公告";
-            Searchable = project.Privacy;
+            Searchable = true;
+            ReportUpdated = false;
             project.Team = this;
             var db = new BaseDbContext();
             var TeamRecord = new TeamRecord(this, TeamMemberStatus.Admin, Extensions.GetContextUser(ref db));

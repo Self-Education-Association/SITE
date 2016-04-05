@@ -1,0 +1,91 @@
+﻿@model Web.Models.TeamReportRound
+
+@{
+    ViewBag.Title = "新建团队报告场次";
+}
+
+@Scripts.Render("~/bundles/timepickerscripts")
+@Styles.Render("~/bundles/timepickerstyles")
+<script type="text/javascript">
+    $(function () {
+        $(".ui_timepicker").datetimepicker({
+            //showOn: "button",
+            //buttonImage: "./css/images/icon_calendar.gif",
+            //buttonImageOnly: true,
+            showSecond: true,
+            timeFormat: 'HH:mm:ss',
+            dateFormat: 'yy/mm/dd',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        })
+    })
+</script>
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">管理员 | @ViewBag.Title </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @ViewData["ErrorInfo"]
+        </b>
+        <div class="col-xs-2">
+            @Html.Partial("_AdminMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <h4>@ViewBag.Title</h4>
+            <hr />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">开始时间<b style="font-size:8px;line-height:1;">(yyyy/mm/dd hh:mm:ss)</b></label>
+                        <!--@Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })-->
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
+                            @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">结束时间<b style="font-size:8px;line-height:1;">(yyyy/mm/dd hh:mm:ss)</b></label>
+                        <!--@Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })-->
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
+                            @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
+                </div>
+            }
+            <div>
+                @Html.ActionLink("返回列表", "Activities")
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

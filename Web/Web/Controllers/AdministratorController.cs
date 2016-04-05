@@ -598,6 +598,40 @@ namespace Web.Controllers
             return View(db.TeamReports.ToList());
         }
 
+        public ActionResult NewReportRound()
+        {
+            TempData["Alert"] = "请注意，新建团队报告上传场次之后，所有团队的上传状态都将被清零，重新计算！";
+            return View(new TeamReportRound());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewReportRound(TeamReportRound round)
+        {
+            if (ModelState.IsValid)
+            {
+                if (round.StartTime >= round.EndTime || round.EndTime <= DateTime.Now)
+                {
+                    TempData["Alert"] = "请检查时间输入是否有误！";
+                    return View(round);
+                }
+                var appSettings = new AppSettings();
+                appSettings.ReportRoundName = round.Name;
+                appSettings.ReportStartTime = round.StartTime;
+                appSettings.ReportEndTime = round.EndTime;
+
+                foreach (var team in db.Teams)
+                {
+                    team.ReportUpdated = false;
+                }
+                db.SaveChanges();
+                TempData["Alert"] = string.Format("新建场次【{0}】成功，允许上传时间为{1}-{2}！", round.Name, round.StartTime, round.EndTime);
+                return RedirectToAction("Reports");
+            }
+
+            return View(round);
+        }
+
         // GET: Reports/Details/5
         public ActionResult ReportDetails(Guid? id)
         {
