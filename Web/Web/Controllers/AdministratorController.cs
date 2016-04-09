@@ -671,6 +671,46 @@ namespace Web.Controllers
             db.SaveChanges();
             return RedirectToAction("Reports");
         }
+
+        public ActionResult DownloadReports()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DownloadReports(string round)
+        {
+            string tempPath = HttpContext.Server.MapPath("~/") + @"Temp/" + Extensions.GetCurrentUser().UserName + @"/" + DateTime.Now.ToString("yyyyMMddHHmmss") + @"/";
+            string zipName = tempPath + round + "Reports.zip";
+            if (string.IsNullOrWhiteSpace(round))
+            {
+                var collection = db.TeamReports.ToList();
+                if (collection == null || collection.Count() == 0)
+                {
+                    TempData["Alert"] = "未找到任何报告记录！";
+                    return View();
+                }
+                foreach (var item in collection)
+                {
+                    System.IO.File.Copy(item.ReportFile.GetPath(), tempPath + item.Round + @"/" + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
+                }
+            }
+            else
+            {
+                var collection = db.TeamReports.Where(t => t.Round == round).ToList();
+                if (collection == null || collection.Count() == 0)
+                {
+                    TempData["Alert"] = "未找到该场次的任何报告记录，请检查场次名称是否正确！";
+                    return View();
+                }
+                foreach (var item in collection)
+                {
+                    System.IO.File.Copy(item.ReportFile.GetPath(), tempPath + round + "-" + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
+                }
+            }
+            ZipHelper.CreateZip(tempPath, zipName);
+            return File(zipName, "application/x-zip-compressed", Path.GetFileName(zipName));
+        }
         #endregion
 
         #region 释放资源模块
