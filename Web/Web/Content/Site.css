@@ -423,3 +423,33 @@ li a{
 li a:hover{
     color:antiquewhite;
 }
+.msgli{
+    margin-bottom: 10px;
+    background-color: #fff;
+    min-height: 50px;
+    padding: 20px 0;
+    box-shadow: 0 1px 1px 1px rgba(0,0,0,.1);
+    border: 1px solid #b8c0cc\9;
+    position: relative;
+    list-style:none;
+}
+.msghead{
+    padding: 0px 15px;
+    font-weight: 600;
+    color: #222;
+    display: inline-block;
+    word-wrap: break-word;
+}
+.msgtime{
+    font-weight: 400;
+    color: #b8c0cc;
+    font-size: 12px;
+    line-height: 22px;
+    margin-left: 10px;
+}
+.msgcontent{
+    font-weight: 400;
+    color: #6d757a;
+    padding:  0px 15px;
+    word-wrap: break-word;
+}
