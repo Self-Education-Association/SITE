@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "主页";
 }
-
 <section class="sec2">
     <div class="cover">
     </div>
@@ -24,8 +23,70 @@
             <hr />
             <!--以下为模板内容-->
             <p>
-                @Html.ActionLink("新建", "Create")
+                @Html.ActionLink("添加", "Create")
             </p>
+            <ul class="timeline">
+                <!--li><div class="tldate">Apr 2014</div></li-->
+                <!--在左边的一行 class用timeline-->
+                <li>
+                    <div class="tl-circ"></div>
+                    <!--以上是那个蓝色圆点-->
+                    <div class="timeline-panel">
+                        <div class="tl-heading">
+                            <h4>这里是标题</h4>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i>这里是时间</small></p>
+                        </div>
+                        <div class="tl-body">
+                            <p>这里有内容。</p>
+                        </div>
+                    </div>
+                    <!--以上是板块内容-->
+                </li>
+                <!--左边结束-->
+                <!--在右边的一行 class用timeline-inverted-->
+                <li class="timeline-inverted">
+                    <div class="tl-circ"></div>
+                    <div class="timeline-panel">
+                        <div class="tl-heading">
+                            <h4>Breaking into Spring!</h4>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 4/07/2014</small></p>
+                        </div>
+                        <div class="tl-body">
+                            <p>Hope the weather gets a bit nicer...</p>
+
+                            <p>Y'know, with more sunlight.</p>
+                        </div>
+                    </div>
+                </li>
+                <!--右边结束-->
+                <li>
+                    <div class="tl-circ"></div>
+                    <div class="timeline-panel">
+                        <div class="tl-heading">
+                            <h4>Surprising Headline Right Here</h4>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 3 hours ago</small></p>
+                        </div>
+                        <div class="tl-body">
+                            <p>Lorem Ipsum and such.</p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="timeline-inverted">
+                    <div class="tl-circ"></div>
+                    <div class="timeline-panel">
+                        <div class="tl-heading">
+                            <h4>Breaking into Spring!</h4>
+                            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> 4/07/2014</small></p>
+                        </div>
+                        <div class="tl-body">
+                            <p>Hope the weather gets a bit nicer...</p>
+
+                            <p>Y'know, with more sunlight.</p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <table class="table table-striped">
                 <tr>
                     <th>
