@@ -307,6 +307,13 @@ namespace Web.Controllers
                 {
                     TempData["Alert"] = "请上传格式为jpg, jpeg，png的图片";
                     model.Avatar = null;
+                    var data = db.IndustryList.ToList();
+                    if (data.Count() == 0)
+                    {
+                        data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
+                    }
+                    ViewBag.Industry = new SelectList(data, "IndustryName", "IndustryName");
+                    ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
                     return View(model);
                 }
                 if (model.Avatar == null)
