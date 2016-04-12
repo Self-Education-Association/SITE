@@ -113,12 +113,13 @@ namespace Web.Controllers
         // 详细信息，请参阅 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EventName,EventContent,EventTime")] TeamEvent teamEvent)
+        public ActionResult Edit([Bind(Include = "EventName,EventContent,EventTime,Id")] TeamEvent teamEvent)
         {
             if (IsTeamAdmin())
             {
                 if (ModelState.IsValid)
                 {
+                    db.TeamEvents.Attach(teamEvent);
                     db.Entry(teamEvent).State = EntityState.Modified;
                     db.SaveChanges();
                     TempData["Alert"] = "修改成功！";
