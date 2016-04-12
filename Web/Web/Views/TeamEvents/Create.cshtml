@@ -4,6 +4,23 @@
     ViewBag.Title = "创建";
 }
 
+@Scripts.Render("~/bundles/timepickerscripts")
+@Styles.Render("~/bundles/timepickerstyles")
+<script type="text/javascript">
+    $(function () {
+        $(".ui_timepicker").datetimepicker({
+            //showOn: "button",
+            //buttonImage: "./css/images/icon_calendar.gif",
+            //buttonImageOnly: true,
+            showSecond: true,
+            timeFormat: 'HH:mm:ss',
+            dateFormat: 'yy/mm/dd',
+            stepHour: 1,
+            stepMinute: 1,
+            stepSecond: 1
+        })
+    })
+</script>
 <section class="sec2">
     <div class="cover">
     </div>
@@ -51,7 +68,7 @@
             <div class="form-group">
                 <label class="control-label col-xs-2">事项时间</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.EventTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.EventTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
                     @Html.ValidationMessageFor(model => model.EventTime, "", new { @class = "text-danger" })
                 </div>
             </div>

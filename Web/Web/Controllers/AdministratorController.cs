@@ -528,6 +528,7 @@ namespace Web.Controllers
                 Team team = new Team();
                 team.NewTeam(ref project);
                 db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Admin, project.Admin));
+                db.TeamEvents.Add(new TeamEvent { Id = Guid.NewGuid(), AddTime = DateTime.Now, EventTime = DateTime.Now, EventContent = "通过管理员审批，在本网站上开始招募团队。", EventName = "创建团队", Team = team });
             }
             else
             {

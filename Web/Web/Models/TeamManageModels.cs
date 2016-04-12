@@ -16,7 +16,6 @@ namespace Web.Models
 
         public string EventContent { get; set; }
 
-        [Column(TypeName ="Date")]
         public DateTime EventTime { get; set; }
 
         public DateTime AddTime { get; set; } = DateTime.Now;
