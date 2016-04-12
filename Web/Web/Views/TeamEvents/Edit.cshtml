@@ -8,7 +8,7 @@
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">团队事项 | 编辑 </b>
+        <b class="secheader">团队事项 | @ViewBag.Title </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -28,7 +28,7 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-                    <h4>TeamEvent</h4>
+                    
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.Id)
