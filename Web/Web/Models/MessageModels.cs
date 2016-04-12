@@ -91,6 +91,11 @@ namespace Web.Models
         [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
+        public Message()
+        {
+
+        }
+
         public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();

@@ -46,6 +46,8 @@ namespace Web.Models
 
         public virtual List<ActivityRecord> Activity { get; set; }
 
+        public virtual List<Message> Messages { get; set; }
+
         [Display(Name = "实名认证")]
         public bool Identitied { get; set; } //是否通过实名认证
 

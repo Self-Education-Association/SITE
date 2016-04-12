@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201604051252094_UpdateTeamModels.Designer.cs">
       <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604120547383_AddMessagesProperty.cs" />
+    <Compile Include="Migrations\201604120547383_AddMessagesProperty.Designer.cs">
+      <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -946,6 +950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604051252094_UpdateTeamModels.resx">
       <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604120547383_AddMessagesProperty.resx">
+      <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

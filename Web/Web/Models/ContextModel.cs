@@ -42,6 +42,7 @@ namespace Web.Models
             modelBuilder.Entity<TeamEvent>().HasRequired(t => t.Team).WithMany(t => t.Events);
             modelBuilder.Entity<TeamReport>().HasRequired(t => t.Team).WithMany(t => t.Reports);
             modelBuilder.Entity<TeamReport>().HasRequired(t => t.ReportFile);
+            modelBuilder.Entity<Message>().HasRequired(m => m.Receiver).WithMany(u => u.Messages);
         }
 
         public static BaseDbContext Create()

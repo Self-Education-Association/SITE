@@ -61,11 +61,12 @@ namespace Web.Controllers
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
                 : "";
 
-            /*var user = Extensions.GetContextUser(ref db);
+            var user = Extensions.GetContextUser(ref db);
             var model = new ManageIndexViewModel
             {
-            };*/
-            return View();
+                NewMessage = user.Messages.Where(m => m.Time >= DateTime.Now.AddMonths(-3)).OrderByDescending(m => m.Time).ToList()
+            };
+            return View(model);
         }
 
         #region 个人履历模块
@@ -466,7 +467,7 @@ namespace Web.Controllers
                 var team = teamRecord.Team;
                 if (team.Member.Count == 1)
                 {
-                    if (TempData["isConfirmed"].ToString() != "true")
+                    if (TempData["isConfirmed"] == null || TempData["isConfirmed"].ToString() != "1")
                     {
                         TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！请确定是否想要进行该操作?";
                         TempData["isConfirmed"] = "1";
