@@ -675,6 +675,12 @@ namespace Web.Controllers
 
         public ActionResult DownloadReports()
         {
+            var data = db.TeamReports.DistinctBy(t => t.Round);
+
+            var i = new SelectList(data, "Round", "Round").ToList();
+            i.Add(new SelectListItem { Text = "全部报告", Value = "" });
+            ViewBag.List = i;
+
             return View();
         }
 
@@ -711,6 +717,11 @@ namespace Web.Controllers
                 }
                 foreach (var item in collection)
                 {
+                    string destFileName = tempPath;
+                    if (!Directory.Exists(destFileName))
+                    {
+                        Directory.CreateDirectory(destFileName);
+                    }
                     System.IO.File.Copy(item.ReportFile.GetPath(), tempPath + round + "-" + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
                 }
             }
