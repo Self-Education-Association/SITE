@@ -681,8 +681,8 @@ namespace Web.Controllers
         [HttpPost]
         public ActionResult DownloadReports(string round)
         {
-            string tempPath = HttpContext.Server.MapPath("~/") + @"Temp/" + Extensions.GetCurrentUser().UserName + @"/" + DateTime.Now.ToString("yyyyMMddHHmmss") + @"/";
-            string zipName = tempPath + round + "Reports.zip";
+            string tempPath = HttpContext.Server.MapPath("~/") + @"Temp\" + Extensions.GetCurrentUser().UserName + @"\" + DateTime.Now.ToString("yyyyMMddHHmmss") + @"\";
+            string zipName = HttpContext.Server.MapPath("~/") + @"Temp\" + Extensions.GetCurrentUser().UserName + @"\" + round + "Reports.zip";
             if (string.IsNullOrWhiteSpace(round))
             {
                 var collection = db.TeamReports.ToList();
@@ -693,7 +693,12 @@ namespace Web.Controllers
                 }
                 foreach (var item in collection)
                 {
-                    System.IO.File.Copy(item.ReportFile.GetPath(), tempPath + item.Round + @"/" + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
+                    string destFileName = tempPath + item.Round + @"\";
+                    if (!Directory.Exists(destFileName))
+                    {
+                        Directory.CreateDirectory(destFileName);
+                    }
+                    System.IO.File.Copy(item.ReportFile.GetPath(), destFileName + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
                 }
             }
             else

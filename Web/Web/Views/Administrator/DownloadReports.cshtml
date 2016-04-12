@@ -1,0 +1,41 @@
+﻿@model IEnumerable<Web.Models.TeamReport>
+
+@{
+    ViewBag.Title = "主页";
+}
+
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">团队报告 | 主页 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <div class="col-xs-2">
+            @Html.Partial("_AdminMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            @using (Html.BeginForm("DownloadReports", "Administrator", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>添加文章</h4>
+                    <hr />
+                    <input type="text" name="round" />
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Create" class="btn btn-default" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>

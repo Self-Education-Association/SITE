@@ -92,10 +92,12 @@ namespace Web.Controllers
                     teamReport.Id = Guid.NewGuid();
                     teamReport.ReportFile = report;
                     teamReport.Team = team;
+                    teamReport.Round = new TeamReportRound().Name;
                     db.TeamReports.Add(teamReport);
+                    team.ReportUpdated = true;
                     db.SaveChanges();
                     TempData["Alert"] = "上传成功！";
-                    return RedirectToAction("Index", "Manage");
+                    return View();
                 }
                 else
                 {

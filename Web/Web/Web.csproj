@@ -253,6 +253,10 @@
     <Compile Include="Migrations\201604120547383_AddMessagesProperty.Designer.cs">
       <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604120847159_UpdateTeamEventModel.cs" />
+    <Compile Include="Migrations\201604120847159_UpdateTeamEventModel.Designer.cs">
+      <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -908,6 +912,7 @@
     <Content Include="Views\Home\ActivitiesByMonth.cshtml" />
     <Content Include="Views\Manage\TeamEdit.cshtml" />
     <Content Include="Views\Administrator\NewReportRound.cshtml" />
+    <Content Include="Views\Administrator\DownloadReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -953,6 +958,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604120547383_AddMessagesProperty.resx">
       <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604120847159_UpdateTeamEventModel.resx">
+      <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
