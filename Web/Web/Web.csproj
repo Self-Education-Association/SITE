@@ -913,6 +913,7 @@
     <Content Include="Views\Manage\TeamEdit.cshtml" />
     <Content Include="Views\Administrator\NewReportRound.cshtml" />
     <Content Include="Views\Administrator\DownloadReports.cshtml" />
+    <Content Include="Views\Home\Mooc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
