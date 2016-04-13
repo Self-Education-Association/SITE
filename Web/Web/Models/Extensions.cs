@@ -50,7 +50,7 @@ namespace Web.Models
             return HttpContext.Current.User.Identity.GetUserId();
         }
 
-        public static string ReplaceHtmlTag(string html="", int length = 0)
+        public static string ReplaceHtmlTag(string html = "", int length = 0)
         {
             string strText = System.Text.RegularExpressions.Regex.Replace(html, "<[^>]+>", "");
 
@@ -101,7 +101,7 @@ namespace Web.Models
     /// 用于分页的分页List,继承自List
     /// </summary>
     /// <typeparam name="T">泛型参数T,必须实现IListPage接口</typeparam>
-    public class ListPage<T> : List<T> where T : class, IListPage
+    public class ListPage<T> : List<T>, IEnumerable<T> where T : class, IListPage
     {
         /// <summary>
         /// 页面索引值

@@ -66,7 +66,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2">开始时间<b style="font-size:8px;line-height:1;">(yyyy/mm/dd hh:mm:ss)</b></label>
+                        <label class="control-label col-md-2">开始时间</label>
                         <!--@Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })-->
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label col-md-2">结束时间<b style="font-size:8px;line-height:1;">(yyyy/mm/dd hh:mm:ss)</b></label>
+                        <label class="control-label col-md-2">结束时间</label>
                        <!--@Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })--> 
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "ui_timepicker form-control" } })
@@ -95,7 +95,7 @@
 
 
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="创建" class="btn btn-default" />
                     </div>
                 </div>
             }

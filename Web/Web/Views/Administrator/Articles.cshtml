@@ -1,6 +1,7 @@
-﻿@model IEnumerable<Web.Models.Article>
+﻿@model Web.Models.ListPage<Web.Models.Article>
 @{
     ViewBag.Title = "文章列表";
+    int index = Model.PageIndex + 1;
 }
 <style>
     .nav-pills > li > a {
@@ -69,22 +70,43 @@
             <p>
                 @Html.ActionLink("添加文章", "ArticleCreate")
             </p>
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "Articles", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "Articles", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Class)
+                        文章类型
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Title)
+                        文章标题
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Content)
+                        文章摘要
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Status)
+                        文章状态
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        时间
                     </th>
                     <th></th>
                 </tr>

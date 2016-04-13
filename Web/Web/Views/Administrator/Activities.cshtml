@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web.Models.ActivityOperation>
+﻿@model Web.Models.ListPage<Web.Models.ActivityOperation>
 
 @{
     ViewBag.Title = "活动列表";
+    int index = Model.PageIndex + 1;
 }
 <section class="sec2">
     <div class="cover">
@@ -24,31 +25,49 @@
             <p>
                 @Html.ActionLink("添加活动", "ActivityCreate")
             </p>
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "Activities", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "Activities", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Count)
+                        活动名称
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Limit)
+                        报名人数
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        人数上限
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        开始时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.StartTime)
+                        结束时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.EndTime)
+                        活动摘要
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ShortContent)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Enabled)
+                        启用中
                     </th>
                     <th></th>
                 </tr>
@@ -57,16 +76,13 @@
             {
                     <tr>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Count)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Limit)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.StartTime)

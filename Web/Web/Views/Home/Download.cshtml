@@ -74,7 +74,7 @@
                         @Html.DisplayFor(modelItem => item.Time)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Type)
+                        @Web.Models.EnumExtension.GetEnumCustomDescription(item.Type)
                     </td>
                 </tr>
             }

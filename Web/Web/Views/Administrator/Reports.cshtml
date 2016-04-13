@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web.Models.TeamReport>
+﻿@model Web.Models.ListPage<Web.Models.TeamReport>
 
 @{
     ViewBag.Title = "团队报告";
+    int index = Model.PageIndex;
 }
 
 <section class="sec2">
@@ -26,10 +27,31 @@
             <p>
                 @Html.ActionLink("新建团队报告场次", "NewReportRound")
             </p>
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "Reports", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "Reports", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Team.Name)
+                        团队名称
                     </th>
                     <th>
                         报告文件

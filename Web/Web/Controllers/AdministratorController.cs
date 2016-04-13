@@ -76,9 +76,9 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult ArticleCreate(Article model)
         {
+            var s = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
-                var s = new HtmlSanitizer();
                 model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
                 var file = Request.Files[0];
                 if (Request.Files.Count >= 1 && file.FileName != "")
@@ -112,6 +112,7 @@ namespace Web.Controllers
                 return RedirectToAction("Articles");
             }
 
+            model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
             ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
             return View();
@@ -135,10 +136,10 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult ArticleEdit(Article model)
         {
+            var s = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
-                var s = new HtmlSanitizer();
-                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
                 db.Articles.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
@@ -146,9 +147,10 @@ namespace Web.Controllers
                 return RedirectToAction("Articles");
             }
 
+            model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
             ViewData["StatusList"] = EnumExtension.GetSelectList(typeof(ArticleStatus));
             ViewData["ClassList"] = EnumExtension.GetSelectList(typeof(ArticleClass));
-            return View();
+            return View(model);
         }
 
         public ActionResult ArticleDelete(Guid? Id)
@@ -182,21 +184,24 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult ActivityCreate(ActivityOperation model)
         {
+            var s = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
                 if (model.StartTime > model.EndTime)
                 {
                     ViewData["Alert"] = "活动开始时间必须在结束时间之前。";
-                    return View();
+                    model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
+                    return View(model);
                 }
-                var s = new HtmlSanitizer();
-                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
+                model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
                 model.NewActivity(db);
                 db.ActivityOperations.Add(model);
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
-            return View();
+
+            model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
+            return View(model);
         }
 
         public ActionResult ActivityEdit(Guid? id)
@@ -215,16 +220,18 @@ namespace Web.Controllers
         [ValidateInput(false)]
         public ActionResult ActivityEdit(ActivityOperation model)
         {
+            var s = new HtmlSanitizer();
             if (ModelState.IsValid)
             {
-                var s = new HtmlSanitizer();
                 model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"])); ;
                 db.ActivityOperations.Attach(model);
                 db.Entry(model).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index", new { status = AdminOperationStatus.Success });
             }
-            return View();
+
+            model.Content = Server.HtmlDecode(s.Sanitize(Request.Params["ck"]));
+            return View(model);
         }
 
         public ActionResult ActivityDelete(Guid? id)
@@ -589,6 +596,146 @@ namespace Web.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("CompanyIdentityRecords");
+        }
+        #endregion
+
+        #region 项目团队管理模块
+        // GET: Reports
+        public ActionResult Reports(int page = 0)
+        {
+            int pageindex = 20;
+
+            return View(new ListPage<TeamReport>(db.TeamReports, page, pageindex));
+        }
+
+        public ActionResult NewReportRound()
+        {
+            TempData["Alert"] = "请注意，新建团队报告上传场次之后，所有团队的上传状态都将被清零，重新计算！";
+            return View(new TeamReportRound());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult NewReportRound(TeamReportRound round)
+        {
+            if (ModelState.IsValid)
+            {
+                if (round.StartTime >= round.EndTime || round.EndTime <= DateTime.Now)
+                {
+                    TempData["Alert"] = "请检查时间输入是否有误！";
+                    return View(round);
+                }
+                var appSettings = new AppSettings();
+                appSettings.ReportRoundName = round.Name;
+                appSettings.ReportStartTime = round.StartTime;
+                appSettings.ReportEndTime = round.EndTime;
+
+                foreach (var team in db.Teams)
+                {
+                    team.ReportUpdated = false;
+                }
+                db.SaveChanges();
+                TempData["Alert"] = string.Format("新建场次【{0}】成功，允许上传时间为{1}-{2}！", round.Name, round.StartTime, round.EndTime);
+                return RedirectToAction("Reports");
+            }
+
+            return View(round);
+        }
+
+        // GET: Reports/Details/5
+        public ActionResult ReportDetails(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeamReport teamReport = db.TeamReports.Find(id);
+            if (teamReport == null)
+            {
+                return HttpNotFound();
+            }
+            return View(teamReport);
+        }
+        // GET: Reports/Delete/5
+        public ActionResult ReportDelete(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            TeamReport teamReport = db.TeamReports.Find(id);
+            if (teamReport == null)
+            {
+                return HttpNotFound();
+            }
+            return View(teamReport);
+        }
+
+        // POST: Reports/ReportDelete/5
+        [HttpPost, ActionName("ReportDelete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReportDeleteConfirmed(Guid id)
+        {
+            TeamReport teamReport = db.TeamReports.Find(id);
+            db.TeamReports.Remove(teamReport);
+            db.SaveChanges();
+            return RedirectToAction("Reports");
+        }
+
+        public ActionResult DownloadReports()
+        {
+            var data = db.TeamReports.DistinctBy(t => t.Round);
+
+            var i = new SelectList(data, "Round", "Round").ToList();
+            i.Add(new SelectListItem { Text = "全部报告", Value = "" });
+            ViewBag.List = i;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult DownloadReports(string round)
+        {
+            string tempPath = HttpContext.Server.MapPath("~/") + @"Temp\" + Extensions.GetCurrentUser().UserName + @"\" + DateTime.Now.ToString("yyyyMMddHHmmss") + @"\";
+            string zipName = HttpContext.Server.MapPath("~/") + @"Temp\" + Extensions.GetCurrentUser().UserName + @"\" + round + "Reports.zip";
+            if (string.IsNullOrWhiteSpace(round))
+            {
+                var collection = db.TeamReports.ToList();
+                if (collection == null || collection.Count() == 0)
+                {
+                    TempData["Alert"] = "未找到任何报告记录！";
+                    return View();
+                }
+                foreach (var item in collection)
+                {
+                    string destFileName = tempPath + item.Round + @"\";
+                    if (!Directory.Exists(destFileName))
+                    {
+                        Directory.CreateDirectory(destFileName);
+                    }
+                    System.IO.File.Copy(item.ReportFile.GetPath(), destFileName + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
+                }
+            }
+            else
+            {
+                var collection = db.TeamReports.Where(t => t.Round == round).ToList();
+                if (collection == null || collection.Count() == 0)
+                {
+                    TempData["Alert"] = "未找到该场次的任何报告记录，请检查场次名称是否正确！";
+                    return View();
+                }
+                foreach (var item in collection)
+                {
+                    string destFileName = tempPath;
+                    if (!Directory.Exists(destFileName))
+                    {
+                        Directory.CreateDirectory(destFileName);
+                    }
+                    System.IO.File.Copy(item.ReportFile.GetPath(), tempPath + round + "-" + item.Team.Name + Path.GetExtension(item.ReportFile.Name));
+                }
+            }
+            ZipHelper.CreateZip(tempPath, zipName);
+            return File(zipName, "application/x-zip-compressed", Path.GetFileName(zipName));
         }
         #endregion
 

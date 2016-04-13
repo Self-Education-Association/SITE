@@ -21,7 +21,7 @@ namespace Web.Models
         public DateTime AddTime { get; set; } = DateTime.Now;
     }
 
-    public class TeamReport
+    public class TeamReport : IListPage
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 

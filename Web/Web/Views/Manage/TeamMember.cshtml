@@ -65,7 +65,7 @@
                             @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
                         </td>
                         <td>
-                            @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn btn-default" })
+                            @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn-sm btn-warning" })
                         </td>
                     </tr>
                 }

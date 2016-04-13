@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web.Models.Material>
+﻿@model Web.Models.ListPage<Web.Models.Material>
 
 @{
     ViewBag.Title = "材料列表";
+    int index = Model.PageIndex + 1;
 }
 
 <section class="sec2">
@@ -25,21 +26,42 @@
             <p>
                 @Html.ActionLink("添加材料", "MaterialCreate")
             </p>
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "Materials", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "Materials", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
             <br />
 
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        文件名称
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Description)
+                        文件描述
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        上传时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Type)
+                        文件类型
                     </th>
                     <th></th>
                 </tr>

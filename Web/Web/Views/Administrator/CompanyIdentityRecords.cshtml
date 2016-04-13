@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web.Models.Company>
+﻿@model Web.Models.ListPage<Web.Models.Company>
 
 @{
     ViewBag.Title = "公司列表";
+    int index = Model.PageIndex + 1;
 }
 
 <section class="sec2">
@@ -22,16 +23,37 @@
         <div class="col-xs-10 board">
             <h4>公司列表</h4>
             <hr />
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "CompanyIdentityRecords", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "CompanyIdentityRecords", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Admin.DisplayName)
+                        管理员名称
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        申请时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Status)
+                        申请状态
                     </th>
                     <th></th>
                 </tr>
