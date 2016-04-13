@@ -92,7 +92,7 @@ namespace Web.Controllers
         public ActionResult VoiceNews(int page = 0)
         {
             int pageSize = 20;
-            var news = from a in db.Articles where a.Class == ArticleClass.News select a;
+            var news = db.Articles.Where(a => a.Status == ArticleStatus.Enabled && a.Class == ArticleClass.News).OrderByDescending(a => a.Time);
             var articles = new ListPage<Article>(news, page, pageSize);
 
             return View(articles);
@@ -101,7 +101,7 @@ namespace Web.Controllers
         public ActionResult VoicePoints(int page = 0)
         {
             int pageSize = 20;
-            var news = from a in db.Articles where a.Class == ArticleClass.Points select a;
+            var news = db.Articles.Where(a => a.Status == ArticleStatus.Enabled && a.Class == ArticleClass.Points).OrderByDescending(a => a.Time);
             var articles = new ListPage<Article>(news, page, pageSize);
 
             return View(articles);
@@ -160,7 +160,7 @@ namespace Web.Controllers
             DateTime end = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
             var data = db.ActivityOperations.Where(a => a.EndTime >= start && a.EndTime <= end).ToList();
             var model = new List<Calendar>();
-            foreach(var item in data)
+            foreach (var item in data)
             {
                 model.Add(new Calendar { Id = item.Id, Name = item.Name, ShortContent = item.ShortContent });
             }
