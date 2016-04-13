@@ -1,7 +1,8 @@
-﻿@model IEnumerable<Web.Models.Team>
+﻿@model Web.Models.ListPage<Web.Models.Team>
 
 @{
     ViewBag.Title = "加入团队";
+    int index = Model.PageIndex + 1;
 }
 
 <section class="sec2">
@@ -30,13 +31,16 @@
             <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        团队名称
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        创立时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Introduction)
+                        团队简介
+                    </th>
+                    <th>
+                        团队人数
                     </th>
                     <th></th>
                 </tr>
@@ -52,6 +56,9 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Introduction)
+                        </td>
+                        <td>
+                            @item.Member.Count()
                         </td>
                         <td>
                             @Html.ActionLink("申请", "DoTeamApply", new { teamId = item.Id })

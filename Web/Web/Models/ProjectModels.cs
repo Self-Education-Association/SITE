@@ -108,7 +108,7 @@ namespace Web.Models
         public string Name { get; set; }
 
         [Display(Name = "管理员")]
-        public User Admin { get; set; }
+        public virtual User Admin { get; set; }
 
         [Display(Name = "创建时间")]
         public DateTime Time { get; set; }

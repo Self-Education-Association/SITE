@@ -49,7 +49,9 @@ namespace Web.Controllers
 
         public ActionResult Index(ManageMessageId? message)
         {
-            TempData["Alert"] =
+            if (message != null)
+            {
+                TempData["Alert"] =
                 message == ManageMessageId.Error ? "出现错误。"
                 : message == ManageMessageId.AddEducationSuccess ? "已添加你的一条教育经历。"
                 : message == ManageMessageId.AddWorkSuccess ? "已添加一条你的工作经历。"
@@ -60,7 +62,9 @@ namespace Web.Controllers
                 : message == ManageMessageId.RecruitSuccess ? "招募请求发送成功，请等待该用户响应。"
                 : message == ManageMessageId.UpdateUserProfileSuccess ? "修改个人信息成功。"
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
+                : message == ManageMessageId.AdminQuit ? "作为团队创始人你无法将自己从团队中删除。\n若要这么做，请删除除你以外的所有团队成员，然后将自己从团队中删除。\n请注意，此时项目及团队将会解散，该操作不可逆转。"
                 : "";
+            }
 
             var user = Extensions.GetContextUser(ref db);
             var model = new ManageIndexViewModel
@@ -441,6 +445,15 @@ namespace Web.Controllers
                 applicant.Project = user.Project;
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, ref db));
+                db.TeamEvents.Add(new TeamEvent
+                {
+                    Id = Guid.NewGuid(),
+                    Team = ApplyRecord.Team,
+                    AddTime = DateTime.Now,
+                    EventTime = DateTime.Now,
+                    EventContent = string.Format("用户{0}加入团队！", applicant.DisplayName),
+                    EventName = "新成员加入团队"
+                });
             }
             else
             {
@@ -491,8 +504,7 @@ namespace Web.Controllers
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
-                TempData["Alert"] = "作为团队创始人你无法将自己从团队中删除。\n若要这么做，请删除除你以外的所有团队成员，然后将自己从团队中删除。\n此时项目及团队将会解散。";
-                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
+                return RedirectToAction("Index", new { message = ManageMessageId.AdminQuit });
             }
             db.TeamRecords.Remove(member.TeamRecord);
             member.TeamRecord = null;
@@ -507,7 +519,9 @@ namespace Web.Controllers
             if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (!IsNotTeamAdmin())
-                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+            {
+                return RedirectToAction("Index", new { message = ManageMessageId.AdminQuit });
+            }
             User member = Extensions.GetContextUser(ref db);
             db.TeamRecords.Remove(member.TeamRecord);
             member.Project = null;
@@ -747,6 +761,7 @@ namespace Web.Controllers
             RecruitSuccess,
             OperationSuccess,
             AcessDenied,
+            AdminQuit,
             Error
         }
 
