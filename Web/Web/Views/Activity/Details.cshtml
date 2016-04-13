@@ -50,6 +50,13 @@
                 <li class="active">活动详情</li>
             </ul>
         </div>
+        <style>
+            dl > dd > p{
+                font-family:"Lato", Helvetica, Arial, sans-serif;
+                font-size:14px;
+                margin-bottom:0;
+            }
+        </style>
         <div class="row" style="padding:0 5%;">
             <dl class="dl-horizontal" style="font-size:14px;">
                 <dt>
@@ -92,9 +99,16 @@
                     @Html.DisplayFor(model => model.EndTime)
                 </dd>
 
+                <dt>
+                    活动描述
+                </dt>
+
+                <dd>
+                    @Html.Raw(Model.Content)
+                </dd>
             </dl>
         </div>
-        @Html.Raw(Model.Content)
+        
         <p>
             @Html.ActionLink("申请", "Apply", new { id = Model.Id }, new { @class = "btn-sm btn-success" }) |
             @Html.ActionLink("退出", "Quit", new { id = Model.Id }, new { @class = "btn-sm btn-danger" }) |
