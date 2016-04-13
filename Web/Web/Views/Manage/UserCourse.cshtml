@@ -59,18 +59,6 @@
         <table class="table table-striped">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Count)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Limit)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Status)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Location)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.CourseOperation.Name)
                 </th>
                 <th>
@@ -95,18 +83,6 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Count)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Limit)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Location)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.CourseOperation.Name)
                     </td>
                     <td>
@@ -125,8 +101,8 @@
                         @Html.DisplayFor(modelItem => item.RemarkRate)
                     </td>
                     <td>
-                        @Html.ActionLink("详情", "Details", "Course", new { id = item.Id }) |
-                        @Html.ActionLink("退课", "Quit", "Course", new { id = item.Id })
+                        @Html.ActionLink("详情", "Details", "Course", new { id = item.CourseOperation.Id }) |
+                        @Html.ActionLink("退课", "Quit", "Course", new { id = item.CourseOperation.Id })
                     </td>
                 </tr>
             }

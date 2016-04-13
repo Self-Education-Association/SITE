@@ -59,13 +59,7 @@
         <table class="table table-striped table-bordered">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.RoomOperation.Usable)
-                </th>
-                <th>
                     @Html.DisplayNameFor(model => model.RoomOperation.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RoomOperation.Time)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.RoomOperation.StartTime)
@@ -89,13 +83,7 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RoomOperation.Usable)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.RoomOperation.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RoomOperation.Time)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.RoomOperation.StartTime)
@@ -113,8 +101,8 @@
                         @Html.DisplayFor(modelItem => item.RemarkRate)
                     </td>
                     <td>
-                        @Html.ActionLink("详情", "Details", "Room", new { id = item.Id }) |
-                        @Html.ActionLink("退选", "Quit", "Room", new { id = item.Id })
+                        @Html.ActionLink("详情", "Details", "Room", new { id = item.RoomOperation.Id }) |
+                        @Html.ActionLink("退选", "Quit", "Room", new { id = item.RoomOperation.Id })
                     </td>
                 </tr>
             }
