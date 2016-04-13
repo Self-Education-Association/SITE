@@ -914,6 +914,7 @@
     <Content Include="Views\Administrator\NewReportRound.cshtml" />
     <Content Include="Views\Administrator\DownloadReports.cshtml" />
     <Content Include="Views\Home\Mooc.cshtml" />
+    <Content Include="Views\Activity\History.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

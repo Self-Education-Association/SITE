@@ -13,11 +13,23 @@ namespace Web.Controllers
     {
         private BaseDbContext db = new BaseDbContext();
 
-        public ActionResult Index(string select)
+        [AllowAnonymous]
+        public ActionResult Index()
         {
-            return View(ActivityOperation.List(select, false));
+            var model = db.ActivityOperations.Where(a => a.EndTime >= DateTime.Now && a.Enabled == true);
+
+            return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult History()
+        {
+            var model = db.ActivityOperations.Where(a => a.EndTime <= DateTime.Now && a.Enabled == true);
+
+            return View(model);
+        }
+
+        [AllowAnonymous]
         public ActionResult Details(Guid? id)
         {
             if (id == null)
