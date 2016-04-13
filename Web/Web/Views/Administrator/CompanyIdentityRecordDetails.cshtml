@@ -33,142 +33,6 @@
                 </dt>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Admin.Identitied)
-                </dt>
-
-                <dt>
-                    @Html.DisplayFor(model => model.Admin.Identitied)
-                </dt>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Admin.UserName)
-                </dt>
-
-                <dt>
-                    @Html.DisplayFor(model => model.Admin.UserName)
-                </dt>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Admin.PhoneNumber)
-                </dt>
-
-                <dt>
-                    @Html.DisplayFor(model => model.Admin.PhoneNumber)
-                </dt>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SourcesOfFunds)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.SourcesOfFunds)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Corporation)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Corporation)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.RegisterSite)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.RegisterSite)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.CodeOfBusinessLicense)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CodeOfBusinessLicense)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MembersCount)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.MembersCount)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.AmountOfMoney)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.AmountOfMoney)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.RecentTurnover)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.RecentTurnover)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.CompanyValuation)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CompanyValuation)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.FinancingAmount)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.FinancingAmount)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.SharesSold)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.SharesSold)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.FinancingTime)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.FinancingTime)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Investment)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Investment)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Note)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Note)
-                </dd>
-
-                <dt>
                     @Html.DisplayNameFor(model => model.Time)
                 </dt>
 
@@ -182,6 +46,14 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Status)
+                </dd>
+
+                <dt>
+                    商业计划书
+                </dt>
+
+                <dd>
+                    <a href=@Url.Content(Model.Plan.GetUrl())>点击下载</a>
                 </dd>
             </dl>
             <p>
