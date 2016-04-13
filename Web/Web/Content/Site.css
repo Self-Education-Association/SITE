@@ -28,15 +28,25 @@ textarea {
     color: white;
 }
 
-.navbar-nav > li > a :hover{
-    color:chartreuse;
-}
 
 
 .navbar-brand {
     color: white;
+    font-family:STSong;
 }
 
+.navbar-brand:hover{
+    color:lightblue;
+}
+
+.lablogo{
+    font-size:24px;
+    font-family:STSong;
+    line-height: 1.042;
+    height: 53px;
+    font-weight: 700;
+    padding: 14px 21px;
+}
 
 
 .a:hover .aa {
@@ -419,12 +429,22 @@ dl.col-xs-4 {
     margin-top:15px;
 }
 
-li a{
-    color:darksalmon;
+.breadcrumb li a{
+    color:#34495e;
+    font-size:14px;
+    font-family:STSong;
+    font-weight:bold;
+}
+
+.breadcrumb li span{
+    color:#34495e;
+    font-size:14px;
+    font-family:STSong;
+    font-weight:bold;
 }
 
 li a:hover{
-    color:antiquewhite;
+    color:#3388e9;
 }
 .msgli{
     margin-bottom: 10px;
@@ -665,4 +685,10 @@ li a:hover{
 
 .col-xs-12 > dl > dd {
     font-size:14px;
+}
+
+.btn-details{
+    background-color:#34495e;
+    color:white;
+    font-weight:bold;
 }
