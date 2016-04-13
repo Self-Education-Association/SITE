@@ -12,6 +12,7 @@ using System.Net;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Migrations;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Web.Controllers
 {
@@ -370,7 +371,7 @@ namespace Web.Controllers
 
         public ActionResult TeamRecruit(int page = 0)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
             var list = new ListPage<User>(db.Users.Where(u => u.Profile.Searchable == true), page, pageSize);
@@ -381,7 +382,7 @@ namespace Web.Controllers
         [ActionName("DoTeamRecruit")]
         public ActionResult TeamRecruit(string userId)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User user = db.Users.Find(userId);
             Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(ref db).Id);
@@ -405,7 +406,7 @@ namespace Web.Controllers
 
         public ActionResult TeamAccess(int page = 0)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             int pageSize = 10;
             var list = new ListPage<User>((from u in db.TeamRecords
@@ -419,7 +420,7 @@ namespace Web.Controllers
         [ActionName("DoTeamAccess")]
         public ActionResult TeamAccess(string userId, bool IsApprove)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User applicant = db.Users.Find(userId);
             Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(ref db).Id);
@@ -452,20 +453,27 @@ namespace Web.Controllers
             Team team = db.Users.Find(Extensions.GetUserId()).TeamRecord.Team;
             if (team == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            var teamMember = team.Member.Where(m => m.Status == TeamMemberStatus.Normal || m.Status == TeamMemberStatus.Admin);
+            List<TeamRecord> teamMember;
+            if (IsNotTeamAdmin())
+            {
+                teamMember = team.Member.Where(m => m.Status == TeamMemberStatus.Normal || m.Status == TeamMemberStatus.Admin).ToList();
+            }
+            else
+            {
+                teamMember = team.Member.ToList();
+            }
 
             return View(teamMember);
         }
         public ActionResult TeamMemberDelete(string id)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            User member = db.Users.Find(id);
-            if (member.TeamRecord.Status == TeamMemberStatus.Admin)
+            var user = Extensions.GetContextUser(ref db);
+            var teamRecord = user.TeamRecord;
+            var team = teamRecord.Team;
+            if (user.TeamRecord.Status == TeamMemberStatus.Admin)
             {
-                var user = Extensions.GetContextUser(ref db);
-                var teamRecord = user.TeamRecord;
-                var team = teamRecord.Team;
                 if (team.Member.Count == 1)
                 {
                     if (TempData["isConfirmed"] == null || TempData["isConfirmed"].ToString() != "1")
@@ -487,8 +495,9 @@ namespace Web.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             }
-            member.Project = null;
-            db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
+            db.TeamRecords.Remove(user.TeamRecord);
+            user.TeamRecord = null;
+            user.Project = null;
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
@@ -498,11 +507,12 @@ namespace Web.Controllers
         {
             if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            if (!IllegalIdentity())
+            if (!IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             User member = Extensions.GetContextUser(ref db);
+            db.TeamRecords.Remove(member.TeamRecord);
             member.Project = null;
-            db.Entry(member.TeamRecord).State = System.Data.Entity.EntityState.Deleted;
+            member.TeamRecord = null;
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });
@@ -519,7 +529,7 @@ namespace Web.Controllers
             {
                 return HttpNotFound();
             }
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
             {
                 TempData["Alert"] = "你没有权限进行此操作！";
                 return RedirectToAction("Index");
@@ -534,7 +544,7 @@ namespace Web.Controllers
         {
             if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.Error });
             Team editTeam = db.Teams.Find(team.Id);
             editTeam.Name = team.Name;
@@ -549,7 +559,7 @@ namespace Web.Controllers
 
         public ActionResult TeamProfile()
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             Team team = Extensions.GetContextUser(ref db).TeamRecord.Team;
             TeamProfileViewModel model = new TeamProfileViewModel
@@ -571,7 +581,7 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (IllegalIdentity())
+                if (IsNotTeamAdmin())
                     return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
                 Team team = db.Teams.First(t => t.Id == Extensions.GetContextUser(ref db).TeamRecord.Team.Id);
                 team.Announcement = model.Announcement;
@@ -586,7 +596,7 @@ namespace Web.Controllers
 
         public ActionResult Company()
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (Extensions.GetContextUser(ref db).TeamRecord.Team.Company != null)
             {
@@ -602,7 +612,7 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Company(Company model)
         {
-            if (IllegalIdentity())
+            if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (ModelState.IsValid)
             {
@@ -702,7 +712,7 @@ namespace Web.Controllers
             }
         }
 
-        public bool IllegalIdentity()
+        public bool IsNotTeamAdmin()
         {
             var user = Extensions.GetContextUser(ref db);
             var teamRecord = user.TeamRecord;
@@ -710,6 +720,18 @@ namespace Web.Controllers
             if (teamRecord == null || project == null)
                 return true;
             if (project.Status != ProjectStatus.Done || teamRecord.Status != TeamMemberStatus.Admin)
+                return true;
+            return false;
+        }
+
+        public bool IsNotTeamMember()
+        {
+            var user = Extensions.GetContextUser(ref db);
+            var teamRecord = user.TeamRecord;
+            var project = user.Project;
+            if (teamRecord == null || project == null)
+                return true;
+            if (project.Status != ProjectStatus.Done || teamRecord.Status != TeamMemberStatus.Normal)
                 return true;
             return false;
         }
