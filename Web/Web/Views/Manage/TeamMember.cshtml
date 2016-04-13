@@ -66,7 +66,7 @@
                         <td>
                             @if (item.Status == Web.Models.TeamMemberStatus.Apply)
                             {
-                                @Html.ActionLink("批准", "TeamAccess", new { userId = item.Receiver.Id, isProve = true }, new { @class = "btn-sm btn-success", @onClick = "clickConfirm()" })
+                                @Html.ActionLink("批准", "TeamAccess", new { userId = item.Receiver.Id, isApprove = true }, new { @class = "btn-sm btn-success", @onClick = "clickConfirm()" })
                             }
                             @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn-sm btn-warning", @onClick = "clickConfirm()" })
                         </td>

@@ -422,7 +422,7 @@ namespace Web.Controllers
         public ActionResult UserDetails(string userId)
         {
             User user = db.Users.Find(userId);
-            if (user == null)
+            if (user == null || user.Profile.Searchable == false)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
 
             return View(user);
@@ -451,7 +451,7 @@ namespace Web.Controllers
                     Team = ApplyRecord.Team,
                     AddTime = DateTime.Now,
                     EventTime = DateTime.Now,
-                    EventContent = string.Format("用户{0}加入团队！", applicant.DisplayName),
+                    EventContent = string.Format("【{0}】加入团队！", applicant.DisplayName),
                     EventName = "新成员加入团队"
                 });
             }
@@ -462,7 +462,7 @@ namespace Web.Controllers
             }
             db.SaveChanges();
 
-            return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });
+            return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
         }
 
         public ActionResult TeamMember()
