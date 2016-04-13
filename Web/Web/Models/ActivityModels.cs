@@ -48,7 +48,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -79,7 +79,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -108,7 +108,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }

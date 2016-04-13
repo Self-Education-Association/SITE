@@ -36,7 +36,7 @@ namespace Web.Models
                         return true;
                     return false;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -81,7 +81,7 @@ namespace Web.Models
                 db.SaveChanges();
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 return false;
             }
@@ -130,7 +130,7 @@ namespace Web.Models
                     var paginatedNews = new ListPage<RoomOperation>(Room, page, pageSize);
                     return paginatedNews;
                 }
-                catch (Exception e)
+                catch
                 {
                     return db.RoomOperations.ToList();
                 }
@@ -154,7 +154,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }
@@ -182,7 +182,7 @@ namespace Web.Models
                     db.SaveChanges();
                     return true;
                 }
-                catch (Exception e)
+                catch
                 {
                     return false;
                 }

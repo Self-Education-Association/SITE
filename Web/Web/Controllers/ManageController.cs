@@ -137,6 +137,27 @@ namespace Web.Controllers
 
             return RedirectToAction("Index", new { Message = ManageMessageId.Error });
         }
+
+        public ActionResult UserActivity()
+        {
+            var model = Extensions.GetContextUser(ref db).Activity.OrderByDescending(a => a.Time);
+
+            return View(model);
+        }
+
+        public ActionResult UserCourse()
+        {
+            var model = Extensions.GetContextUser(ref db).Course.OrderByDescending(c => c.Time);
+
+            return View(model);
+        }
+
+        public ActionResult UserRoom()
+        {
+            var model = Extensions.GetContextUser(ref db).Room.OrderByDescending(r => r.Time);
+
+            return View(model);
+        }
         #endregion
 
         #region 用户信息与认证模块

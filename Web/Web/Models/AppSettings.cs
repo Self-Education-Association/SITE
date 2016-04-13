@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Xml;
-using System.Configuration;
 using System.Web.Configuration;
 
 namespace Web.Models

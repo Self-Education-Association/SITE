@@ -915,6 +915,9 @@
     <Content Include="Views\Administrator\DownloadReports.cshtml" />
     <Content Include="Views\Home\Mooc.cshtml" />
     <Content Include="Views\Activity\History.cshtml" />
+    <Content Include="Views\Manage\UserActivity.cshtml" />
+    <Content Include="Views\Manage\UserCourse.cshtml" />
+    <Content Include="Views\Manage\UserRoom.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

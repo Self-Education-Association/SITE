@@ -1,0 +1,124 @@
+﻿@model IEnumerable<Web.Models.RoomRecord>
+
+@{
+    ViewBag.Title = "场地预约";
+}
+<style>
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
+
+    .table > tbody > tr > th {
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+    }
+
+    dl {
+        text-align: center;
+    }
+
+    dd {
+        color: #3C5B45;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    dt {
+        color: #608D4E;
+        font-family: Arial;
+        font-size: larger;
+    }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+</style>
+<section class="sec2" style="background-image:url(../../img/mate1.jpg);">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">场地 | 场地预约 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <p>
+            <div>
+                @TempData["ErrorInfo"]
+            </div>
+        </p>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomOperation.Usable)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomOperation.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomOperation.Time)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomOperation.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RoomOperation.EndTime)
+                </th>
+                <th>
+                    描述
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RemarkContent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RemarkRate)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.Usable)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.Time)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.EndTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RoomOperation.ShortContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RemarkContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RemarkRate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("详情", "Details", "Room", new { id = item.Id }) |
+                        @Html.ActionLink("退选", "Quit", "Room", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>

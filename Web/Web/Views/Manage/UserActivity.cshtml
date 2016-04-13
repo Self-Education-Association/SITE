@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Web.Models.ActivityRecord>
+
+@{
+    ViewBag.Title = "已选活动";
+}
+<style>
+    h2 {
+        font-family: 'Microsoft YaHei';
+        color: #577492;
+        text-align: center;
+    }
+
+    .table > tbody > tr > th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .table > tbody > tr > td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    body {
+        background: url(/img/HeaderGreyDenim.jpg);
+        background-repeat: repeat;
+    }
+
+    p {
+        font-size: 10px;
+    }
+</style>
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">活动 | @ViewBag.Title </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @TempData["DeniedInfo"]
+        </b>
+        <table class="table table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.Count)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.Limit)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.StartTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.EndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ActivityOperation.Content)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model=>model.RemarkContent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RemarkRate)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityOperation.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityOperation.Count)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityOperation.Limit)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityOperation.StartTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ActivityOperation.EndTime)
+                    </td>
+                    <td>
+                        @Html.Raw(item.ActivityOperation.ShortContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RemarkContent)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RemarkRate)
+                    </td>
+                    <td>
+                        @Html.ActionLink("详情", "Details", "Activity", new { id = item.Id }, new { @class = "btn-sm btn-info" }) |
+                        @Html.ActionLink("退出", "Quit", "Activity", new { id = item.Id }, new { @class = "btn-sm btn-danger" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>
