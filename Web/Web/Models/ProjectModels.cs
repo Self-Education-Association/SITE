@@ -192,7 +192,7 @@ namespace Web.Models
         public Guid Id { get; set; }
 
         [Display(Name = "公司创始人")]
-        public User Admin { get; set; }
+        public virtual User Admin { get; set; }
 
         [Display(Name = "目标行业")]
         public string Industry { get; set; }

@@ -62,7 +62,8 @@ namespace Web.Controllers
                 : message == ManageMessageId.RecruitSuccess ? "招募请求发送成功，请等待该用户响应。"
                 : message == ManageMessageId.UpdateUserProfileSuccess ? "修改个人信息成功。"
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
-                : message == ManageMessageId.AdminQuit ? "作为团队创始人你无法将自己从团队中删除。\n若要这么做，请删除除你以外的所有团队成员，然后将自己从团队中删除。\n请注意，此时项目及团队将会解散，该操作不可逆转。"
+                : message == ManageMessageId.AdminQuit ? "作为团队创始人你无法将自己从团队中删除。"
+                : message == ManageMessageId.ApproveSuccess ? "批准成员加入成功！"
                 : "";
             }
 
@@ -459,11 +460,11 @@ namespace Web.Controllers
             else
             {
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Deleted;
-                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.ProjectFailure, ref db));
+                db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplyFailure, ref db));
             }
             db.SaveChanges();
 
-            return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
+            return RedirectToAction("Index", new { Message = ManageMessageId.ApproveSuccess });
         }
 
         public ActionResult TeamMember()
@@ -642,7 +643,7 @@ namespace Web.Controllers
                 model.Admin = user;
                 user.TeamRecord.Team.Company = model;
                 db.SaveChanges();
-                return View();
+                return RedirectToAction("Index", new { message = ManageMessageId.OperationSuccess });
             }
 
             return View();
@@ -755,6 +756,7 @@ namespace Web.Controllers
             ApplySuccess,
             RecruitSuccess,
             OperationSuccess,
+            ApproveSuccess,
             AcessDenied,
             AdminQuit,
             Error
