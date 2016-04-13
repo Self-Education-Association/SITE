@@ -145,7 +145,10 @@ namespace Web.Controllers
         {
             return View();
         }
-
+        public ActionResult Mooc()
+        {
+            return View();
+        }
         public ActionResult VoiceRace()
         {
             return View();

@@ -59,6 +59,9 @@
                                 <div class="tl-body">
                                     <p>@item.EventContent</p>
                                 </div>
+                                @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
+                                @Html.ActionLink("详情", "Details", new { id = item.Id }) |
+                                @Html.ActionLink("删除", "Delete", new { id = item.Id })
                             </div>
                         </li>
                     }

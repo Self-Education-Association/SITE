@@ -525,7 +525,7 @@ namespace Web.Controllers
                 return RedirectToAction("Index");
             }
 
-            return View();
+            return View(team);
         }
 
         [HttpPost]
@@ -613,6 +613,7 @@ namespace Web.Controllers
                 }
                 var file = Request.Files[0];//只上传第一个文件
                 var user = Extensions.GetContextUser(ref db);
+                model.NewCompany(ref db);
                 model.Plan = Material.Create("商业计划书", MaterialType.Management, file, db);
                 model.Admin = user;
                 user.TeamRecord.Team.Company = model;
