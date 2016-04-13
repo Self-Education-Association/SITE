@@ -64,7 +64,11 @@
                             @Html.DisplayFor(modelItem => item.Receiver.Profile.Email)
                         </td>
                         <td>
-                            @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn-sm btn-warning" })
+                            @if (item.Status == Web.Models.TeamMemberStatus.Apply)
+                            {
+                                @Html.ActionLink("批准", "TeamAccess", new { userId = item.Receiver.Id, isProve = true }, new { @class = "btn-sm btn-success", @onClick = "clickConfirm()" })
+                            }
+                            @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn-sm btn-warning", @onClick = "clickConfirm()" })
                         </td>
                     </tr>
                 }
@@ -74,6 +78,13 @@
         </div>
     </div>
 </section>
+<script>
+    function clickConfirm() {
+        if (!confirm("确认要执行此操作吗？")) {
+            window.event.returnValue = false;
+        }
+    }
+</script>
 
 
 

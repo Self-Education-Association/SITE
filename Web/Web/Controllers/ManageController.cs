@@ -383,8 +383,7 @@ namespace Web.Controllers
             if (team == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Apply, Extensions.GetContextUser(ref db)));
-            User admin = db.Users.Where(u => u.TeamRecord.Team.Id == team.Id && u.TeamRecord.Status == TeamMemberStatus.Admin).First();
-            db.Messages.Add(new Message(admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
+            db.Messages.Add(new Message(team.Admin.Id, MessageType.System, MessageTemplate.TeamApply, ref db));
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.ApplySuccess });
@@ -425,21 +424,7 @@ namespace Web.Controllers
             return View(user);
         }
 
-        public ActionResult TeamAccess(int page = 0)
-        {
-            if (IsNotTeamAdmin())
-                return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            int pageSize = 10;
-            var list = new ListPage<User>((from u in db.TeamRecords
-                                           where u.Team.Admin.Id == Extensions.GetContextUser(ref db).Id &&   //团队管理为该用户的团队
-                                           u.Status == TeamMemberStatus.Apply                             //状态为申请
-                                           select u.Receiver), page, pageSize);
-
-            return View(list);
-        }
-
-        [ActionName("DoTeamAccess")]
-        public ActionResult TeamAccess(string userId, bool IsApprove)
+        public ActionResult TeamAccess(string userId, bool isApprove)
         {
             if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -450,7 +435,7 @@ namespace Web.Controllers
             var ApplyRecord = applicant.TeamRecord;
             if (ApplyRecord == null || applicant.TeamRecord.Team.Id != user.TeamRecord.Team.Id)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
-            if (IsApprove)
+            if (isApprove)
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
                 applicant.Project = user.Project;
@@ -467,7 +452,7 @@ namespace Web.Controllers
             return RedirectToAction("Index", new { Message = ManageMessageId.RecruitSuccess });
         }
 
-        public ActionResult TeamMember(int page = 0)
+        public ActionResult TeamMember()
         {
             if (Extensions.GetContextUser(ref db).TeamRecord == null)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
@@ -500,22 +485,11 @@ namespace Web.Controllers
             {
                 if (team.Member.Count == 1)
                 {
-                    if (TempData["isConfirmed"] == null || TempData["isConfirmed"].ToString() != "1")
-                    {
-                        TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！\n请确定是否想要进行该操作?";
-                        TempData["isConfirmed"] = "1";
-                        return RedirectToAction("TeamMember");
-                    }
-                    else
-                    {
-                        db.Projects.Remove(user.Project);
-                        db.Teams.Remove(team);
-                        db.TeamRecords.Remove(teamRecord);
-                        db.SaveChanges();
-                        TempData["isConfirmed"] = "0";
-                        TempData["Alert"] = "删除成功！";
-                        return RedirectToAction("Index");
-                    }
+                    db.Projects.Remove(user.Project);
+                    db.Teams.Remove(team);
+                    db.TeamRecords.Remove(teamRecord);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
                 }
                 TempData["Alert"] = "作为团队创始人你无法将自己从团队中删除。\n若要这么做，请删除除你以外的所有团队成员，然后将自己从团队中删除。\n此时项目及团队将会解散。";
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
