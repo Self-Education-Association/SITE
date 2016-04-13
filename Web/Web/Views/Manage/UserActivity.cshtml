@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "已选活动";
 }
-<style>
+<!--style>
     h2 {
         font-family: 'Microsoft YaHei';
         color: #577492;
@@ -28,12 +28,12 @@
     p {
         font-size: 10px;
     }
-</style>
+</style-->
 <section class="sec2">
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">活动 | @ViewBag.Title </b>
+        <b class="secheader">用户 | @ViewBag.Title </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -44,50 +44,58 @@
         <b style="font-size:16px;font-weight:bold;color:red;">
             @TempData["DeniedInfo"]
         </b>
-        <table class="table table-striped">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActivityOperation.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActivityOperation.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ActivityOperation.EndTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkContent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkRate)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
+        <div class="col-xs-2">
+            @Html.Partial("_ManageMenuPartial")
+        </div>
+        <div class="col-xs-10 board" style="background:none;">
+            <!--以下为模板内容-->
+            <table class="table table-striped">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityOperation.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityOperation.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ActivityOperation.EndTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkContent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkRate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("详情", "Details", "Activity", new { id = item.ActivityOperation.Id }, new { @class = "btn-sm btn-info" }) |
-                        @Html.ActionLink("退出", "Quit", "Activity", new { id = item.ActivityOperation.Id }, new { @class = "btn-sm btn-danger" })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActivityOperation.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActivityOperation.StartTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ActivityOperation.EndTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RemarkContent)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RemarkRate)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </table>
+
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivityOperation.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivityOperation.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivityOperation.EndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemarkContent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemarkRate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("详情", "Details", "Activity", new { id = item.ActivityOperation.Id }, new { @class = "btn-sm btn-info" }) |
+                            @Html.ActionLink("退出", "Quit", "Activity", new { id = item.ActivityOperation.Id }, new { @class = "btn-sm btn-danger" })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!--以上为模板内容-->
+        </div>
+
     </div>
 </section>

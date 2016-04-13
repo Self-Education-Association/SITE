@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "课程列表";
 }
-<style>
+<!--style>
     body {
         background: url(/img/HeaderGreyDenim.jpg);
         background-repeat: repeat;
@@ -38,12 +38,12 @@
         font-family: Arial;
         font-size: larger;
     }
-</style>
+</style-->
 <section class="sec2">
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">课程预约 | 课程列表</b>
+        <b class="secheader">用户 | @ViewBag.Title </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -51,63 +51,67 @@
 </section>
 <section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
     <div class="row" style="padding:0 5%;">
-        <p>
-            <div>
-                @TempData["ErrorInfo"]
-            </div>
-        </p>
-        <table class="table table-striped">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.StartTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.EndTime)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CourseOperation.Content)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkContent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RemarkRate)
-                </th>
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
+        <b style="font-size:16px;font-weight:bold;color:red;">
+            @TempData["ErrorInfo"]
+        </b>
+        <div class="col-xs-2">
+            @Html.Partial("_ManageMenuPartial")
+        </div>
+        <div class="col-xs-10 board" style="background:none;">
+            <!--以下为模板内容-->
+            <table class="table table-striped">
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.StartTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.EndTime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CourseOperation.Content)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkContent)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RemarkRate)
-                    </td>
-                    <td>
-                        @Html.ActionLink("详情", "Details", "Course", new { id = item.CourseOperation.Id }) |
-                        @Html.ActionLink("退课", "Quit", "Course", new { id = item.CourseOperation.Id })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.StartTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.EndTime)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CourseOperation.Content)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RemarkContent)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RemarkRate)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </table>
 
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.StartTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.EndTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseOperation.Content)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemarkContent)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemarkRate)
+                        </td>
+                        <td>
+                            @Html.ActionLink("详情", "Details", "Course", new { id = item.CourseOperation.Id }) |
+                            @Html.ActionLink("退课", "Quit", "Course", new { id = item.CourseOperation.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!--以上为模板内容-->
+        </div>
     </div>
 </section>
 
