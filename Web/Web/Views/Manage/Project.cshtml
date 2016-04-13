@@ -42,6 +42,7 @@
 
                 <div class="form-horizontal">
                     <h4>申请项目</h4>
+                    <a class="text-danger">以下所有栏目除标注选填的部分外均为必填项，无相关事项时可填写无。填写时请务必按照项目状况或预期如实填写，否则无法通过审核！</a>
                     <hr />
                     <br />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -50,13 +51,15 @@
                         <label class="control-label col-md-2">上传头像</label>
                         <div class="col-md-10">
                             <input name="file" type="file" class="form-control" />
+                            <a>只允许上传JPG、PNG类型的图片，大小在5MB以内。</a>
                         </div>
                     </div>
 
                     <div class="form-group">
                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", onkeyup = "value=value.replace(/[^\u4E00-\u9FA5]/g,'')" } })
+                            <a>只允许使用中文团队名称。</a>
                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -64,7 +67,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Industry, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Industry, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.DropDownListFor(model => model.Industry, (SelectList)ViewBag.Industry, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -137,6 +140,7 @@
                         @Html.LabelFor(model => model.ProjectBudget, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.ProjectBudget, new { htmlAttributes = new { @class = "form-control" } })
+                            <a>单位为CNY（元）。</a>
                             @Html.ValidationMessageFor(model => model.ProjectBudget, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -144,7 +148,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.Webpage, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Webpage, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.EditorFor(model => model.Webpage, new { htmlAttributes = new { @class = "form-control", @placeholder = "选填" } })
                             @Html.ValidationMessageFor(model => model.Webpage, "", new { @class = "text-danger" })
                         </div>
                     </div>

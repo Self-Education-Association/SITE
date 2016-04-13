@@ -65,6 +65,10 @@
       <HintPath>..\packages\HtmlSanitizer.2.0.5735.24296\lib\net40\HtmlSanitizer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.5.0, Culture=neutral, PublicKeyToken=9dea7c6e17aa31ff, processorArchitecture=MSIL">
+      <HintPath>..\packages\ICSharpCode.SharpZipLib.Patched.0.86.5\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -241,6 +245,18 @@
     <Compile Include="Migrations\201603281620342_UpdateModels.Designer.cs">
       <DependentUpon>201603281620342_UpdateModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604051252094_UpdateTeamModels.cs" />
+    <Compile Include="Migrations\201604051252094_UpdateTeamModels.Designer.cs">
+      <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604120547383_AddMessagesProperty.cs" />
+    <Compile Include="Migrations\201604120547383_AddMessagesProperty.Designer.cs">
+      <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604120847159_UpdateTeamEventModel.cs" />
+    <Compile Include="Migrations\201604120847159_UpdateTeamEventModel.Designer.cs">
+      <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -253,7 +269,7 @@
     <Compile Include="Models\MessageModels.cs" />
     <Compile Include="Models\ProjectModels.cs" />
     <Compile Include="Models\RoomModels.cs" />
-    <Compile Include="Models\TeamEvent.cs" />
+    <Compile Include="Models\TeamManageModels.cs" />
     <Compile Include="Models\TutorInformation.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\ViewModels\ActivityViewModel.cs" />
@@ -264,6 +280,7 @@
     <Compile Include="Models\ViewModels\ManageViewModels.cs" />
     <Compile Include="Models\ViewModels\RoomViewModel.cs" />
     <Compile Include="Models\ViewModels\TutorViewModel.cs" />
+    <Compile Include="Models\ZipHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -764,7 +781,6 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
-    <Content Include="ClassDiagram1.cd" />
     <None Include="Properties\PublishProfiles\部署.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -895,9 +911,12 @@
     <Content Include="Views\TeamEvents\_EventsPartial.cshtml" />
     <Content Include="Views\Home\ActivitiesByMonth.cshtml" />
     <Content Include="Views\Manage\TeamEdit.cshtml" />
+    <Content Include="Views\Administrator\NewReportRound.cshtml" />
+    <Content Include="Views\Administrator\DownloadReports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Temp\" />
     <Folder Include="UserUpload\Administrator\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
@@ -933,6 +952,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603281620342_UpdateModels.resx">
       <DependentUpon>201603281620342_UpdateModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604051252094_UpdateTeamModels.resx">
+      <DependentUpon>201604051252094_UpdateTeamModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604120547383_AddMessagesProperty.resx">
+      <DependentUpon>201604120547383_AddMessagesProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604120847159_UpdateTeamEventModel.resx">
+      <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

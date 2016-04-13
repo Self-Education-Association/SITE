@@ -34,7 +34,7 @@
                     @Html.HiddenFor(model => model.Id)
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.EventName, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-xs-2">事项名称</label>
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EventName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EventName, "", new { @class = "text-danger" })
@@ -42,7 +42,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.EventContent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-xs-2">事项内容</label>
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EventContent, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EventContent, "", new { @class = "text-danger" })
@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.EventTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-xs-2">事项时间</label>
                         <div class="col-md-10">
                             @Html.EditorFor(model => model.EventTime, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.EventTime, "", new { @class = "text-danger" })

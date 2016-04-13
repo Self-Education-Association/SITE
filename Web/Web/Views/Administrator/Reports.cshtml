@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<Web.Models.TeamReport>
 
 @{
-    ViewBag.Title = "主页";
+    ViewBag.Title = "团队报告";
 }
 
 <section class="sec2">
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">团队报告 | 主页 </b>
+        <b class="secheader">管理员 | @ViewBag.Title </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -20,16 +20,25 @@
             @Html.Partial("_AdminMenuPartial")
         </div>
         <div class="col-xs-10 board">
-            <h4>团队报告</h4>
+            <h4>@ViewBag.Title</h4>
             <hr /> 
             <!--以下为模板内容-->
             <p>
-                @Html.ActionLink("新建", "Create")
+                @Html.ActionLink("新建团队报告场次", "NewReportRound")
             </p>
             <table class="table table-striped">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        @Html.DisplayNameFor(model => model.Team.Name)
+                    </th>
+                    <th>
+                        报告文件
+                    </th>
+                    <th>
+                        上传时间
+                    </th>
+                    <th>
+                        报告场次
                     </th>
                     <th></th>
                 </tr>
@@ -38,12 +47,21 @@
                 {
                     <tr>
                         <td>
+                            @Html.DisplayFor(modelItem => item.Team.Name)
+                        </td>
+                        <td>
+                            <a href="@Url.Content(item.ReportFile.GetUrl())">下载</a>
+                        </td>
+                        <td>
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
-                            @Html.ActionLink("编辑", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("详情", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("删除", "Delete", new { id = item.Id })
+                            @item.Round
+                        </td>
+                        <td>
+                            @Html.ActionLink("编辑", "ReportEdit", new { id = item.Id }) |
+                            @Html.ActionLink("详情", "ReportDetails", new { id = item.Id }) |
+                            @Html.ActionLink("删除", "ReportDelete", new { id = item.Id })
                         </td>
                     </tr>
                 }

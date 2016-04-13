@@ -528,6 +528,7 @@ namespace Web.Controllers
                 Team team = new Team();
                 team.NewTeam(ref project);
                 db.TeamRecords.Add(new TeamRecord(team, TeamMemberStatus.Admin, project.Admin));
+                db.TeamEvents.Add(new TeamEvent { Id = Guid.NewGuid(), AddTime = DateTime.Now, EventTime = DateTime.Now, EventContent = "通过管理员审批，在本网站上开始招募团队。", EventName = "创建团队", Team = team });
             }
             else
             {
@@ -588,54 +589,6 @@ namespace Web.Controllers
             }
             db.SaveChanges();
             return RedirectToAction("CompanyIdentityRecords");
-        }
-        #endregion
-
-        #region 项目团队管理模块
-        // GET: Reports
-        public ActionResult Reports()
-        {
-            return View(db.TeamReports.ToList());
-        }
-
-        // GET: Reports/Details/5
-        public ActionResult ReportDetails(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TeamReport teamReport = db.TeamReports.Find(id);
-            if (teamReport == null)
-            {
-                return HttpNotFound();
-            }
-            return View(teamReport);
-        }
-        // GET: Reports/Delete/5
-        public ActionResult ReportDelete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TeamReport teamReport = db.TeamReports.Find(id);
-            if (teamReport == null)
-            {
-                return HttpNotFound();
-            }
-            return View(teamReport);
-        }
-
-        // POST: Reports/ReportDelete/5
-        [HttpPost, ActionName("ReportDelete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult ReportDeleteConfirmed(Guid id)
-        {
-            TeamReport teamReport = db.TeamReports.Find(id);
-            db.TeamReports.Remove(teamReport);
-            db.SaveChanges();
-            return RedirectToAction("Reports");
         }
         #endregion
 

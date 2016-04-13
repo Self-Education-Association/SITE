@@ -91,6 +91,11 @@ namespace Web.Models
         [Display(Name = "创建时间")]
         public DateTime Time { get; set; }
 
+        public Message()
+        {
+
+        }
+
         public Message(string title, string content, string userId, MessageType type, BaseDbContext db)
         {
             ID = Guid.NewGuid();
@@ -113,9 +118,45 @@ namespace Web.Models
             Time = DateTime.Now;
             switch (template)
             {
+                case MessageTemplate.TeamApply:
+                    Title = "新成员申请加入团队";
+                    Content = "有新成员申请加入你的团队，请及时处理。";
+                    break;
+                case MessageTemplate.TeamApplySuccess:
+                    Title = "您已成功加入团队";
+                    Content = "您申请的团队已通过您的申请！请在我的团队页面查看。";
+                    break;
+                case MessageTemplate.TeamApplyFailure:
+                    Title = "您未能加入团队";
+                    Content = "您申请的团队拒绝了你的申请，详情请向团队管理员咨询。";
+                    break;
+                case MessageTemplate.TeamRecruit:
+                    Title = "您已成功创建团队招募";
+                    Content = "您申请的团队招募已通过！请等待他人的加入申请。";
+                    break;
+                case MessageTemplate.ProjectSuccess:
+                    Title = "您申请的项目已成功通过审核";
+                    Content = "您申请的项目已经通过管理员的审核！现在你可以招募你的团队了。";
+                    break;
                 case MessageTemplate.ProjectFailure:
-                    Title = "";
-                    Content = "";
+                    Title = "项目申请被驳回";
+                    Content = "很遗憾，你的项目申请被管理员驳回，请按照要求重新申请。";
+                    break;
+                case MessageTemplate.CompanySuccess:
+                    Title = "您申请的公司已成功通过审核";
+                    Content = "您申请的公司已经通过管理员的审核！请在相关界面查看。";
+                    break;
+                case MessageTemplate.CompanyFailure:
+                    Title = "您申请的公司未通过审核";
+                    Content = "很遗憾，您申请的公司未通过管理员的审核。详情请向网站管理员咨询。";
+                    break;
+                case MessageTemplate.IdentityRecordSuccess:
+                    Title = "您的个人认证已通过";
+                    Content = "您的个人认证已经通过管理员的审核！请在相关界面查看。";
+                    break;
+                case MessageTemplate.IdentityRecordFailure:
+                    Title = "您的个人认证未通过";
+                    Content = "很遗憾，您的个人认证未通过管理员的审核。详情请向网站管理员咨询。";
                     break;
                 default:
                     Title = "";
@@ -124,7 +165,7 @@ namespace Web.Models
             }
         }
 
-        public Message(User user,string varName, MessageType type, MessageTemplate template,ref BaseDbContext db)
+        public Message(User user, string varName, MessageType type, MessageTemplate template, ref BaseDbContext db)
         {
             ID = Guid.NewGuid();
             Publisher = Extensions.GetContextUser(ref db);
@@ -135,7 +176,7 @@ namespace Web.Models
             switch (template)
             {
                 case MessageTemplate.CourseDelete:
-                    Title = "你选择的课程"+varName+"被Tutor删除了";
+                    Title = "你选择的课程" + varName + "被Tutor删除了";
                     Content = "blablablabla。。。。。。";
                     break;
                 case MessageTemplate.RoomDelete:
