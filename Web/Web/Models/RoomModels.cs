@@ -139,7 +139,7 @@ namespace Web.Models
     }
     public class RoomRecord : Remark
     {
-        public RoomOperation RoomOperation { get; set; }
+        public virtual RoomOperation RoomOperation { get; set; }
 
         public bool Remark()
         {

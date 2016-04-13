@@ -104,8 +104,8 @@
                             @Html.DisplayFor(modelItem => item.RemarkRate)
                         </td>
                         <td>
-                            @Html.ActionLink("详情", "Details", "Room", new { id = item.RoomOperation.Id }) |
-                            @Html.ActionLink("退选", "Quit", "Room", new { id = item.RoomOperation.Id })
+                            @Html.ActionLink("详情", "Details", "Room", new { id = item.RoomOperation.Id }, new { @class = "btn-sm btn-info" }) |
+                            @Html.ActionLink("退选", "Quit", "Room", new { id = item.RoomOperation.Id }, new { @class = "btn-sm btn-danger" })
                         </td>
                     </tr>
                 }
