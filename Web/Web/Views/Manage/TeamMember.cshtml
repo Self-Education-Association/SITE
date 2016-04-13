@@ -55,9 +55,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
                         </td>
-
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Receiver.DisplayName)

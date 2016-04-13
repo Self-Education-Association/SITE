@@ -491,9 +491,12 @@ namespace Web.Controllers
             if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             var user = Extensions.GetContextUser(ref db);
+            var member = db.Users.Find(id);
+            if (id == null || member == null)
+                return HttpNotFound();
             var teamRecord = user.TeamRecord;
             var team = teamRecord.Team;
-            if (user.TeamRecord.Status == TeamMemberStatus.Admin)
+            if (member.TeamRecord.Status == TeamMemberStatus.Admin)
             {
                 if (team.Member.Count == 1)
                 {
@@ -516,9 +519,9 @@ namespace Web.Controllers
                 }
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             }
-            db.TeamRecords.Remove(user.TeamRecord);
-            user.TeamRecord = null;
-            user.Project = null;
+            db.TeamRecords.Remove(member.TeamRecord);
+            member.TeamRecord = null;
+            member.Project = null;
             db.SaveChanges();
 
             return RedirectToAction("Index", new { Message = ManageMessageId.OperationSuccess });

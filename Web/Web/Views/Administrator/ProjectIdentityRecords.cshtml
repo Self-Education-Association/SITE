@@ -53,7 +53,7 @@
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Status)
+                            @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
                         </td>
                         <td>
                             @Html.ActionLink("详情", "ProjectIdentityRecordDetails", new { id = item.Id })
