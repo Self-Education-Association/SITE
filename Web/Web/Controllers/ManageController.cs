@@ -257,7 +257,7 @@ namespace Web.Controllers
         {
             User user = db.Users.Find(Extensions.GetUserId());
             ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
-            var data = db.IndustryList.ToList();
+            var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
             if (data.Count() == 0)
             {
                 data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
@@ -309,7 +309,7 @@ namespace Web.Controllers
                 {
                     TempData["Alert"] = "请上传格式为jpg, jpeg，png的图片";
                     model.Avatar = null;
-                    var data = db.IndustryList.ToList();
+                    var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
                     if (data.Count() == 0)
                     {
                         data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });

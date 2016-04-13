@@ -92,16 +92,9 @@
                     @Html.DisplayFor(model => model.EndTime)
                 </dd>
 
-                <dt>
-                    @Html.DisplayNameFor(model => model.Content)
-                </dt>
-
-                <dd>
-                    @Html.Raw(Model.Content)
-                </dd>
-
             </dl>
         </div>
+        @Html.Raw(Model.Content)
         <p>
             @Html.ActionLink("申请", "Apply", new { id = Model.Id }, new { @class = "btn-sm btn-success" }) |
             @Html.ActionLink("退出", "Quit", new { id = Model.Id }, new { @class = "btn-sm btn-danger" }) |
