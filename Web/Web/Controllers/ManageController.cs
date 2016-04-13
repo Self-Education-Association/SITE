@@ -444,16 +444,16 @@ namespace Web.Controllers
             if (IsNotTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             User applicant = db.Users.Find(userId);
-            Team team = db.Teams.First(u => u.Admin.Id == Extensions.GetContextUser(ref db).Id);
+            User user = Extensions.GetContextUser(ref db);
             if (applicant == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var ApplyRecord = db.TeamRecords.First(t => t.Team.Id == team.Id && t.Receiver.Id == applicant.Id && t.Status == TeamMemberStatus.Apply);
-            if (ApplyRecord == null)
+            var ApplyRecord = applicant.TeamRecord;
+            if (ApplyRecord == null || applicant.TeamRecord.Team.Id != user.TeamRecord.Team.Id)
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (IsApprove)
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
-                applicant.Project = Extensions.GetContextUser(ref db).Project;
+                applicant.Project = user.Project;
                 db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, ref db));
             }
@@ -502,7 +502,7 @@ namespace Web.Controllers
                 {
                     if (TempData["isConfirmed"] == null || TempData["isConfirmed"].ToString() != "1")
                     {
-                        TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！请确定是否想要进行该操作?";
+                        TempData["Alert"] = "这将删除你的项目及团队去，该操作无法恢复！\n请确定是否想要进行该操作?";
                         TempData["isConfirmed"] = "1";
                         return RedirectToAction("TeamMember");
                     }
@@ -517,6 +517,7 @@ namespace Web.Controllers
                         return RedirectToAction("Index");
                     }
                 }
+                TempData["Alert"] = "作为团队创始人你无法将自己从团队中删除。\n若要这么做，请删除除你以外的所有团队成员，然后将自己从团队中删除。\n此时项目及团队将会解散。";
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             }
             db.TeamRecords.Remove(member.TeamRecord);

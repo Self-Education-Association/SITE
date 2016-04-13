@@ -28,9 +28,8 @@
             <!--以下为模板内容-->
             <h4>成员列表</h4>
             <hr />
-
             <p>
-                @Html.ActionLink("退出", "TeamMemberQuit")
+                @Html.ActionLink("退出团队", "TeamMemberQuit")
             </p>
             <table class="table">
                 <tr>
@@ -44,7 +43,7 @@
                         电话号码
                     </th>
                     <th>
-                        用户名称
+                        电子邮箱
                     </th>
                     <th></th>
                 </tr>
@@ -59,10 +58,10 @@
                             @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                            @Html.DisplayFor(modelItem => item.Receiver.Profile.Phone)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Receiver.DisplayName)
+                            @Html.DisplayFor(modelItem => item.Receiver.Profile.Email)
                         </td>
                         <td>
                             @Html.ActionLink("删除", "TeamMemberDelete", new { id = item.Receiver.Id }, new { @class = "btn-sm btn-warning" })

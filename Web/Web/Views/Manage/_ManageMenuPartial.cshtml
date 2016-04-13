@@ -1,4 +1,18 @@
-﻿<style>
+﻿@{
+    var db = new Web.Models.BaseDbContext();
+    var user = Web.Models.Extensions.GetContextUser(ref db);
+    bool hasTeam = user.TeamRecord != null;
+    bool isAdmin;
+    if (hasTeam)
+    {
+        isAdmin = user.TeamRecord.Status == Web.Models.TeamMemberStatus.Admin;
+    }
+    else
+    {
+        isAdmin = false;
+    }
+}
+<style>
     body {
         background: url(/img/HeaderGreyDenim.jpg);
         background-repeat: repeat;
@@ -28,7 +42,7 @@
         font-size: larger;
     }
 </style>
- <!--menue start-->
+<!--menue start-->
 <div class="panel-group" id="menu" style="min-width:100px">
     <!--侧边菜单第一栏start-->
     <div class="panel panel-default">
@@ -79,67 +93,85 @@
         <div id="menuThree" class="panel-collapse collapse">
             <div class="panel-body">
                 <ul>
-                    <li>
-                        <a href="/Manage/Project">申请项目</a>
-                    </li>
-                    <li>
-                        <a href="/Manage/TeamApply">加入团队</a>
-                    </li>
-                    <li>
-                        <a href="/Manage/TeamMember">成员列表</a>
-                    </li>
-                    <li>
-                        <a href="/Manage/TeamProfile">管理团队</a>
-                    </li>
-                    <li>
-                        <a href="/Manage/TeamRecruit">招募成员</a>
-                    </li>
-                    <li>
-                        <a href="/Manage/Company">注册公司</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>   
-    <div class="panel panel-default">
-        <div class="panel-heading ">
-            <h4 class="panel-title ">
-                <a data-toggle="collapse" data-parent="#menu" href="#menuFive">
-                    团队事项
-                </a>
-            </h4>
-        </div>
-        <div id="menuFive" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ul>
-                    <li>
-                        <a href="/TeamEvents/Index">事项主页</a>
-                    </li>
-                    <li>
-                        <a href="/TeamEvents/Create">创建事项</a>
-                    </li>
+                    @if (!hasTeam)
+                    {
+                        <li>
+                            <a href="/Manage/Project">申请项目</a>
+                        </li>
+                        <li>
+                            <a href="/Manage/TeamApply">加入团队</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="/Manage/TeamMember">成员列表</a>
+                        </li>
+                        if (isAdmin)
+                        {
+                            <li>
+                                <a href="/Manage/TeamProfile">管理团队</a>
+                            </li>
+                            <li>
+                                <a href="/Manage/TeamAccess">申请名单</a>
+                            </li>
+                            <li>
+                                <a href="/Manage/Company">注册公司</a>
+                            </li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
     </div>
-    <div class="panel panel-default">
-        <div class="panel-heading ">
-            <h4 class="panel-title ">
-                <a data-toggle="collapse" data-parent="#menu" href="#menuFour">
-                    团队报告
-                </a>
-            </h4>
-        </div>
-        <div id="menuFour" class="panel-collapse collapse">
-            <div class="panel-body">
-                <ul>
-                    <li>
-                        <a href="/Reports/Create">创建报告</a>
-                    </li>
-                </ul>
+    @if (hasTeam)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading ">
+                <h4 class="panel-title ">
+                    <a data-toggle="collapse" data-parent="#menu" href="#menuFive">
+                        团队事项
+                    </a>
+                </h4>
+            </div>
+            <div id="menuFive" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <ul>
+                        <li>
+                            <a href="/TeamEvents/Index">事项主页</a>
+                        </li>
+                        @if (isAdmin)
+                        {
+                            <li>
+                                <a href="/TeamEvents/Create">创建事项</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+        if (isAdmin)
+        {
+            <div class="panel panel-default">
+                <div class="panel-heading ">
+                    <h4 class="panel-title ">
+                        <a data-toggle="collapse" data-parent="#menu" href="#menuFour">
+                            团队报告
+                        </a>
+                    </h4>
+                </div>
+                <div id="menuFour" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <ul>
+                            <li>
+                                <a href="/Reports/Create">创建报告</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    }
     <div class="panel panel-default">
         <div class="panel-heading ">
             <h4 class="panel-title ">
