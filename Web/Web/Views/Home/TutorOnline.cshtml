@@ -56,7 +56,7 @@
                                         <strong>简介：</strong>@item.Introduction<br />
                                         @foreach (var c in item.Courses)
                                         {
-                                            <strong>课程：@c.Name <br>可报名时间 @c.StartTime 至 @c.EndTime</strong><br><a href="@Url.Action("Details","Course",new { id=c.Id})" class="btn btn-info">详情</a><br>
+                                            <strong>课程：@c.Name <br>可报名时间 @c.StartTime 至 @c.EndTime</strong><br><a href="@Url.Action("Details","Course",new { id=c.Id})" class="btn btn-details">详情</a><br>
                                         }
                                     </p>
                                 </td>
