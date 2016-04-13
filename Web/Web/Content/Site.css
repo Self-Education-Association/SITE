@@ -28,6 +28,10 @@ textarea {
     color: white;
 }
 
+.navbar-nav > li > a :hover{
+    color:chartreuse;
+}
+
 
 .navbar-brand {
     color: white;
@@ -106,7 +110,7 @@ dl.col-xs-4 {
     text-align: center;
     color: #fff;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .sec2 {
@@ -119,7 +123,7 @@ dl.col-xs-4 {
     text-align: center;
     color: #fff;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .secblank {
@@ -130,7 +134,7 @@ dl.col-xs-4 {
     padding: 225px 0 225px;
     color: black;
     position: relative;
-    z-index: 1;
+    z-index: 0;
 }
 
 .secheader {
@@ -143,7 +147,7 @@ dl.col-xs-4 {
     line-height: 24px;
     margin-bottom: 30px;
     text-transform: uppercase;
-    z-index: 2;
+    z-index: 1;
 }
 
 .seccontent {
@@ -158,7 +162,7 @@ dl.col-xs-4 {
     text-transform: uppercase;
     padding-left: 100px;
     padding-right: 100px;
-    z-index: 2;
+    z-index: 1;
 }
 
 
@@ -654,4 +658,12 @@ li a:hover{
     left: -14px;
     right: auto;
   }
+}
+
+.col-xs-12 > dl > dt {
+    font-size:14px;
+}
+
+.col-xs-12 > dl > dd {
+    font-size:14px;
 }

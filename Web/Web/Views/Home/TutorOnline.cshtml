@@ -43,20 +43,26 @@
             {
                 foreach (var item in Model)
                 {
-                    <hr />
-                    <div class="col-xs-3">
-                        <img src="@Url.Content(item.Avatar.GetUrl())" height=185 width=125 />
-                    </div>
-                    <div class="col-xs-9" style="font-family:'Microsoft YaHei';">
-                        <p><b>导师：</b>@item.Name</p>
-                        <p><b>职位：</b>@item.Position</p>
-                        <p><b>简介：</b>@item.Introduction</p>
-                        @foreach (var c in item.Courses)
-                        {
-                            <a href="@Url.Action("Details","Course",new { id=c.Id})" class="btn btn-info">@c.Name - 可报名时间 @c.StartTime 至 @c.EndTime</a>
-                        }
-                    </div>
-                   
+                    <table style="border-collapse:separate;border-spacing:30px 30px;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <img src="@Url.Content(item.Avatar.GetUrl())" style="width:120px;height:160px;" />
+                                </td>
+                                <td>
+                                    <p style="font-family:'Microsoft YaHei', Arial">
+                                        <strong>导师：</strong>@item.Name<br />
+                                        <strong>职位：</strong>@item.Position<br />
+                                        <strong>简介：</strong>@item.Introduction<br />
+                                        @foreach (var c in item.Courses)
+                                        {
+                                            <strong>课程：@c.Name <br>可报名时间 @c.StartTime 至 @c.EndTime</strong><br><a href="@Url.Action("Details","Course",new { id=c.Id})" class="btn btn-info">详情</a><br>
+                                        }
+                                    </p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 }
             }
         </div>
