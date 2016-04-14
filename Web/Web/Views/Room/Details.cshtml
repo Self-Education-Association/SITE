@@ -49,51 +49,71 @@
         </p>
     </div>
 </section>
-<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
-    <div class="row" style="padding:0 5%;">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Usable)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Usable)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.Name)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.Name)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.StartTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.StartTime)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.EndTime)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.EndTime)
-            </dd>
-        </dl>
-        <div>
-            @Html.Raw(Model.Content)
+<section class="pagesec">
+    <div class="container-fluid pagecontainer">
+        <div class="row">
+            <b style="font-size:16px;font-weight:bold;color:red;">
+                @TempData["DeniedInfo"]
+            </b>
+            <ul class="breadcrumb col-md-6">
+                <li>
+                    <a href="#">首页</a> <span class="divider"></span>
+                </li>
+                <li class="active">
+                    活动<span class="divider"></span>
+                </li>
+                <li class="active">活动详情</li>
+            </ul>
         </div>
-        <p>
-            @Html.ActionLink("预约", "Apply", new { id = Model.Id }) |
-            @Html.ActionLink("退选", "Quit", new { id = Model.Id }) |
-            @Html.ActionLink("返回列表", "Index")
-        </p>
+        <style>
+            dl > dd > p {
+                font-family: "Lato", Helvetica, Arial, sans-serif;
+                font-size: 14px;
+                margin-bottom: 0;
+            }
+        </style>
+        <div class="row" style="padding:0 5%;">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Usable)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Usable)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.StartTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.EndTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.EndTime)
+                </dd>
+            </dl>
+            <div>
+                @Html.Raw(Model.Content)
+            </div>
+            <p>
+                @Html.ActionLink("预约", "Apply", new { id = Model.Id }) |
+                @Html.ActionLink("退选", "Quit", new { id = Model.Id }) |
+                @Html.ActionLink("返回列表", "Index")
+            </p>
+        </div>
     </div>
 </section>
-
-
-
