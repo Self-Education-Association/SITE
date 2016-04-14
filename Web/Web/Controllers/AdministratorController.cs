@@ -588,6 +588,15 @@ namespace Web.Controllers
             {
                 company.Status = CompanyStatus.Done;
                 db.Messages.Add(new Message(company.Admin.Id, MessageType.System, MessageTemplate.CompanySuccess, ref db));
+                db.TeamEvents.Add(new TeamEvent
+                {
+                    Id = Guid.NewGuid(),
+                    Team = company.Admin.TeamRecord.Team,
+                    AddTime = DateTime.Now,
+                    EventTime = DateTime.Now,
+                    EventName = "注册公司",
+                    EventContent = "团队成功通过管理员审核，注册成为一家公司。"
+                });
             }
             else
             {

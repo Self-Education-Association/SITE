@@ -615,8 +615,8 @@ namespace Web.Controllers
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
             if (Extensions.GetContextUser(ref db).TeamRecord.Team.Company != null)
             {
-                ViewBag.Status = Extensions.GetContextUser(ref db).TeamRecord.Team.Company.Status;
-                return View(Extensions.GetContextUser(ref db).TeamRecord.Team.Company);
+                TempData["Alert"] = "请不要重复申请！";
+                return RedirectToAction("Index");
             }
 
             ViewBag.Status = CompanyStatus.None;
@@ -679,6 +679,10 @@ namespace Web.Controllers
                 if (System.IO.File.Exists(absolutFileName))
                 {
                     System.IO.File.Delete(absolutFileName);
+                }
+                if (!Directory.Exists(Path.GetDirectoryName(absolutFileName)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(absolutFileName));
                 }
                 file.SaveAs(absolutFileName);
                 model.Name = uploadFileName;

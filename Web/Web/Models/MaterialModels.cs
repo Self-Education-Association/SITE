@@ -89,6 +89,11 @@ namespace Web.Models
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Administrator/" + uploadFileName;
                     break;
             }
+
+            if (!Directory.Exists(Path.GetDirectoryName(absolutFileName)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(absolutFileName));
+            }
             //执行上传
             if (File.Exists(absolutFileName))
             {
@@ -124,6 +129,11 @@ namespace Web.Models
                 default:
                     absolutFileName = HttpContext.Current.Server.MapPath("~/UserUpload/") + "Administrator/" + uploadFileName;
                     break;
+            }
+
+            if (!Directory.Exists(Path.GetDirectoryName(absolutFileName)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(absolutFileName));
             }
             //执行上传
             file.SaveAs(absolutFileName);
