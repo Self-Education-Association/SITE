@@ -627,8 +627,11 @@ namespace Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Company(Company model)
         {
+            var user = Extensions.GetContextUser(ref db);
             if (!IsTeamAdmin())
                 return RedirectToAction("Index", new { Message = ManageMessageId.AcessDenied });
+            if (user.TeamRecord.Team.Company != null)
+                return RedirectToAction("Index", new { message = ManageMessageId.AcessDenied });
             if (ModelState.IsValid)
             {
                 if (Request.Files.Count != 1)//如果文件列表为空则返回
@@ -637,7 +640,6 @@ namespace Web.Controllers
                     return View();
                 }
                 var file = Request.Files[0];//只上传第一个文件
-                var user = Extensions.GetContextUser(ref db);
                 model.NewCompany(ref db);
                 model.Plan = Material.Create("商业计划书", MaterialType.Management, file, db);
                 model.Admin = user;
