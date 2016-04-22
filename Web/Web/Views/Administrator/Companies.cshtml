@@ -1,0 +1,82 @@
+﻿@model Web.Models.ListPage<Web.Models.Company>
+
+@{
+    ViewBag.Title = "公司列表";
+    int index = Model.PageIndex + 1;
+}
+
+<section class="sec2">
+    <div class="cover">
+    </div>
+    <div class="row animated pulse">
+        <b class="secheader">管理员 | 公司列表 </b>
+        <p class="seccontent">
+            京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
+        </p>
+    </div>
+</section>
+<section style="display: table;width: 100%;height: auto; padding: 100px 0 100px; color:black;position: relative;">
+    <div class="row" style="padding:0 5%;">
+        <div class="col-xs-2">
+            @Html.Partial("_AdminMenuPartial")
+        </div>
+        <div class="col-xs-10 board">
+            <h4>公司列表</h4>
+            <hr />
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "CompanyIdentityRecords", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "CompanyIdentityRecords", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
+            <table class="table table-striped">
+                <tr>
+                    <th>
+                        管理员名称
+                    </th>
+                    <th>
+                        申请时间
+                    </th>
+                    <th>
+                        申请状态
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Admin.DisplayName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.ActionLink("详情", "CompanyIdentityRecordDetails", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</section>
+

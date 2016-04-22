@@ -918,6 +918,8 @@
     <Content Include="Views\Manage\UserActivity.cshtml" />
     <Content Include="Views\Manage\UserCourse.cshtml" />
     <Content Include="Views\Manage\UserRoom.cshtml" />
+    <Content Include="Views\Administrator\Companies.cshtml" />
+    <Content Include="Views\Administrator\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

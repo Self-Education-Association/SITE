@@ -474,13 +474,13 @@ namespace Web.Controllers
         public ActionResult ProjectIdentityRecords(int page = 0)
         {
             var project = new ListPage<Project>(db.Projects.Where(i => i.Status == ProjectStatus.ToApprove), page, pageSize);
-            return View("ProjectIdentityRecords", project);
+            return View(project);
         }
 
         public ActionResult CompanyIdentityRecords(int page = 0)
         {
             var company = new ListPage<Company>(db.Companys.Where(i => i.Status == CompanyStatus.ToApprove), page, pageSize);
-            return View("CompanyIdentityRecords", company);
+            return View(company);
 
         }
 
@@ -492,7 +492,7 @@ namespace Web.Controllers
             if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            return View("IdentityRecordDetails", user);
+            return View(user);
         }
 
         public ActionResult ProjectIdentityRecordDetails(Guid? id)
@@ -504,7 +504,7 @@ namespace Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
             ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
-            return View("ProjectIdentityRecordDetails", project);
+            return View(project);
         }
 
         public ActionResult CompanyIdentityRecordDetails(Guid? id)
@@ -515,7 +515,7 @@ namespace Web.Controllers
             if (company == null)
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
 
-            return View("CompanyIdentityRecordDetails", company);
+            return View(company);
         }
 
         public ActionResult ProjectIdentityRecordApprove(Guid? id, bool isApprove)
@@ -745,6 +745,18 @@ namespace Web.Controllers
             }
             ZipHelper.CreateZip(tempPath, zipName);
             return File(zipName, "application/x-zip-compressed", Path.GetFileName(zipName));
+        }
+
+        public ActionResult Projects(int page = 0)
+        {
+            int pageSize = 20;
+            return View(new ListPage<Project>(db.Projects, page, pageSize));
+        }
+
+        public ActionResult Companies(int page = 0)
+        {
+            int pageSize = 20;
+            return View(new ListPage<Company>(db.Companys, page, pageSize));
         }
         #endregion
 

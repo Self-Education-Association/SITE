@@ -445,7 +445,7 @@ namespace Web.Controllers
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
                 applicant.Project = user.Project;
-                db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(ApplyRecord).State = EntityState.Modified;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, ref db));
                 db.TeamEvents.Add(new TeamEvent
                 {
@@ -459,7 +459,7 @@ namespace Web.Controllers
             }
             else
             {
-                db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Deleted;
+                db.Entry(ApplyRecord).State = EntityState.Deleted;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplyFailure, ref db));
             }
             db.SaveChanges();
