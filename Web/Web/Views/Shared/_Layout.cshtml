@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title | 贸大X-Lab</title>
+    <title>@ViewBag.Title | 京贸创客</title>
     @Styles.Render("~/Content/css")
     <link type="text/css" rel="stylesheet" href="~/Content/flat-ui.css" />
     <link type="text/css" rel="stylesheet" href="~/Content/animate.css" />
@@ -16,7 +16,7 @@
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/flat-ui.js"></script>
     <script src="~/Scripts/flat-ui.min.js"></script>
-    <style>
+    <!--style>
         .navbar-nav > li > .dropdown-menu {
             margin-top: 0px;
         }
@@ -27,10 +27,18 @@
             font-weight: 700;
             font-family: 'Arial Unicode MS','Microsoft YaHei UI';
         }
+    </style-->
+    <style>
+        .navbar {
+            padding: 12px 0;
+            background-color: #88c5e1;
+            border: none;
+            border-bottom: 5px solid #54abd4;
+        }
     </style>
 </head>
 <body>
-    <div class="navbar" role="navigation" style="padding-bottom:1%;padding-top:1%;">
+    <!--div class="navbar" role="navigation" style="padding-bottom:1%;padding-top:1%;">
         <div class="row">
             <div class="navbar-header col-md-offset-2  col-xs-offset-0">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -90,10 +98,146 @@
                     </li>
                     @Html.Partial("_LoginPartial")
                 </ul>
-            </div><!--/.nav-collapse -->
+            </div>
         </div>
-    </div>
-
+    </div-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="hidden-xs hidden-sm col-md-2">
+                    <div class="navbar-header navbar-left">
+                        <a href="/home" style="padding:6px 0;font-weight:100;">
+                            <img src="~/img/sitelogo.png" />
+                        </a>
+                    </div>
+                </div>
+                <div class="visible-xs-block visible-sm-block col-xs-2">
+                    <div class="navbar-header navbar-left">
+                        <a href="/home" style="padding:6px 0;font-weight:100;">
+                            <img src="~/img/sitelogosm.png" />
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden-xs col-xs-9">
+                    <div class="navbar-collapse">
+                        <ul class="nav navbar-nav pull-right">
+                            <li class="nava">
+                                <span class="fui-mic hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu1">声音</b>
+                                <ul class="dropdown-menu dropdown-menu-left navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="/Home/VoiceNews">近期新闻</a></li>
+                                    <li><a href="/Home/VoicePoints">新锐观点</a></li>
+                                    <li><a href="/Home/constructing">比赛天地</a></li>
+                                </ul>
+                            </li>
+                            <li class="nava">
+                                <span class="fui-windows-8 hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu2">学习</b>
+                                <ul class="dropdown-menu navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu2">
+                                    <li><a href="/Home/LearnSelf">个人学习</a></li>
+                                    <li><a href="/Home/LearnSelf#course">课程学习</a></li>
+                                    <li><a href="/Home/LearnSelf#project">项目学习</a></li>
+                                    <li><a href="/Home/Mooc">MOOC</a></li>
+                                </ul>
+                            </li>
+                            <li class="nava">
+                                <span class="fui-new hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu3">在线</b>
+                                <ul class="dropdown-menu navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu3">
+                                    <li><a href="/Room/Index">场地预约</a></li>
+                                    <li><a href="/Home/Download">资料下载</a></li>
+                                    <li><a href="/Home/constructing">视频库</a></li>
+                                    <li><a href="/Course/Index">课程预约</a></li>
+                                </ul>
+                            </li>
+                            <li class="nava">
+                                <span class="fui-gear hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu4">活动</b>
+                                <ul class="dropdown-menu navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu4">
+                                    <li><a href="/Activity/Index">目前活动</a></li>
+                                    <li><a href="/Activity/History">往期活动</a></li>
+                                </ul>
+                            </li>
+                            <li class="nava">
+                                <span class="fui-star hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu5">培育</b>
+                                <ul class="dropdown-menu navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu5">
+                                    <li><a href="/Home/TutorOnline">导师在线</a></li>
+                                    <li><a href="/Home/TutorJoin">成为导师</a></li>
+                                </ul>
+                            </li>
+                            <li class="nava">
+                                <span class="fui-bookmark hidden-xs hidden-sm hidden-md"></span><b href="#" data-toggle="dropdown" id="dropdownMenu6">关于</b>
+                                <ul class="dropdown-menu navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu6">
+                                    <li><a href="/Home/AboutSite">京贸创客</a></li>
+                                    <li><a href="/Home/AboutNew">创业企业</a></li>
+                                    <li><a href="/Manage/Project">创业项目</a></li>
+                                </ul>
+                            </li>
+                            @Html.Partial("_LoginPartial")
+                        </ul>
+                    </div>
+                </div>
+                <div class="visible-xs-inline-block col-xs-offset-3 col-xs-5">
+                    <ul style="list-style:none">
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                </div>
+                <div class="visible-xs-block col-xs-2 pull-right">
+                    <div class="nav nav-hamburger pull-right">
+                        <!--b href="#" data-toggle="dropdown" id="dropdownMenu1">声音</!--b>
+                        <ul class="dropdown-menu dropdown-menu-left navb animated fadeIn" role="menu" aria-labelledby="dropdownMenu1"-->
+                            <a data-toggle="collapse" href="#nav1" id="dropdownMenu9"><span class="fui-list" aria-hidden="true" style="color:white;"></span></a>
+                            <ul id="nav1" class="dropdown-menu dropdown-menu-right"  role="menu" aria-labelledby="dropdownMenu9" >
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd1">声音</a>
+                                    <ul id="dd1" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Home/VoiceNews">近期新闻</a></li>
+                                        <li><a href="/Home/VoicePoints">新锐观点</a></li>
+                                        <li><a href="/Home/constructing">比赛天地</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd2">学习</a>
+                                    <ul id="dd2" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Home/LearnSelf">个人学习</a></li>
+                                        <li><a href="/Home/LearnSelf#course">课程学习</a></li>
+                                        <li><a href="/Home/LearnSelf#project">项目学习</a></li>
+                                        <li><a href="/Home/Mooc">MOOC</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd3">在线</a>
+                                    <ul id="dd3" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Room/Index">场地预约</a></li>
+                                        <li><a href="/Home/Download">资料下载</a></li>
+                                        <li><a href="/Home/constructing">视频库</a></li>
+                                        <li><a href="/Course/Index">课程预约</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd4">活动</a>
+                                    <ul id="dd4" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Activity/Index">目前活动</a></li>
+                                        <li><a href="/Activity/History">往期活动</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd5">培育</a>
+                                    <ul id="dd5" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Home/TutorOnline">导师在线</a></li>
+                                        <li><a href="/Home/TutorJoin">成为导师</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="tndmenu" data-toggle="collapse" data-target="#dd6">关于</a>
+                                    <ul id="dd6" class="collapse" style="transition:0.2s;">
+                                        <li><a href="/Home/AboutSite">京贸创客</a></li>
+                                        <li><a href="/Home/AboutNew">创业企业</a></li>
+                                        <li><a href="/Manage/Project">创业项目</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+</div>
+                </div>
+            </div>
+        </div>
+    </nav>
     @RenderBody()
 
     <div class="col-xs-12" style="padding-top:50px;padding-bottom:20px;min-height:225px;background-color:white;font-size:12px;font-family:'Microsoft YaHei UI','Arial Unicode MS';">

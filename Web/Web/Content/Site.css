@@ -48,17 +48,39 @@ textarea {
     padding: 14px 21px;
 }
 
+.nava{
+    color:white;
+    font-weight:200;
+    margin:5px 12px;
+}
 
-.a:hover .aa {
+
+.nava:hover{
+    cursor:pointer;
+    border-bottom: 2px solid #fff;
+}
+.nav-hamburger {
+    height: 40px;
+    padding: 0 10px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-radius: 2px;
+    font-size: 1.125rem;
+    line-height: 40px;
+}
+
+
+/*
+.nava:hover .navb {
     display: block;
     -webkit-animation-duration: 0.8s;
     animation-duration: 0.8s;
 }
 
-.aa {
+.navb {
     display: none;
 }
-
+    */
 
 dl > dt {
     color: black;
@@ -691,4 +713,9 @@ li a:hover{
     background-color:#34495e;
     color:white;
     font-weight:bold;
+}
+
+/*new*/
+.tndmenu{
+    cursor:pointer;
 }

@@ -714,6 +714,7 @@
     <Content Include="img\icons\svg\retina.svg" />
     <Content Include="img\icons\svg\ribbon.svg" />
     <Content Include="img\icons\svg\toilet-paper.svg" />
+    <Content Include="img\indexlogo.jpg" />
     <Content Include="img\mate1.jpg" />
     <Content Include="img\moocintro.jpg" />
     <Content Include="img\old-brick-wall-texture-02.jpg" />
@@ -721,6 +722,8 @@
     <Content Include="img\overlay.png" />
     <Content Include="img\qiusuo1.jpg" />
     <Content Include="img\sea.jpg" />
+    <Content Include="img\sitelogo.png" />
+    <Content Include="img\sitelogosm.png" />
     <Content Include="img\story1.jpg" />
     <Content Include="img\story1.png" />
     <Content Include="img\story2.jpg" />
