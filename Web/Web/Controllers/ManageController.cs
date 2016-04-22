@@ -235,6 +235,8 @@ namespace Web.Controllers
 
                 return RedirectToAction("Index", "Manage");
             }
+            ViewBag.School = Extensions.GetCurrentUser().School;
+            ViewBag.Academy = Extensions.GetCurrentUser().Academy;
 
             return View();
         }
@@ -257,6 +259,8 @@ namespace Web.Controllers
                 if (model.FrontIdCard == null)
                 {
                     TempData["Alert"] = "请检查上传文件！";
+                    ViewBag.School = Extensions.GetCurrentUser().School;
+                    ViewBag.Academy = Extensions.GetCurrentUser().Academy;
                     return View(model);
                 }
                 model.BackIdCard = Material.Create("", MaterialType.Identity, Request.Files[1], db);
@@ -265,6 +269,8 @@ namespace Web.Controllers
                     db.Materials.Remove(model.FrontIdCard);
                     db.SaveChanges();
                     TempData["Alert"] = "请检查上传文件！";
+                    ViewBag.School = Extensions.GetCurrentUser().School;
+                    ViewBag.Academy = Extensions.GetCurrentUser().Academy;
                     return View(model);
                 }
                 model.Status = IdentityStatus.ToApprove;
@@ -284,7 +290,7 @@ namespace Web.Controllers
         {
             User user = db.Users.Find(Extensions.GetUserId());
             ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
-            var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
+            var data = db.IndustryLists.OrderBy(i => i.IndustryName).ToList();
             if (data.Count() == 0)
             {
                 data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
@@ -336,7 +342,7 @@ namespace Web.Controllers
                 {
                     TempData["Alert"] = "请上传格式为jpg, jpeg，png的图片";
                     model.Avatar = null;
-                    var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
+                    var data = db.IndustryLists.OrderBy(i => i.IndustryName).ToList();
                     if (data.Count() == 0)
                     {
                         data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });

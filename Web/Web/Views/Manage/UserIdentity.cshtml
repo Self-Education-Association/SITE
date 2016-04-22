@@ -23,7 +23,7 @@
         <div class="col-xs-10 board">
             <h4>身份验证</h4>
             <hr />
-            <!--以下为模板内容-->           
+            <!--以下为模板内容-->
 
             @using (Html.BeginForm("UserIdentity", "Manage", FormMethod.Post, new { @enctype = "multipart/form-data" }))
             {
@@ -50,18 +50,16 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.InUIBE, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label("来自学校", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.InUIBE, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
-                            @Html.ValidationMessageFor(model => model.InUIBE, "", new { @class = "text-danger" })
+                            @Html.Label((string)ViewBag.School)
                         </div>
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.IsStudent, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.Label("来自学院", htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
-                            @Html.DropDownListFor(model => model.IsStudent, new[] { new SelectListItem() { Text = "是", Value = "true" }, new SelectListItem() { Text = "否", Value = "false" } })
-                            @Html.ValidationMessageFor(model => model.IsStudent, "", new { @class = "text-danger" })
+                            @Html.Label((string)ViewBag.Academy)
                         </div>
                     </div>
 

@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
 using Web.Models;
+using System.Collections.Generic;
 
 namespace Web.Controllers
 {
@@ -159,6 +160,8 @@ namespace Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.School = new SelectList(GetSchoolList(), "Name", "Name");
+
             return View();
         }
 
@@ -171,7 +174,24 @@ namespace Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email, DisplayName = model.DisplayName, Time = DateTime.Now, IsDisabled = false, Profile = new Profile { Email = model.Email, Phone = "", Searchable = true, InformationPrivacy = false, Other = "" } };
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    DisplayName = model.DisplayName,
+                    Academy = model.Academy,
+                    School = model.School,
+                    Time = DateTime.Now,
+                    IsDisabled = false,
+                    Profile = new Profile
+                    {
+                        Email = model.Email,
+                        Phone = "",
+                        Searchable = true,
+                        InformationPrivacy = false,
+                        Other = ""
+                    }
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -188,6 +208,7 @@ namespace Web.Controllers
                 AddErrors(result);
             }
 
+            ViewBag.School = new SelectList(GetSchoolList(), "Name", "Name");
             // 如果我们进行到这一步时某个地方出错，则重新显示表单
             return View(model);
         }
@@ -476,6 +497,19 @@ namespace Web.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        private List<SchoolList> GetSchoolList()
+        {
+            using (BaseDbContext db = new BaseDbContext())
+            {
+                var data = db.SchoolLists.OrderBy(s => s.Name).ToList();
+                if (data.Count == 0)
+                {
+                    data.Add(new SchoolList { Id = Guid.Empty, Name = "空" });
+                }
+                return data;
+            }
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

@@ -40,19 +40,27 @@
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.InUIBE)
+                        @Html.DisplayNameFor(model => model.User.School)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.InUIBE)
+                        @Html.DisplayFor(model => model.User.School)
                     </dd>
 
                     <dt>
-                        @Html.DisplayNameFor(model => model.IsStudent)
+                        @Html.DisplayNameFor(model => model.User.Academy)
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.IsStudent)
+                        @Html.DisplayFor(model => model.User.Academy)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.IdNumber)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.IdNumber)
                     </dd>
 
                     <dt>
@@ -68,11 +76,11 @@
                     </dt>
 
                     <dd>
-                        @Html.DisplayFor(model => model.Status)
+                        @Web.Models.EnumExtension.GetEnumCustomDescription(Model.Status)
                     </dd>
                 </dl>
                 <img src="@Url.Content(Model.FrontIdCard.GetUrl())" style="height:200px;width:200px" />
-                <img src="@Url.Content(Model.FrontIdCard.GetUrl())" style="height:200px;width:200px" />
+                <img src="@Url.Content(Model.BackIdCard.GetUrl())" style="height:200px;width:200px" />
             </div>
         <br />
         <p>
@@ -83,8 +91,3 @@
         </div>
     </div>
 </section>
-
-
-
-
-    </div>
