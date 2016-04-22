@@ -72,7 +72,7 @@ namespace Web.Models
         {
             if (!type.Match(file))
                 return null;
-            string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
+            string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "-" + Guid.NewGuid() + Path.GetExtension(file.FileName);
             string absolutFileName;
             switch (type)
             {
@@ -108,12 +108,12 @@ namespace Web.Models
             return db.Materials.Find(material.Id);
         }
 
-        public static Material ChangeFile(Guid id,HttpPostedFileBase file, BaseDbContext db)
+        public static Material ChangeFile(Guid id, HttpPostedFileBase file, BaseDbContext db)
         {
             Material material = db.Materials.Find(id);
             if (!material.Type.Match(file))
                 return null;
-            string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
+            string uploadFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + "-" + Guid.NewGuid() + Path.GetExtension(file.FileName);
             string absolutFileName;
             switch (material.Type)
             {

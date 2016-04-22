@@ -83,6 +83,14 @@ namespace Web.Models
         [Required]
         [Display(Name ="用户名")]
         public string DisplayName { get; set; }
+
+        [Required]
+        [Display(Name ="学校")]
+        public string School { get; set; }
+
+        [Required]
+        [Display(Name = "学院")]
+        public string Academy { get; set; }
     }
 
     public class ResetPasswordViewModel

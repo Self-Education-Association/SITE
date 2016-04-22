@@ -28,6 +28,12 @@ namespace Web.Models
         [Display(Name = "昵称")]
         public string DisplayName { get; set; }//用户昵称
 
+        [Display(Name = "来自学校")]
+        public string School { get; set; }
+
+        [Display(Name = "来自学院")]
+        public string Academy { get; set; }
+
         public Profile Profile { get; set; }
 
         public virtual IdentityRecord IdentityRecord { get; set; }//认证记录
@@ -88,12 +94,6 @@ namespace Web.Models
 
         [Display(Name = "身份证反面或学生证注册页")]
         public virtual Material BackIdCard { get; set; }//身份证反面或学生证注册报到页
-
-        [Display(Name = "贸大校友")]
-        public bool InUIBE { get; set; }//是否为校友
-
-        [Display(Name = "在校学生")]
-        public bool IsStudent { get; set; }//是否为在校生
 
         [Display(Name = "认证时间")]
         public DateTime Time { get; set; }//时间戳
@@ -194,5 +194,10 @@ namespace Web.Models
         Done
     }
 
+    public class SchoolList
+    {
+        public Guid Id { get; set; }
 
+        public string Name { get; set; }
+    }
 }

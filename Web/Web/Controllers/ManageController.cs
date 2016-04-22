@@ -64,6 +64,7 @@ namespace Web.Controllers
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
                 : message == ManageMessageId.AdminQuit ? "作为团队创始人你无法将自己从团队中删除。"
                 : message == ManageMessageId.ApproveSuccess ? "批准成员加入成功！"
+                : message == ManageMessageId.UserIdentitySuccess ? "申请实名认证成功，请等待管理员审批！"
                 : "";
             }
 
@@ -235,6 +236,8 @@ namespace Web.Controllers
 
                 return RedirectToAction("Index", "Manage");
             }
+            ViewBag.School = Extensions.GetCurrentUser().School;
+            ViewBag.Academy = Extensions.GetCurrentUser().Academy;
 
             return View();
         }
@@ -257,6 +260,8 @@ namespace Web.Controllers
                 if (model.FrontIdCard == null)
                 {
                     TempData["Alert"] = "请检查上传文件！";
+                    ViewBag.School = Extensions.GetCurrentUser().School;
+                    ViewBag.Academy = Extensions.GetCurrentUser().Academy;
                     return View(model);
                 }
                 model.BackIdCard = Material.Create("", MaterialType.Identity, Request.Files[1], db);
@@ -265,6 +270,8 @@ namespace Web.Controllers
                     db.Materials.Remove(model.FrontIdCard);
                     db.SaveChanges();
                     TempData["Alert"] = "请检查上传文件！";
+                    ViewBag.School = Extensions.GetCurrentUser().School;
+                    ViewBag.Academy = Extensions.GetCurrentUser().Academy;
                     return View(model);
                 }
                 model.Status = IdentityStatus.ToApprove;
@@ -284,7 +291,7 @@ namespace Web.Controllers
         {
             User user = db.Users.Find(Extensions.GetUserId());
             ViewData["ProgressList"] = EnumExtension.GetSelectList(typeof(ProjectProgressType));
-            var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
+            var data = db.IndustryLists.OrderBy(i => i.IndustryName).ToList();
             if (data.Count() == 0)
             {
                 data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
@@ -336,7 +343,7 @@ namespace Web.Controllers
                 {
                     TempData["Alert"] = "请上传格式为jpg, jpeg，png的图片";
                     model.Avatar = null;
-                    var data = db.IndustryList.OrderBy(i => i.IndustryName).ToList();
+                    var data = db.IndustryLists.OrderBy(i => i.IndustryName).ToList();
                     if (data.Count() == 0)
                     {
                         data.Add(new IndustryList { ID = Guid.Empty, IndustryName = "空" });
@@ -445,7 +452,7 @@ namespace Web.Controllers
             {
                 ApplyRecord.Status = TeamMemberStatus.Normal;
                 applicant.Project = user.Project;
-                db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Modified;
+                db.Entry(ApplyRecord).State = EntityState.Modified;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplySuccess, ref db));
                 db.TeamEvents.Add(new TeamEvent
                 {
@@ -459,7 +466,7 @@ namespace Web.Controllers
             }
             else
             {
-                db.Entry(ApplyRecord).State = System.Data.Entity.EntityState.Deleted;
+                db.Entry(ApplyRecord).State = EntityState.Deleted;
                 db.Messages.Add(new Message(applicant.Id, MessageType.System, MessageTemplate.TeamApplyFailure, ref db));
             }
             db.SaveChanges();

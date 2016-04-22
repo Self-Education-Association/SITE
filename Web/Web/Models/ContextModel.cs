@@ -86,8 +86,10 @@ namespace Web.Models
 
         public virtual DbSet<TeamEvent> TeamEvents { get; set; }
 
-        public virtual DbSet<IndustryList> IndustryList { get; set; }
+        public virtual DbSet<IndustryList> IndustryLists { get; set; }
 
-        public System.Data.Entity.DbSet<Web.Models.TeamReport> TeamReports { get; set; }
+        public virtual DbSet<SchoolList> SchoolLists { get; set; }
+
+        public virtual DbSet<TeamReport> TeamReports { get; set; }
     }
 }

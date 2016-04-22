@@ -1,13 +1,15 @@
-﻿@model IEnumerable<Web.Models.IdentityRecord>
+﻿@model Web.Models.ListPage<Web.Models.Project>
 
 @{
-    ViewBag.Title = "审核认证";
+    ViewBag.Title = "项目列表";
+    int index = Model.PageIndex + 1;
 }
+
 <section class="sec2">
     <div class="cover">
     </div>
     <div class="row animated pulse">
-        <b class="secheader">管理员 | 审核认证 </b>
+        <b class="secheader">管理员 | 项目列表 </b>
         <p class="seccontent">
             京贸创客创业平台是对外经济贸易大学国际经济贸易学院与北京其他兄弟院校共建的创业平台。在这里你能找到自己的创业伙伴，获得导师指导，注册并成立自己的创业公司。
         </p>
@@ -19,33 +21,52 @@
             @Html.Partial("_AdminMenuPartial")
         </div>
         <div class="col-xs-10 board">
-            <h4>审核认证</h4>
+            <h4>项目列表</h4>
             <hr />
-            <table class="table table-striped">
+            @{
+                <ul class="pager">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("前一页", "ProjectIdentityRecords", new { page = Model.PageIndex - 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>前一页</a></li>
+                    }
+                    <li><a>@index</a></li>
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="previous ">@Html.ActionLink("后一页", "ProjectIdentityRecords", new { page = Model.PageIndex + 1 })</li>
+                    }
+                    else
+                    {
+                        <li class="previous disabled"><a>后一页</a></li>
+                    }
+                </ul>
+            }
+            <table class="table">
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.User.DisplayName)
+                        申请人
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Name)
+                        项目名称
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Time)
+                        申请时间
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.User.School)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Status)
+                        申请状态
                     </th>
                     <th></th>
                 </tr>
 
                 @foreach (var item in Model)
+
             {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.User.DisplayName)
+                            @Html.DisplayFor(modelItem => item.Admin.DisplayName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Name)
@@ -54,22 +75,15 @@
                             @Html.DisplayFor(modelItem => item.Time)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.User.School)
-                        </td>
-                        <td>
                             @Web.Models.EnumExtension.GetEnumCustomDescription(item.Status)
                         </td>
-
                         <td>
-                            @Html.ActionLink("详情", "IdentityRecordDetails", new { id = item.Id })
+                            @Html.ActionLink("详情", "ProjectIdentityRecordDetails", new { id = item.Id })
                         </td>
                     </tr>
                 }
 
             </table>
-
         </div>
     </div>
 </section>
-
-

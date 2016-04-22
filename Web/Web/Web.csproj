@@ -257,6 +257,14 @@
     <Compile Include="Migrations\201604120847159_UpdateTeamEventModel.Designer.cs">
       <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604220550078_UpdateUserModelIdentityModel.cs" />
+    <Compile Include="Migrations\201604220550078_UpdateUserModelIdentityModel.Designer.cs">
+      <DependentUpon>201604220550078_UpdateUserModelIdentityModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201604220614055_UpdateUserModel.cs" />
+    <Compile Include="Migrations\201604220614055_UpdateUserModel.Designer.cs">
+      <DependentUpon>201604220614055_UpdateUserModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ActivityModels.cs" />
     <Compile Include="Models\AppSettings.cs" />
@@ -921,6 +929,8 @@
     <Content Include="Views\Manage\UserActivity.cshtml" />
     <Content Include="Views\Manage\UserCourse.cshtml" />
     <Content Include="Views\Manage\UserRoom.cshtml" />
+    <Content Include="Views\Administrator\Companies.cshtml" />
+    <Content Include="Views\Administrator\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -969,6 +979,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201604120847159_UpdateTeamEventModel.resx">
       <DependentUpon>201604120847159_UpdateTeamEventModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604220550078_UpdateUserModelIdentityModel.resx">
+      <DependentUpon>201604220550078_UpdateUserModelIdentityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201604220614055_UpdateUserModel.resx">
+      <DependentUpon>201604220614055_UpdateUserModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

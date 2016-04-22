@@ -5,8 +5,8 @@
 <style type="text/css">
     body {
         background: url(/img/subtle-grunge-texture-02.jpg);
-        background-size:contain;
-        background-attachment:fixed;   
+        background-size: contain;
+        background-attachment: fixed;
     }
 
     .login-form .login-field-icon {
@@ -29,30 +29,40 @@
                     <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })</div>
                 </div>
                 <div class="form-group" style="margin:auto;width:70%;">
-                    <a class="login-field-icon fui-user col-xs-12" for="DisplayName">昵称</a>                   
-                        @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control login-filed", @placeholder = "请输入昵称", @id = "DisplayName" })
+                    <a class="login-field-icon fui-user col-xs-12" for="DisplayName">昵称</a>
+                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control login-filed", @placeholder = "请输入昵称", @id = "DisplayName" })
+                    <div class="col-xs-12"></div>
+                </div>
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <a class="login-field-icon fui-user col-xs-12" for="DisplayName">学校</a>
+                    @Html.DropDownListFor(m => m.School, (SelectList)ViewBag.School, new { @class = "form-control login-filed" })
+                    <div class="col-xs-12"></div>
+                </div>
+                <div class="form-group" style="margin:auto;width:70%;">
+                    <a class="login-field-icon fui-user col-xs-12" for="DisplayName">学院</a>
+                    @Html.TextBoxFor(m => m.Academy, new { @class = "form-control login-filed", @placeholder = "请输入学院名", @id = "DisplayName" })
                     <div class="col-xs-12"></div>
                 </div>
                 <div class="form-group" style="margin:auto;width:70%;">
                     <div>
                         <a class="login-field-icon fui-lock col-xs-12" for="Password">密码</a>
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control login-field", @placeholder = "请输入密码", @id = "Password" })
-                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div> 
+                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
                     </div>
                 </div>
                 <div class="form-group" style="margin:auto;width:70%;">
-                        <a class="login-field-icon fui-lock col-xs-12" for="ConfirmPassword">确认密码</a>
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control login-field", @placeholder = "请确认密码", @id = "ConfirmPassword" })
-                        <div class="col-xs-12">@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
-                <button type="submit" value="注册" class="btn btn-primary btn-lg btn-block" style="margin-top:30px">注册</button>
+                    <a class="login-field-icon fui-lock col-xs-12" for="ConfirmPassword">确认密码</a>
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control login-field", @placeholder = "请确认密码", @id = "ConfirmPassword" })
+                    <div class="col-xs-12">@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
+                    <button type="submit" value="注册" class="btn btn-primary btn-lg btn-block" style="margin-top:30px">注册</button>
                 </div>
             }
         </div><!--/row-->
-     
-        </div>
-    </div><!--/.fluid-container-->
+
+    </div>
+</div><!--/.fluid-container-->
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-         
+
