@@ -133,12 +133,12 @@ dl.col-xs-4 {
 }
 
 .sec {
-    background: url(../img/sea.jpg) center fixed;
+    background: url(../img/indexsec.jpg) center scroll;
     background-size: cover;
     display: table;
     width: 100%;
     height: auto;
-    padding: 250px 0 250px;
+    padding: 150px 0;
     text-align: center;
     color: #fff;
     position: relative;
@@ -163,7 +163,7 @@ dl.col-xs-4 {
     display: table;
     width: 100%;
     height: auto;
-    padding: 225px 0 225px;
+    padding: 125px 0 125px;
     color: black;
     position: relative;
     z-index: 0;
@@ -718,4 +718,8 @@ li a:hover{
 /*new*/
 .tndmenu{
     cursor:pointer;
+}
+
+.dropdown-menu > li > ul >li > a{
+    font-size:10px;
 }

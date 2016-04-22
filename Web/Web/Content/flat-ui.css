@@ -3196,7 +3196,7 @@ fieldset[disabled] .input-group-btn .btn-default.active {
 .select2-drop {
   z-index: 1000;
   background-color: #f3f4f5;
-  min-width: 220px;
+  min-width: 160px;
   border: none;
   margin-top: 9px;
   padding: 0;
