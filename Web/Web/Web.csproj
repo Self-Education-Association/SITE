@@ -722,6 +722,7 @@
     <Content Include="img\icons\svg\retina.svg" />
     <Content Include="img\icons\svg\ribbon.svg" />
     <Content Include="img\icons\svg\toilet-paper.svg" />
+    <Content Include="img\Indexboard.png" />
     <Content Include="img\indexlogo.jpg" />
     <Content Include="img\indexsec.jpg" />
     <Content Include="img\mate1.jpg" />
