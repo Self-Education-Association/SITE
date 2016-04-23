@@ -2,8 +2,23 @@
 @{
     ViewBag.Title = "首页";
 }
+<script>
+    $(function () {
+            var divHeight;
+            Resize = function () {
+                divHeight = $(this).height();
+            }
+    });
+</script>
 <!--第一部分：大标题-->
-<section class="sec">
+<section class="sec visible-lg visible-md">
+    <div class="cover2"></div>
+    <div class="row animated fadeIn" style="z-index:0;">
+        <b class="secheader">京贸创客创业平台<a class="visible-sm visible-xs"><br /></a> 致力创业创新发展</b><br>
+        <a class="secbutton" href="/Manage/Project">立即提交你的创业计划</a>
+    </div>
+</section>
+<section class="secmobile visible-xs visible-sm">
     <div class="cover2"></div>
     <div class="row animated fadeIn" style="z-index:0;">
         <b class="secheader">京贸创客创业平台<a class="visible-sm visible-xs"><br /></a> 致力创业创新发展</b><br>
@@ -11,18 +26,15 @@
     </div>
 </section>
 <!--第二部分：轮播图-->
-<section class="secblank">
+<section class="secblank visible-lg">
     <div class="row" style="padding-left:10%;padding-right:10%;">
-        <div style="float:left" class="col-md-4 col-xs-12">
-            <h1 class="showtitle" style="font-size:40px;">风采展示|Show</h1>
-            <p class="showpara">这里是京贸创客风采展示。</p>
-        </div>
-        <div style="margin-top:20px;" class="col-md-8 col-xs-12">
-            <div id="myCarousel" class="carousel slide" style="height:300px;cursor:pointer;box-shadow:20px 20px 20px rgba(0,0,0,0.5);" data-ride="carousel" data-interval="2000">
+        <b class="secheader2 col-xs-12">风采展示|Show</b>
+        <div style="margin-top:20px;" class="col-xs-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
                 @if (Model.Sliders.Count > 0)
                 {
 
-                <!-- 轮播（Carousel）指标 -->
+
                     <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
                         @for (int i = 1; i < Model.Sliders.Count; i++)
@@ -30,7 +42,7 @@
                             <li data-target="#myCarousel" data-slide-to="@i"></li>
                         }
                     </ol>
-                <!-- 轮播（Carousel）项目 -->
+
                     <div class="carousel-inner">
                         <div class="item active">
                             <img src="@Url.Content(Model.Sliders[0].GetUrl())" alt="First slide" style="height:300px;width:100%">
@@ -44,7 +56,7 @@
                             </div>
                         }
                     </div>
-                <!-- 轮播（Carousel）导航 -->
+
                     <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
                     <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
 
@@ -53,6 +65,47 @@
         </div>
     </div>
 </section>
+
+<section class="secblankmobile hidden-lg">
+    <div class="row" style="padding-left:2%;padding-right:2%;">
+        <b class="secheader2 col-xs-12">风采展示|Show</b>
+        <div style="margin-top:20px;" class="col-xs-12">
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2000">
+                @if (Model.Sliders.Count > 0)
+                {
+
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        @for (int i = 1; i < Model.Sliders.Count; i++)
+                        {
+                            <li data-target="#myCarousel" data-slide-to="@i"></li>
+                        }
+                    </ol>
+
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <img src="@Url.Content(Model.Sliders[0].GetUrl())" alt="First slide" style="height:300px;width:100%">
+                                <div class="carousel-caption">@Model.Sliders[0].Description</div>
+                            </div>
+                            @for (int i = 1; i < Model.Sliders.Count; i++)
+                            {
+                                <div class="item">
+                                    <img src="@Url.Content(Model.Sliders[i].GetUrl())" alt="First slide" style="height:300px;width:100%">
+                                    <div class="carousel-caption">@Model.Sliders[i].Description</div>
+                                </div>
+                            }
+                        </div>
+
+                        <a class="left carousel-control" data-slide="prev" href="#myCarousel" style="color:springgreen">&lsaquo;</a>
+                        <a class="right carousel-control" data-slide="next" href="#myCarousel" style="color:springgreen">&rsaquo;</a>
+
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
 <!--第三部分：公告栏-->
 <section class="secblank" style="background-image:url(../../img/featuresbg.jpg);background-size: cover;background-position: center;background-attachment:fixed;">
     <div class="row" style="padding-left:10%;padding-right:10%;">
@@ -206,7 +259,7 @@
             var request = this.Month - 1;
             jQuery.ajax({
                 type: "GET",
-                url: '@Url.Action("ActivitiesByMonth")' + '?year=' + this.Year + '&month=' +request,
+                url: '@Url.Action("ActivitiesByMonth")' + '?year=' + this.Year + '&month=' + request,
                 data: {},
                 datatype: "json",
                 success: function (data) {

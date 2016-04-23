@@ -14,7 +14,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    [Authorize(Users ="admin@uibe.edu.cn")]
+    [Authorize(Users = "admin@uibe.edu.cn")]
     public class AdministratorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
@@ -264,7 +264,7 @@ namespace Web.Controllers
         public ActionResult Materials(int page = 0)
         {
             IListPage test = new Material();
-            var model = new ListPage<Material>(db.Materials, page, pageSize); //实现分页功能
+            var model = new ListPage<Material>(db.Materials.Where(m => m.Type == MaterialType.Activity || m.Type == MaterialType.Download || m.Type == MaterialType.Slider), page, pageSize); //实现分页功能
             return View(model);
         }
 
