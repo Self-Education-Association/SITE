@@ -13,7 +13,7 @@ using Web.Models;
 
 namespace Web.Controllers
 {
-    //[Authorize(Users ="admin@uibe.edu.cn")]
+    [Authorize(Users ="admin@uibe.edu.cn")]
     public class AdministratorController : Controller
     {
         private BaseDbContext db = new BaseDbContext();
