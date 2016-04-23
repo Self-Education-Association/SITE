@@ -63,7 +63,7 @@ namespace Web.Controllers
                 : message == ManageMessageId.UpdateUserProfileSuccess ? "修改个人信息成功。"
                 : message == ManageMessageId.OperationSuccess ? "操作成功。"
                 : message == ManageMessageId.AdminQuit ? "作为团队创始人你无法将自己从团队中删除。"
-                : message == ManageMessageId.ApproveSuccess ? "批准成员加入成功！"
+                : message == ManageMessageId.ApproveSuccess ? "成员列表审核成功！"
                 : message == ManageMessageId.UserIdentitySuccess ? "申请实名认证成功，请等待管理员审批！"
                 : "";
             }

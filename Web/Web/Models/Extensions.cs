@@ -62,7 +62,7 @@ namespace Web.Models
 
         public static bool Match(this MaterialType type, HttpPostedFileBase file)
         {
-            string extensions = Path.GetExtension(file.FileName);
+            string extensions = Path.GetExtension(file.FileName).ToLower();
             List<string> allowList;
             switch (type)
             {
@@ -72,7 +72,7 @@ namespace Web.Models
                     allowList = new List<string> { ".jpg", ".jpeg", ".png" };
                     break;
                 case MaterialType.Management:
-                    allowList = new List<string> { ".zip", ".rar", ".doc", ".docx" };
+                    allowList = new List<string> { ".zip", ".rar", ".doc", ".docx", ".pdf" };
                     break;
                 default:
                     return true;
