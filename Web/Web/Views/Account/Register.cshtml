@@ -46,13 +46,13 @@
                 <div class="form-group" style="margin:auto;width:70%;">
                     <div>
                         <a class="login-field-icon fui-lock col-xs-12" for="Password">密码</a>
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control login-field", @placeholder = "请输入密码", @id = "Password" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control login-filed", @placeholder = "请输入密码", @id = "Password" })
                         <div class="col-xs-12">@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })</div>
                     </div>
                 </div>
                 <div class="form-group" style="margin:auto;width:70%;">
                     <a class="login-field-icon fui-lock col-xs-12" for="ConfirmPassword">确认密码</a>
-                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control login-field", @placeholder = "请确认密码", @id = "ConfirmPassword" })
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control login-filed", @placeholder = "请确认密码", @id = "ConfirmPassword" })
                     <div class="col-xs-12">@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })</div>
                     <button type="submit" value="注册" class="btn btn-primary btn-lg btn-block" style="margin-top:30px">注册</button>
                 </div>
