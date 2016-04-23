@@ -615,7 +615,7 @@ namespace Web.Controllers
             var projects = db.Projects.ToList();
             MemoryStream file = new MemoryStream();
             StreamWriter sw = new StreamWriter(file, Encoding.GetEncoding("GBK"));
-            sw.Write("项目名称,立项时间,项目行业,团队事项的更新时间,团队成员,电子邮箱,所在学校,联系方式");
+            sw.Write("项目名称,立项时间,项目行业,团队事项更新时间,团队成员,电子邮箱,所在学校,联系方式");
             sw.WriteLine();
             foreach (Project project in projects)
             {
@@ -625,15 +625,17 @@ namespace Web.Controllers
                 sw.Write(project.Team.Events.OrderByDescending(p => p.AddTime).First().AddTime + ",");
                 foreach (TeamRecord record in project.Team.Member.Where(m => m.Status == TeamMemberStatus.Admin || m.Status==TeamMemberStatus.Normal ))
                 {
+                    sw.Write(project.Name + ",");
+                    sw.Write(project.Time + ",");
+                    sw.Write(project.Industry + ",");
+                    sw.Write(project.Team.Events.OrderByDescending(p => p.AddTime).First().AddTime + ",");
                     User member = record.Receiver;
                     sw.Write(member.DisplayName + ",");
                     sw.Write(member.Profile.Email + ",");
                     sw.Write(member.School + ",");
                     sw.Write(member.Profile.Phone);
                     sw.WriteLine();
-                    sw.Write(",,,,");
                 }
-                sw.Write(",,");
                 sw.WriteLine();
             }
             sw.Flush();
