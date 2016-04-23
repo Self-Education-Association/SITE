@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using Web.Models;
@@ -606,6 +607,41 @@ namespace Web.Controllers
             db.SaveChanges();
             return RedirectToAction("CompanyIdentityRecords");
         }
+        #endregion
+
+        #region 导出模块
+        public ActionResult Output()
+        {
+            var projects = db.Projects.ToList();
+            MemoryStream file = new MemoryStream();
+            StreamWriter sw = new StreamWriter(file, Encoding.GetEncoding("GBK"));
+            sw.Write("项目名称,立项时间,项目行业,团队事项的更新时间,团队成员,电子邮箱,所在学校,联系方式");
+            sw.WriteLine();
+            foreach (Project project in projects)
+            {
+                sw.Write(project.Name+",");
+                sw.Write(project.Time + ",");
+                sw.Write(project.Industry + ",");
+                sw.Write(project.Team.Events.OrderByDescending(p => p.AddTime).First().AddTime + ",");
+                foreach (TeamRecord record in project.Team.Member.Where(m => m.Status == TeamMemberStatus.Admin || m.Status==TeamMemberStatus.Normal ))
+                {
+                    User member = record.Receiver;
+                    sw.Write(member.DisplayName + ",");
+                    sw.Write(member.Profile.Email + ",");
+                    sw.Write(member.School + ",");
+                    sw.Write(member.Profile.Phone);
+                    sw.WriteLine();
+                    sw.Write(",,,,");
+                }
+                sw.Write(",,");
+                sw.WriteLine();
+            }
+            sw.Flush();
+            file.Position = 0;
+            return File(file, "text/comma-separated-values", "output.csv");
+        }
+
+
         #endregion
 
         #region 项目团队管理模块

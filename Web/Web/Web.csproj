@@ -814,8 +814,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="UserUpload\Avatar\DefaultAvatar.png" />
-    <Content Include="UserUpload\Avatar\DefaultNews.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -938,6 +936,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
     <Folder Include="UserUpload\Administrator\" />
+    <Folder Include="UserUpload\Avatar\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
     <Folder Include="UserUpload\Management\" />
