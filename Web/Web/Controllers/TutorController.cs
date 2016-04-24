@@ -234,11 +234,11 @@ namespace Web.Controllers
             return View();
         }
 
-        public ActionResult StudentList(Guid? Id)
+        public ActionResult StudentList(Guid Id)
         {
             var user = Extensions.GetContextUser(ref db);
             if (Id == null)
-                return View(db.CourseRecords.Where(c => c.CourseOperation.Creator.Id == user.Id).ToList());
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             CourseOperation course = db.CourseOperations.Find(Id);
             if (course == null)
             {
@@ -250,39 +250,11 @@ namespace Web.Controllers
                 TempData["Alert"] = "你没有权限对该课程进行评价！";
                 return View("Index");
             }
-            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id == course.Id select a).Distinct();
+            IQueryable<CourseRecord> studentList = (from a in db.CourseRecords where a.CourseOperation.Id == Id select a).Distinct();
             if (studentList.FirstOrDefault() == null)
                 return View(db.CourseRecords.ToList());
             return View(studentList);
         }
-
-        /* public ActionResult Calendar()
-        {
-            var AllCourseInThisMonth = db.CourseOperations.Where(a => a.Creator == Extensions.GetContextUser(db) && a.StartTime.Month == DateTime.Now.Month);
-            int Monthdays = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
-            TempData["Days"] = Monthdays;
-            int t = 0;
-            for (int i = 1; i == Monthdays; i++)
-            {
-                TempData["Days" + i] = AllCourseInThisMonth.Where(a => a.StartTime.Day == i).Count();
-                foreach (var a in AllCourseInThisMonth.Where(a => a.StartTime.Day == i))
-                {
-                    t++;
-                    TempData["Day" + i + t + "Id"] = a.Id;
-                    TempData["Day" + i + t+"Name"] = a.Name;
-                    TempData["Day" + i + t + "StartTime"] = a.StartTime;
-                    TempData["Day" + i + t + "Location"] = a.Location;
-                }
-                t = 0;
-            }
-            return View();
-        }
-
-        public ActionResult ToCourse(Guid? Id)
-        {
-            return RedirectToAction("StudentList");
-        }
-         */
 
         protected override void Dispose(bool disposing)
         {
