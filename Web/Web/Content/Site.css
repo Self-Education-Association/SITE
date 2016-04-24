@@ -86,10 +86,11 @@ dl > dt {
     color: black;
 }
 
-dl.col-xs-1 {
-    text-align: center;
-    padding-left: 0;
+dl.col-xs-2 {
+    text-align: left;
+    padding-left: 10px;
     padding-right: 0;
+    border-left:dotted 1px #b8c0cc;
 }
 
 dl.col-xs-4 {
@@ -247,7 +248,41 @@ dl.col-xs-4 {
     z-index: 1;
 }
 
+.boardname{
+    font-size: 18px;
+    min-height:32px;
+    font-family:SimHei;
+    margin: 0;
+    color: #c25b4e;
+    text-align:center;  
+}
 
+.boardnamemb{
+    font-size: 18px;
+    min-height:48px;
+    font-family:SimHei;
+    margin: 0;
+    color: #c25b4e;
+    text-align:center
+}
+
+.boardcontent{
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 0px;
+    min-height:75px;
+    word-wrap:break-word;
+    text-wrap:normal;
+    word-break:break-all;
+    text-align:center;
+}
+
+.boardtime{
+    font-size: 16px;
+    line-height: 1.6;
+    color:dimgray;
+    text-align:center;
+}
 
 .feature {
     border-radius: 5px;
@@ -255,22 +290,13 @@ dl.col-xs-4 {
     margin: 0 auto 25px auto;
     padding: 15px;
     color: #000;
-    text-align: center;
-    min-height: 350px;
     box-shadow: 1px 1px 2px rgba(0,0,0,0.19);
-    cursor: pointer;
-   
 }
 
     .feature:hover {
         box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
     }
 
-    .feature img {
-        border-radius: 5px 5px 0 0;
-        width: 100%;
-        height: 220px;
-    }
 
 .featuretitle{
     margin-top: 25px; 
@@ -296,12 +322,12 @@ dl.col-xs-4 {
 }
 
 .showitem {
-    padding: 0;
-    margin: 0;
+ padding:10px 10px;
+ border:solid 2px  #f0f0f0;
 }
 
     .showitem img {
-        width: 100%;
+        width: 270px;
         height: 262px;
     }
 
@@ -351,7 +377,7 @@ dl.col-xs-4 {
 }
 
 #idCalendar td.onToday {
-    color: black;
+    color: red;
     font-weight:bolder;
 }
 
@@ -451,7 +477,7 @@ dl.col-xs-4 {
     top: 0px;
     width: 100%;
     height: 100%;
-    z-index: 0;
+    z-index: 1;
     opacity: 0;
     transition: all 0.3s ease-in-out;
 }
@@ -471,14 +497,23 @@ dl.col-xs-4 {
     width: 50%;
     color: #fff;
     text-align: center;
-    margin: 40% 25%;
+    margin: 20% 25%;
     padding: 5px 2px;
+    z-index:2;
 }
 
     .storya:hover {
         color: lightskyblue;
         border: 2px solid lightskyblue;
         transition: all 0.5s ease-in-out;
+    }
+
+    .scoverpara{
+        color:white;
+        font-size:20px;
+        text-align:center;
+        font-family:'Microsoft YaHei';
+        margin:20% 7% 0;
     }
 
 .itemhide {
@@ -498,7 +533,8 @@ dl.col-xs-4 {
     font-family:'Microsoft YaHei';
     font-weight:600;
     color:white;
-    margin-top:15px;
+    margin-top:0;
+    margin-bottom:10px;
 }
 
 .breadcrumb li a{
@@ -826,4 +862,34 @@ li a:hover{
    -webkit-transform:scale(1,1); 
    -o-transform:scale(1,1); 
    transform:scale(1,1)
+}
+
+.actname{
+    font-size: 15px;
+    font-family:YouYuan;
+    font-weight:700;
+    color:white;
+}
+
+.actname:hover{
+    color:paleturquoise;
+    cursor:auto;
+}
+
+.actcontent {
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 3px 0 0;
+    word-wrap: break-word;
+    text-wrap: normal;
+    word-break: break-all;
+}
+
+.pgfooter{
+    background-color:white;
+    padding-top:50px;
+    padding-bottom:20px;
+    min-height:225px;
+    font-size:12px;
+    font-family:'Microsoft YaHei UI','Arial Unicode MS';
 }

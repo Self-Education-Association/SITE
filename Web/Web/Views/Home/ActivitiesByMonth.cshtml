@@ -6,9 +6,9 @@
 @foreach (var item in Model)
 {
     <li class="calli">
-        <span class="fui-new"></span>@Html.ActionLink(item.Name, "Details", "Activity", new { id = item.Id }, new { })
+        <span class="fui-check"></span>@Html.ActionLink(item.Name, "Details", "Activity", new { id = item.Id }, new { @class = "actname" })
         <br>
-        @item.ShortContent
+        <p class="actcontent">@item.ShortContent</p>
     </li>
 }
 

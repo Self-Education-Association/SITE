@@ -734,6 +734,10 @@
     <Content Include="img\sea.jpg" />
     <Content Include="img\sitelogo.png" />
     <Content Include="img\sitelogosm.png" />
+    <Content Include="img\story02.jpg" />
+    <Content Include="img\story04.jpg" />
+    <Content Include="img\story05.jpg" />
+    <Content Include="img\story08.jpg" />
     <Content Include="img\story1.jpg" />
     <Content Include="img\story1.png" />
     <Content Include="img\story2.jpg" />
@@ -745,6 +749,7 @@
     <Content Include="img\sushe1.JPG" />
     <Content Include="img\timelane1.jpg" />
     <Content Include="img\viewfile.jpg" />
+    <Content Include="img\viewthedemo.png" />
     <Content Include="img\wg_burned_and_scratched8.jpg" />
     <Content Include="Properties\PublishProfiles\部署.pubxml.user" />
     <Content Include="Scripts\bootstrap.js" />
