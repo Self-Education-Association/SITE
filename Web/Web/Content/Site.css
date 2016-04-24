@@ -12,6 +12,10 @@
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
+.btn-sm{
+    display:inline-block!important;
+}
+
 .dl-horizontal dt {
     white-space: normal;
 }
@@ -172,8 +176,22 @@ dl.col-xs-4 {
     position: relative;
     z-index: 0;
 }
+
 .sec2 {
-    background: url(../img/qiusuo1.jpg) center fixed;
+    background: url(../img/qiusuo1.jpg) center;
+    background-size: cover;
+    display: table;
+    width: 100%;
+    height: auto;
+    padding: 100px 0 100px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    z-index: 0;
+}
+
+.sec3 {
+    background: url(../img/secimg.jpg) center;
     background-size: cover;
     display: table;
     width: 100%;

@@ -671,6 +671,8 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\flat-ui.css.map" />
+    <Content Include="img\consing.png" />
+    <Content Include="img\secimg.jpg" />
     <Content Include="img\a.jpg" />
     <Content Include="img\calenderbg.jpg" />
     <Content Include="img\chengxin1.jpg" />

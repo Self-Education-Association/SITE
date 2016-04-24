@@ -4,7 +4,7 @@
     ViewBag.Title = "项目详情";
 }
 
-<section class="sec2">
+<section class="sec3">
     <div class="cover">
     </div>
     <div class="row animated pulse">
@@ -183,8 +183,8 @@
             <p>
                 @if (Model.Status == Web.Models.ProjectStatus.ToApprove)
                 {
-                    @Html.ActionLink("审批通过", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = true })
-                    @Html.ActionLink("审批驳回", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = false })
+                    @Html.ActionLink("审批通过", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = true })|
+                    @Html.ActionLink("审批驳回", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = false })|
                     @Html.ActionLink("返回列表", "ProjectIdentityRecords")
                 }
             </p>
