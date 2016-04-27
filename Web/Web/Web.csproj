@@ -801,6 +801,7 @@
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
     <Content Include="ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <None Include="Properties\PublishProfiles\Pacakage.pubxml" />
     <None Include="Properties\PublishProfiles\部署.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -821,6 +822,8 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\video.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="UserUpload\Avatar\DefaultAvatar.png" />
+    <Content Include="UserUpload\Avatar\DefaultNews.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -943,7 +946,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Temp\" />
     <Folder Include="UserUpload\Administrator\" />
-    <Folder Include="UserUpload\Avatar\" />
     <Folder Include="UserUpload\Identity\" />
     <Folder Include="UserUpload\Image\" />
     <Folder Include="UserUpload\Management\" />

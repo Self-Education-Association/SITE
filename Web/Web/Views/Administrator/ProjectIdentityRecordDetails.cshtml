@@ -183,12 +183,11 @@
             <p>
                 @if (Model.Status == Web.Models.ProjectStatus.ToApprove)
                 {
-                    @Html.ActionLink("审批通过", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = true })|
-                    @Html.ActionLink("审批驳回", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = false })|
                     @Html.ActionLink("返回列表", "ProjectIdentityRecords")
+                    @Html.ActionLink("审批通过", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = true }, new { @class = "btn btn-success" })
+                    @Html.ActionLink("审批驳回", "ProjectIdentityRecordApprove", new { id = Model.Id, isApprove = false }, new { @class = "btn btn-danger" })
                 }
             </p>
         </div>
     </div>
 </section>
-

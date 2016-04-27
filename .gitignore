@@ -207,15 +207,4 @@ FakesAssemblies/
 *.opt
 
 # LightSwitch generated files
-GeneratedArtifacts/
-_Pvt_Extensions/
-ModelManifest.xml
-/Web/Web/UserUpload/Avatar/20160412141123.jpg
-/Web/Web/UserUpload/Avatar
-/Web/Web/UserUpload/Management/20160412145512.docx
-/Web/Web/UserUpload/Management/20160412145811.docx
-/Web/Web/UserUpload/Management
-/Web/Web/Temp/405889947@qq.com
-/Web/Web/UserUpload/Identity/20160412211727.png
-/Web/Web/UserUpload/Identity/20160422135559.jpg
-/Web/Web/UserUpload/Identity/20160422141820.jpg
+
