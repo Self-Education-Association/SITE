@@ -24,21 +24,6 @@
         text-align: center;
     }
 
-    dl {
-        text-align: center;
-    }
-
-    dd {
-        color: #3C5B45;
-        font-family: Arial;
-        font-size: larger;
-    }
-
-    dt {
-        color: #608D4E;
-        font-family: Arial;
-        font-size: larger;
-    }
     p
     {
         word-wrap:break-word; 
@@ -64,29 +49,17 @@
                 <li class="active">新闻详情</li>
             </ol>
             <p align="center" style="color:black;font-family:'Microsoft YaHei';font-size:20px;font-weight:bolder;margin-bottom:0;">@Model.Title</p>
-            <div class="col-xs-12">
-                <div class="col-xs-2">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="/Home/VoiceNews" style="font-size:16px;text-align:center;">返回 <hr /></a></li>
-                    </ul>
-                </div>
-                <div class="col-xs-10">
-                    <p style="line-height:250%;">
-                    <p style="font-weight:bold;">@Model.Time<br /></p>
-                    <style>
-                        p {
-                            font-size: 14px;
-                        }
-                    </style>
-                    <p>
-                        &nbsp; 摘要： @Html.DisplayFor(model => model.ShortContent)
+                <div class="col-xs-12  raw">
+                    <p align="center" style="color:black;font-family:'Microsoft YaHei';font-size:24px;font-weight:bolder;margin-bottom:20px;">@Model.Title</p>
+                    <p style="font-weight:bold;text-align:center;margin-bottom:10px;">@Model.Time<br /></p>
+                    <p style="font-family:SimHei;font-weight:bold;font-size:14px;margin-bottom:5px;">
+                        摘要： @Html.DisplayFor(model => model.ShortContent)
                     </p>
 
                     <p>
-                        &nbsp; @Html.Raw(Model.ContentStored)
+                        @Html.Raw(Model.ContentStored)
                     </p>
                 </div>
             </div>
         </div>
-    </div>
 </section>

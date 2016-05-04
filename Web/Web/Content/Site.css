@@ -311,6 +311,19 @@ dl.col-xs-4 {
     box-shadow: 1px 1px 2px rgba(0,0,0,0.19);
 }
 
+.feature> img{
+        width:100%;
+        height:300px;
+}
+.feature>h3{
+    text-align:center;
+}
+.feature>p{
+    text-align:center
+}
+.raw>p{
+    margin:0 0 0 0;
+}
     .feature:hover {
         box-shadow: 10px 10px 10px rgba(0,0,0,0.5);
     }

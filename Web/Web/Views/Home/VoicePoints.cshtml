@@ -63,7 +63,7 @@
         <div class="row">
             @foreach (Web.Models.Article item in Model)
             {
-                <div class="col-md-4 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="feature" style="position:relative;">
                         <img src="@Url.Content(item.Image.GetUrl())" alt="Compas">
                         <h3 class="featuretitle">@item.Title</h3>
