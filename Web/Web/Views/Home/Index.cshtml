@@ -249,6 +249,9 @@
         PreMonth: function () {
             var request = this.Month - 1;
 			if (request <= 0) {
+				request = 1;
+			}
+			if (request >= 13) {
 				request = 12;
 			}
             jQuery.ajax({
@@ -268,8 +271,11 @@
         //下一月
         NextMonth: function () {
             var request = this.Month + 1;
-			if (request >= 13) {
+			if (request <= 0) {
 				request = 1;
+			}
+			if (request >= 13) {
+				request = 12;
 			}
             jQuery.ajax({
                 type: "GET",
